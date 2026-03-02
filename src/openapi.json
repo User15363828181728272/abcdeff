@@ -93,6 +93,25 @@
         "responses": { "200": { "description": "Success" } }
       }
     },
+        "/v2/ai/overchat": {
+      "get": {
+        "tags": ["AI"],
+        "summary": "Overchat AI (GPT-5.2 Nano)",
+        "description": "Tanya jawab cerdas dengan model GPT-5.2 Nano via Overchat.",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Pertanyaan kamu"
+          }
+        ],
+        "responses": {
+          "200": { "description": "Jawaban AI" }
+        }
+      }
+    },
     "/ai/notegpt": {
       "get": {
         "summary": "NoteGPT",
