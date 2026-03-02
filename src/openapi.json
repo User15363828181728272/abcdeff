@@ -836,6 +836,46 @@
         "responses": { "200": { "description": "Success" } }
       }
     },
+        "/v2/search/bingimg": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Bing Image Search",
+        "description": "Mencari gambar dari Bing Search Engine secara real-time.",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "description": "Kata kunci gambar yang ingin dicari (contoh: anime girl)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Daftar URL gambar berhasil ditemukan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": { "type": "boolean" },
+                    "creator": { "type": "string" },
+                    "result": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/search/spotify": {
       "get": {
         "summary": "Spotify Search",
