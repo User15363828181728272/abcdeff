@@ -668,6 +668,20 @@
         "responses": { "200": { "description": "Success" } }
       }
     },
+        "/v2/tools/nglspam": {
+      "get": {
+        "tags": ["Tools"],
+        "summary": "NGL Spammer",
+        "parameters": [
+          { "name": "apikey", "in": "query", "required": true, "schema": { "type": "string" }, "description": "apikey" },
+          { "name": "user", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Username NGL" },
+          { "name": "msg", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Isi Pesan" },
+          { "name": "total", "in": "query", "schema": { "type": "integer", "default": 5 }, "description": "Total (Max 50)" },
+          { "name": "delay", "in": "query", "schema": { "type": "integer", "default": 1 }, "description": "Kecepatan (detik)" }
+        ],
+        "responses": { "200": { "description": "Spam Selesai" } }
+      }
+    },
      "/tools/ocr": {
       "get": {
         "summary": "Image to Text (OCR)",
