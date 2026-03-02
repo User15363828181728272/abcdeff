@@ -691,16 +691,43 @@
         "responses": { "200": { "description": "Success" } }
       }
     },
-    "/tools/ssweb": {
+    "/v2/tools/ssweb": {
       "get": {
-        "summary": "Screenshot Website",
-        "description": "Mengambil tangkapan layar (screenshot) dari sebuah URL website.",
         "tags": ["Tools"],
-        "parameters": [{ "name": "url", "in": "query", "required": true, "schema": { "type": "string" } }],
-        "responses": { "200": { "description": "Image Biner" } }
+        "summary": "Website Screenshot",
+        "description": "Ambil screenshot website secara instan tanpa perlu API Key.",
+        "parameters": [
+          {
+            "name": "url",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "URL website (Contoh: https://google.com)"
+          },
+          {
+            "name": "device",
+            "in": "query",
+            "schema": { 
+              "type": "string", 
+              "enum": ["desktop", "tablet", "phone"],
+              "default": "desktop"
+            },
+            "description": "Mode tampilan perangkat"
+          },
+          {
+            "name": "full",
+            "in": "query",
+            "schema": { "type": "boolean", "default": false },
+            "description": "Ambil seluruh halaman (Full Page)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Berhasil, mengembalikan file gambar"
+          }
+        }
       }
     },
-
     "/tools/text-replace": {
       "get": {
         "summary": "AI Text Replace",
@@ -726,39 +753,7 @@
         "responses": { "200": { "description": "Success" } }
       }
     },
-    "/v2/tools/deploy": {
-      "post": {
-        "tags": ["Tools"],
-        "summary": "Surge Web Deployer",
-        "description": "Upload file ZIP berisi index.html untuk di-deploy gratis ke Surge.sh",
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "domain": {
-                    "type": "string",
-                    "description": "Nama subdomain (contoh: web-gue)"
-                  },
-                  "file": {
-                    "type": "string",
-                    "format": "binary",
-                    "description": "File ZIP project kamu"
-                  }
-                },
-                "required": ["domain", "file"]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Berhasil Deploy"
-          }
-        }
-      }
-    },
+  
     "/tools/undress": {
       "get": {
         "summary": "AI Image Alter",
