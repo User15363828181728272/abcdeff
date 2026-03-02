@@ -1,126 +1,134 @@
 const express = require("express");
-const chalk = require("chalk");
 const fs = require("fs");
 const cors = require("cors");
 const path = require("path");
-const multer = require("multer");
 const axios = require("axios");
 require("dotenv").config();
 
 const app = express();
-const PORT = process.env.PORT || 4000;
 const DISCORD_WEBHOOK_URL = process.env.DISCORD_WEBHOOK || "https://discord.com/api/webhooks/1475655302383665213/U5FwGe2sMbUcujPKvq9fgLdjIO3Euf1xxsgI95fwHcaYHJ-x3VBAh_wSCENEnpK6p0h1";
 
-// --- ANTI SPAM CONFIG ---
-const requestLog = new Map();
-const SPAM_THRESHOLD = 20; // Maksimal request per menit
-const BAN_DURATION = 60000; // Blokir selama 1 menit (ms)
-const spamDetectedIPs = new Set();
-
+// ========================= DISCORD =========================
 async function sendDiscord(message, embed = null) {
+    if (!DISCORD_WEBHOOK_URL) return;
+
     try {
         const payload = { content: message };
         if (embed) payload.embeds = [embed];
         await axios.post(DISCORD_WEBHOOK_URL, payload);
     } catch (err) {
-        console.error(chalk.red(`[DiscordError] ${err.message}`));
+        console.error("Discord Error:", err.message);
     }
 }
 
+// ========================= BASIC MIDDLEWARE =========================
 app.enable("trust proxy");
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
-app.use(fileUpload());
 app.set("json spaces", 2);
 
-// --- MIDDLEWARE ANTI SPAM ---
+// ========================= AUTO JSON FORMAT =========================
 app.use((req, res, next) => {
-    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    const originalJson = res.json;
+    res.json = function (data) {
+        if (typeof data === "object") {
+            data = {
+                status: data.status ?? true,
+                creator: "D2:業",
+                ...data
+            };
+        }
+        return originalJson.call(this, data);
+    };
+    next();
+});
+
+// ========================= ANTI SPAM =========================
+const requestLog = new Map();
+const bannedIPs = new Set();
+const SPAM_LIMIT = 20;
+const BAN_TIME = 60000;
+
+app.use((req, res, next) => {
+    const ip =
+        req.headers["x-forwarded-for"]?.split(",")[0] ||
+        req.socket.remoteAddress;
+
     const now = Date.now();
 
-    if (spamDetectedIPs.has(ip)) {
-        return res.status(429).json({ status: false, message: "Too many requests. IP temporary blocked." });
+    if (bannedIPs.has(ip)) {
+        return res
+            .status(429)
+            .json({ status: false, message: "Too many requests." });
     }
 
-    if (!requestLog.has(ip)) {
-        requestLog.set(ip, []);
-    }
+    if (!requestLog.has(ip)) requestLog.set(ip, []);
 
-    const timestamps = requestLog.get(ip);
-    timestamps.push(now);
+    const logs = requestLog.get(ip).filter((t) => now - t < 60000);
+    logs.push(now);
+    requestLog.set(ip, logs);
 
-    // Filter timestamp yang lebih lama dari 1 menit
-    const recentRequests = timestamps.filter(time => now - time < 60000);
-    requestLog.set(ip, recentRequests);
+    if (logs.length > SPAM_LIMIT) {
+        bannedIPs.add(ip);
 
-    if (recentRequests.length > SPAM_THRESHOLD) {
-        spamDetectedIPs.add(ip);
-        
-        console.log(chalk.bgRed.white(` SPAM DETECTED `) + ` IP: ${ip}`);
-        
-        sendDiscord(`⚠️ **SPAM ATTACK DETECTED**`, {
+        sendDiscord("⚠️ SPAM DETECTED", {
             color: 16711680,
             fields: [
-                { name: "IP Address", value: `\`${ip}\``, inline: true },
-                { name: "Total Requests", value: `\`${recentRequests.length} req/min\``, inline: true },
-                { name: "Action", value: "Temporary Blocked (1 Min)" },
-                { name: "Path", value: `\`${req.url}\`` }
+                { name: "IP", value: `\`${ip}\`` },
+                { name: "Path", value: `\`${req.url}\`` },
+                { name: "Requests/min", value: `\`${logs.length}\`` }
             ],
             timestamp: new Date()
         });
 
         setTimeout(() => {
-            spamDetectedIPs.delete(ip);
+            bannedIPs.delete(ip);
             requestLog.delete(ip);
-        }, BAN_DURATION);
+        }, BAN_TIME);
 
-        return res.status(429).json({ status: false, message: "Spam detected. Notified to Owner." });
+        return res
+            .status(429)
+            .json({ status: false, message: "Spam detected." });
     }
+
     next();
 });
 
+// ========================= STATIC FILES =========================
 app.use("/", express.static(path.join(__dirname, "api-page")));
 app.use("/src", express.static(path.join(__dirname, "src")));
 
-const openApiPath = path.join(__dirname, "src", "openapi.json");
-let openApi = {};
-if (fs.existsSync(openApiPath)) {
-    openApi = JSON.parse(fs.readFileSync(openApiPath));
-}
-
-app.use((req, res, next) => {
-    const original = res.json;
-    res.json = function (data) {
-        if (typeof data === "object") {
-            data = { status: data.status ?? true, creator: "D2:業", ...data };
-        }
-        return original.call(this, data);
-    };
-    next();
-});
-
+// ========================= LOAD API ROUTES =========================
 const apiFolder = path.join(__dirname, "src", "api");
+
 if (fs.existsSync(apiFolder)) {
     const categories = fs.readdirSync(apiFolder);
-    categories.forEach((sub) => {
-        const subPath = path.join(apiFolder, sub);
-        if (fs.statSync(subPath).isDirectory()) {
-            const files = fs.readdirSync(subPath);
+
+    categories.forEach((category) => {
+        const categoryPath = path.join(apiFolder, category);
+
+        if (fs.statSync(categoryPath).isDirectory()) {
+            const files = fs.readdirSync(categoryPath);
+
             files.forEach((file) => {
                 if (file.endsWith(".js")) {
                     try {
-                        const route = require(path.join(subPath, file));
+                        const route = require(path.join(categoryPath, file));
                         if (typeof route === "function") {
                             route(app);
-                            console.log(chalk.bgGreen.black(` OK `) + ` ${file}`);
+                            console.log("Loaded:", file);
                         }
-                    } catch (e) {
-                        console.error(chalk.bgRed.white(` ERROR LOADER `) + ` ${file}: ${e.message}`);
-                        sendDiscord(`❌ **Gagal Memuat API**`, {
-                            title: "Loader Error",
-                            description: `File: \`${file}\`\nError: \`${e.message}\``,
-                            color: 16711680
+                    } catch (err) {
+                        console.error("Route Error:", file, err.message);
+
+                        sendDiscord("❌ ROUTE LOAD ERROR", {
+                            color: 16711680,
+                            fields: [
+                                { name: "File", value: `\`${file}\`` },
+                                { name: "Error", value: `\`${err.message}\`` }
+                            ],
+                            timestamp: new Date()
                         });
                     }
                 }
@@ -129,59 +137,85 @@ if (fs.existsSync(apiFolder)) {
     });
 }
 
-app.post('/api/request', async (req, res) => {
+// ========================= API REQUEST =========================
+app.post("/api/request", async (req, res) => {
     const { name, detail } = req.body;
-    const ip = req.headers['x-forwarded-for']?.split(',')[0] || req.socket.remoteAddress;
 
-    try {
-        await sendDiscord(`🚀 **NEW REQUEST**`, {
-            color: 3447003,
-            fields: [
-                { name: "Name", value: name || "N/A", inline: true },
-                { name: "Type", value: "Request", inline: true },
-                { name: "IP Address", value: `||\`${ip}\`||`, inline: true },
-                { name: "Detail", value: `\`\`\`\n${detail || "N/A"}\n\`\`\`` }
-            ]
-        });
+    const ip =
+        req.headers["x-forwarded-for"]?.split(",")[0] ||
+        req.socket.remoteAddress;
 
-        res.json({ ok: true });
-    } catch (err) {
-        res.status(500).json({ ok: false, description: err.message });
-    }
-});
-
-app.get("/", (req, res) => res.sendFile(path.join(__dirname, "api-page", "index.html")));
-app.get("/docs", (req, res) => res.sendFile(path.join(__dirname, "api-page", "docs.html")));
-app.get("/dev", (req, res) => res.sendFile(path.join(__dirname, "api-page", "dev.html")));
-app.get("/nt", (req, res) => res.sendFile(path.join(__dirname, "api-page", "nt.html")));
-app.get("/req", (req, res) => res.sendFile(path.join(__dirname, "api-page", "r.html")));
-app.get("/openapi.json", (req, res) => res.sendFile(openApiPath));
-
-app.use((err, req, res, next) => {
-    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-    console.error(chalk.red(`[RuntimeError] ${req.url} - ${err.message}`));
-    
-    sendDiscord(`🚨 **Server Error Runtime**`, {
-        color: 15105570,
+    await sendDiscord("🚀 NEW REQUEST", {
+        color: 3447003,
         fields: [
-            { name: "Path", value: `\`${req.url}\``, inline: true },
-            { name: "Method", value: `\`${req.method}\``, inline: true },
-            { name: "IP Address", value: `\`${ip}\``, inline: true },
-            { name: "Error Message", value: `\`${err.message}\`` }
+            { name: "Name", value: name || "N/A", inline: true },
+            { name: "Type", value: "Request", inline: true },
+            { name: "IP", value: `||\`${ip}\`||`, inline: true },
+            {
+                name: "Detail",
+                value: `\`\`\`\n${detail || "N/A"}\n\`\`\``
+            }
         ],
         timestamp: new Date()
     });
 
-    res.status(500).json({ status: false, error: "Internal Server Error. Notified to Owner." });
+    res.json({ message: "Request sent successfully." });
 });
 
-app.listen(PORT, () => {
-    console.log(chalk.bgCyan.black(` INFO `) + ` Server running on port ${PORT}`);
-    sendDiscord("🟢 **Server Dinzo Apis Started**", {
-        description: `Server successfully running on port ${PORT}`,
-        color: 3066993,
+// ========================= HTML ROUTES =========================
+app.get("/", (req, res) =>
+    res.sendFile(path.join(__dirname, "api-page", "index.html"))
+);
+
+app.get("/docs", (req, res) =>
+    res.sendFile(path.join(__dirname, "api-page", "docs.html"))
+);
+
+app.get("/dev", (req, res) =>
+    res.sendFile(path.join(__dirname, "api-page", "dev.html"))
+);
+
+app.get("/nt", (req, res) =>
+    res.sendFile(path.join(__dirname, "api-page", "nt.html"))
+);
+
+app.get("/req", (req, res) =>
+    res.sendFile(path.join(__dirname, "api-page", "r.html"))
+);
+
+// ========================= OPENAPI =========================
+const openApiPath = path.join(__dirname, "src", "openapi.json");
+
+if (fs.existsSync(openApiPath)) {
+    app.get("/openapi.json", (req, res) =>
+        res.sendFile(openApiPath)
+    );
+}
+
+// ========================= ERROR HANDLER =========================
+app.use((err, req, res, next) => {
+    const ip =
+        req.headers["x-forwarded-for"]?.split(",")[0] ||
+        req.socket.remoteAddress;
+
+    console.error("Runtime Error:", req.url, err.message);
+
+    sendDiscord("🚨 SERVER RUNTIME ERROR", {
+        color: 15105570,
+        fields: [
+            { name: "Path", value: `\`${req.url}\`` },
+            { name: "Method", value: `\`${req.method}\`` },
+            { name: "IP", value: `\`${ip}\`` },
+            { name: "Error", value: `\`${err.message}\`` }
+        ],
         timestamp: new Date()
+    });
+
+    res.status(500).json({
+        status: false,
+        error: "Internal Server Error"
     });
 });
 
+// ========================= EXPORT FOR VERCEL =========================
 module.exports = app;
