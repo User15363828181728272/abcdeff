@@ -915,6 +915,27 @@
         "responses": { "200": { "description": "Success" } }
       }
     },
+        "/v2/search/webpilot": {
+      "get": {
+        "tags": ["Search"],
+        "summary": "WebPilot AI (Browsing Search)",
+        "description": "AI yang bisa mencari informasi terbaru langsung dari internet.",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Apa yang ingin kamu cari/tanyakan?"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Hasil pencarian AI"
+          }
+        }
+      }
+    },
     "/v1/search/soundcloud": {
       "get": {
         "summary": "SoundCloud Search",
