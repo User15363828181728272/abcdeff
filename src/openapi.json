@@ -668,31 +668,7 @@
         "responses": { "200": { "description": "Success" } }
       }
     },
-        "/v2/tools/upload-neko": {
-      "post": {
-        "tags": ["Tools"],
-        "summary": "Nekohime CDN Uploader",
-        "description": "Upload gambar atau file ke CDN Nekohime.",
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "file": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": { "description": "Berhasil Upload" }
-        }
-      }
-    },
+
         "/v2/tools/nglspam": {
       "get": {
         "tags": ["Tools"],
@@ -728,22 +704,6 @@
             "required": true,
             "schema": { "type": "string" },
             "description": "URL website (Contoh: https://google.com)"
-          },
-          {
-            "name": "device",
-            "in": "query",
-            "schema": { 
-              "type": "string", 
-              "enum": ["desktop", "tablet", "phone"],
-              "default": "desktop"
-            },
-            "description": "Mode tampilan perangkat"
-          },
-          {
-            "name": "full",
-            "in": "query",
-            "schema": { "type": "boolean", "default": false },
-            "description": "Ambil seluruh halaman (Full Page)"
           }
         ],
         "responses": {
