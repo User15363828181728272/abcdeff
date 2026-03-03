@@ -622,6 +622,32 @@
         "responses": { "200": { "description": "Image PNG" } }
       }
     },
+        "/v2/tools/img2prompt": {
+      "post": {
+        "tags": ["Tools"],
+        "summary": "AI Image to Prompt",
+        "description": "Upload gambar untuk mendapatkan deskripsi prompt AI-nya.",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Pilih gambar yang mau di-scan"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Berhasil dapet prompt" }
+        }
+      }
+    },
     "/tools/cloneweb": {
       "get": {
         "summary": "Website Cloner",
