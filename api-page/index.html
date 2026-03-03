@@ -30,34 +30,15 @@
     <link rel="canonical" href="https://api.xte.web.id/">
     <link rel="icon" type="image/x-icon" href="src/icon.jpg">
     <link rel="apple-touch-icon" href="src/icon.jpg">
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "XTE APIS",
-      "url": "https://api.xte.web.id",
-      "description": "Enterprise-grade REST APIs for AI integration, media downloading, and advanced developer tools.",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "All",
-      "author": {
-        "@type": "Organization",
-        "name": "XTE ID"
-      },
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      }
-    }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
         }
-
         :root {
             --primary: #FF5F00;
             --primary-soft: rgba(255, 95, 0, 0.1);
@@ -72,7 +53,6 @@
             --grid-size: 30px;
             --success: #22C55E;
         }
-
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg);
@@ -84,7 +64,6 @@
             overflow-x: hidden;
             line-height: 1.6;
         }
-
         .nav-float {
             position: fixed;
             top: 20px;
@@ -105,7 +84,6 @@
             padding: 0 24px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.03);
         }
-
         .brand {
             display: flex;
             align-items: center;
@@ -113,21 +91,17 @@
             text-decoration: none;
             color: var(--text);
         }
-
         .brand img {
             width: 32px;
             height: 32px;
             border-radius: 10px;
         }
-
         .brand span {
             font-weight: 800;
             font-size: 18px;
             letter-spacing: -0.5px;
         }
-
         .brand span b { color: var(--primary); }
-
         .menu-trigger {
             background: var(--primary);
             color: white;
@@ -140,7 +114,6 @@
             align-items: center;
             justify-content: center;
         }
-
         .side-panel {
             position: fixed;
             inset: 0;
@@ -151,9 +124,7 @@
             visibility: hidden;
             transition: 0.4s;
         }
-
         .side-panel.active { opacity: 1; visibility: visible; }
-
         .panel-content {
             position: absolute;
             right: 20px;
@@ -167,16 +138,13 @@
             transition: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
             box-shadow: 0 40px 100px rgba(0,0,0,0.1);
         }
-
         .side-panel.active .panel-content { transform: translateX(0); }
-
         .nav-links {
             display: flex;
             flex-direction: column;
             gap: 10px;
             margin-top: 40px;
         }
-
         .nav-links a {
             text-decoration: none;
             color: var(--text);
@@ -189,19 +157,16 @@
             gap: 15px;
             transition: 0.3s;
         }
-
         .nav-links a:hover {
             background: var(--primary);
             color: white;
         }
-
         .hero {
             padding: 180px 24px 80px;
             text-align: center;
             background: radial-gradient(circle at top right, rgba(255,95,0,0.08), transparent),
                         radial-gradient(circle at bottom left, rgba(255,95,0,0.08), transparent);
         }
-
         .hero-title {
             font-size: clamp(40px, 8vw, 96px);
             font-weight: 800;
@@ -209,23 +174,19 @@
             line-height: 0.9;
             margin-bottom: 24px;
         }
-
         .hero-title span { color: var(--primary); }
-
         .hero-sub {
             font-size: 18px;
             color: var(--text-light);
             max-width: 600px;
             margin: 0 auto 48px;
         }
-
         .btn-group {
             display: flex;
             gap: 16px;
             justify-content: center;
             flex-wrap: wrap;
         }
-
         .pill-btn {
             padding: 18px 40px;
             border-radius: var(--radius-btn);
@@ -233,34 +194,30 @@
             text-decoration: none;
             transition: 0.4s;
             font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
-
         .pill-btn-main { background: var(--primary); color: white; box-shadow: 0 15px 30px rgba(255,95,0,0.2); }
         .pill-btn-outline { border: 2px solid var(--primary); color: var(--primary); background: rgba(255,255,255,0.5); backdrop-filter: blur(5px); }
-
         .pill-btn:hover { transform: translateY(-5px); }
-
         .section-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 40px 24px;
         }
-
         .section-title {
             font-size: 32px;
             font-weight: 800;
             margin-bottom: 40px;
             text-align: center;
         }
-
         .section-title span { color: var(--primary); }
-
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 24px;
         }
-
         .blob-card {
             background: rgba(248, 249, 250, 0.8);
             backdrop-filter: blur(10px);
@@ -269,13 +226,11 @@
             border: 1px solid var(--border);
             transition: 0.4s;
         }
-
         .blob-card:hover {
             background: white;
             border-color: var(--primary);
             box-shadow: 0 20px 40px rgba(0,0,0,0.05);
         }
-
         .icon-circle {
             width: 64px;
             height: 64px;
@@ -288,13 +243,11 @@
             color: var(--primary);
             box-shadow: 0 10px 20px rgba(0,0,0,0.05);
         }
-
         .endpoint-list {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 16px;
         }
-
         .endpoint-item {
             background: white;
             padding: 20px;
@@ -305,9 +258,7 @@
             justify-content: space-between;
             transition: 0.3s;
         }
-
         .endpoint-item:hover { border-color: var(--primary); }
-
         .method-badge {
             font-size: 10px;
             font-weight: 800;
@@ -316,7 +267,6 @@
             background: var(--primary-soft);
             color: var(--primary);
         }
-
         .status-header {
             display: flex;
             align-items: center;
@@ -333,7 +283,6 @@
             font-weight: 700;
             color: var(--primary);
         }
-
         .pulse {
             width: 8px;
             height: 8px;
@@ -342,13 +291,11 @@
             box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
             animation: pulse 2s infinite;
         }
-
         @keyframes pulse {
             0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
             70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
         }
-
         .code-window {
             background: #0F172A;
             border-radius: 24px;
@@ -357,7 +304,6 @@
             margin-top: 40px;
             text-align: left;
         }
-
         .code-header {
             background: #1E293B;
             padding: 16px 24px;
@@ -365,13 +311,11 @@
             align-items: center;
             justify-content: space-between;
         }
-
         .code-dots { display: flex; gap: 8px; }
         .dot { width: 12px; height: 12px; border-radius: 50%; }
         .dot-1 { background: #FF5F56; }
         .dot-2 { background: #FFBD2E; }
         .dot-3 { background: #27C93F; }
-
         .code-body {
             padding: 32px;
             font-family: 'JetBrains Mono', monospace;
@@ -380,12 +324,10 @@
             line-height: 1.8;
             overflow-x: auto;
         }
-
         .code-body b { color: #38BDF8; }
         .code-body i { color: #F472B6; font-style: normal; }
         .code-body u { color: #4ADE80; text-decoration: none; }
         .code-body s { color: #EAB308; text-decoration: none; }
-
         .stats-wrap {
             margin-top: 60px;
             background: var(--text);
@@ -397,10 +339,8 @@
             text-align: center;
             gap: 40px;
         }
-
         .stat-val { font-size: 48px; font-weight: 800; color: var(--primary); }
         .stat-lbl { color: rgba(255,255,255,0.6); text-transform: uppercase; font-size: 12px; font-weight: 700; letter-spacing: 2px; }
-
         .cta-box {
             background: var(--primary);
             padding: 80px 40px;
@@ -409,7 +349,6 @@
             color: white;
             margin-top: 80px;
         }
-
         .notification {
             position: fixed;
             bottom: 30px;
@@ -426,9 +365,7 @@
             z-index: 9999;
             transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
         }
-
         .notification.show { transform: translateX(-50%) translateY(0); }
-
         .time-badge {
             position: fixed;
             bottom: 20px;
@@ -442,7 +379,6 @@
             border: 1px solid var(--border);
             z-index: 999;
         }
-
         footer {
             text-align: center;
             padding: 60px 0;
@@ -451,7 +387,6 @@
             font-size: 14px;
             position: relative;
         }
-
         @media (max-width: 768px) {
             .hero { padding-top: 140px; }
             .panel-content { width: 85%; right: 7.5%; }
@@ -461,7 +396,6 @@
     </style>
 </head>
 <body>
-
     <nav class="nav-float">
         <a href="#" class="brand">
             <img src="src/icon.jpg" alt="XTE APIS Logo">
@@ -471,36 +405,20 @@
             <i class="material-icons-round">sort</i>
         </button>
     </nav>
-
     <div class="side-panel" id="sidePanel">
         <div class="panel-content">
-            <div style="display:flex; justify-content: space-between; align-items: center;">
+            <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
                 <h2 style="font-weight: 800;">Navigation</h2>
                 <i class="material-icons-round" style="cursor:pointer" id="closeMenu">close</i>
             </div>
-<a href="/" class="nav-link">
-    <i class="material-icons-round">dashboard</i>
-    Dashboard
-</a>
-
-<a href="/docs" class="nav-link">
-    <i class="material-icons-round">api</i>
-    API Docs
-</a>
-
-<a href="/dev" class="nav-link">
-    <i class="material-icons-round">code</i>
-    Developer
-</a>
-
-<a href="https://t.me/depstore11" target="_blank" class="nav-link">
-    <i class="material-icons-round">campaign</i>
-    Updates
-</a>
+            <div class="nav-links">
+                <a href="/"><i class="material-icons-round">dashboard</i>Dashboard</a>
+                <a href="/docs"><i class="material-icons-round">api</i>API Docs</a>
+                <a href="/dev"><i class="material-icons-round">code</i>Developer</a>
+                <a href="https://t.me/depstore11" target="_blank"><i class="material-icons-round">campaign</i>Updates</a>
             </div>
         </div>
     </div>
-
     <section class="hero">
         <div class="status-header">
             <div class="pulse"></div>
@@ -510,9 +428,8 @@
         <p class="hero-sub">Enterprise-grade REST APIs for AI integration, media downloading, and advanced developer tools.</p>
         <div class="btn-group">
             <a href="/docs" class="pill-btn pill-btn-main">Documentation</a>
-            <a href="/dev" class="pill-btn pill-btn-outline">dev</a>
+            <a href="/dev" class="pill-btn pill-btn-outline">Developer</a>
         </div>
-
         <div class="section-container">
             <div class="code-window">
                 <div class="code-header">
@@ -536,7 +453,6 @@
             </div>
         </div>
     </section>
-
     <div class="section-container">
         <h2 class="section-title">Popular <span>Endpoints</span></h2>
         <div class="endpoint-list">
@@ -584,7 +500,6 @@
             </div>
         </div>
     </div>
-
     <div class="section-container">
         <h2 class="section-title">Why <span>XTE ID</span></h2>
         <div class="grid">
@@ -604,7 +519,6 @@
                 <p style="color: var(--text-light); font-size: 15px;">Predictable JSON responses with strict TypeScript-ready interfaces for seamless production implementation.</p>
             </div>
         </div>
-
         <div class="stats-wrap">
             <div class="stat-box">
                 <div class="stat-val" id="count">300+</div>
@@ -619,51 +533,41 @@
                 <div class="stat-lbl">Uptime</div>
             </div>
         </div>
-
         <div class="cta-box">
             <h2 style="font-size: 40px; font-weight: 800; margin-bottom: 20px;">Ready to integrate?</h2>
             <p style="margin-bottom: 40px; opacity: 0.9;">Start building your next big project with the most reliable API gateway.</p>
             <a href="/docs" class="pill-btn" style="background: white; color: var(--primary);">Documentation</a>
         </div>
-
         <footer>
             <p>© <span id="year"></span> XTE ID. Powered by High-Performance Infrastructure.</p>
         </footer>
     </div>
-
     <div class="notification" id="toast">
         <i class="material-icons-round" style="color: var(--primary)">verified</i>
-        <span style="font-weight: 600; font-size: 14px;">Welcome in XTE APIS</span>
+        <span style="font-weight: 600; font-size: 14px;">Welcome to XTE APIS</span>
     </div>
-
     <div class="time-badge" id="clock">WIB 00:00:00</div>
-
     <script>
         const openBtn = document.getElementById('openMenu');
         const closeBtn = document.getElementById('closeMenu');
         const panel = document.getElementById('sidePanel');
         const toast = document.getElementById('toast');
         const clock = document.getElementById('clock');
-
         openBtn.onclick = () => panel.classList.add('active');
         closeBtn.onclick = () => panel.classList.remove('active');
         panel.onclick = (e) => { if(e.target === panel) panel.classList.remove('active'); };
-
         function updateClock() {
             const time = new Date().toLocaleTimeString('en-GB', { timeZone: 'Asia/Jakarta' });
             clock.textContent = `WIB ${time}`;
         }
         setInterval(updateClock, 1000);
         updateClock();
-
         document.getElementById('year').textContent = new Date().getFullYear();
-
         window.onload = () => {
             setTimeout(() => toast.classList.add('show'), 1500);
             setTimeout(() => toast.classList.remove('show'), 6000);
             fetchCount();
         };
-
         async function fetchCount() {
             try {
                 const r = await fetch('src/openapi.json');
@@ -674,7 +578,7 @@
                         c += Object.keys(d.paths[p]).length;
                     });
                 }
-                document.getElementById('count').textContent = c + "+";
+                document.getElementById('count').textContent = (c > 0 ? c : "300") + "+";
             } catch(e) {
                 document.getElementById('count').textContent = "300+";
             }
