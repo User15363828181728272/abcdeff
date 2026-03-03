@@ -12,20 +12,20 @@ module.exports = function (app, upload) {
     app.post("/v2/tools/img2prompt", upload.single('file'), async (req, res) => {
         const file = req.file;
 
+        // 1. Validasi keberadaan file
         if (!file) {
             return res.status(400).json({
                 status: false,
-                creator: "D2:业",
-                message: "Gambarnya mana, Mbut? 🗿 (Key: 'file')"
+                message: "Gambarnya mana, Mbut? 🗿"
             });
         }
 
         try {
-            // 1. Convert gambar yang diupload ke Base64
+            // 2. Baca file dari temp folder dan convert ke Base64
             const mediaBuffer = fs.readFileSync(file.path);
             const base64 = `data:${file.mimetype};base64,${mediaBuffer.toString('base64')}`;
 
-            // 2. Tembak ke API Supabase Rim
+            // 3. Request ke API Vision Supabase
             const response = await axios.post(
                 'https://wabpfqsvdkdjpjjkbnok.supabase.co/functions/v1/unified-prompt-dev',
                 { 
@@ -44,7 +44,7 @@ module.exports = function (app, upload) {
                 }
             );
 
-            // 3. Gabungkan hasil stream teksnya
+            // 4. Proses Stream Data menjadi Teks
             let result = '';
             response.data.on('data', (chunk) => {
                 const lines = chunk.toString().split('\n');
@@ -55,24 +55,32 @@ module.exports = function (app, upload) {
                             const json = JSON.parse(raw);
                             const text = json?.choices?.[0]?.delta?.content || json?.content || json?.text || '';
                             result += text;
-                        } catch (e) {}
+                        } catch (e) {
+                            // Abaikan error parsing baris stream
+                        }
                     }
                 }
             });
 
+            // 5. Kirim respon setelah stream selesai
             response.data.on('end', () => {
-                // Hapus file sampah
+                // Hapus file temporary agar tidak menumpuk di Vercel
                 if (fs.existsSync(file.path)) fs.unlinkSync(file.path);
 
                 res.json({
                     status: true,
-                    creator: "D2:业",
-                    result: result.trim()
+                    result: result.trim() || "Gagal mendapatkan deskripsi gambar."
                 });
             });
 
+            response.data.on('error', (err) => {
+                throw new Error(err.message);
+            });
+
         } catch (e) {
+            // Pastikan file temp terhapus jika terjadi error
             if (file && fs.existsSync(file.path)) fs.unlinkSync(file.path);
+            
             res.status(500).json({
                 status: false,
                 error: e.message
