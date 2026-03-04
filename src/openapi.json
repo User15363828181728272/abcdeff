@@ -875,6 +875,25 @@
         "responses": { "200": { "description": "Success" } }
       }
     },
+    "/v2/search/iqiyi": {
+      "get": {
+        "tags": ["Search"],
+        "summary": "iQIYI Search (Drama & Anime)",
+        "description": "Cari informasi drama, anime, dan variety show terbaru di iQIYI.",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Judul film/drama (Contoh: Demon Slayer)"
+          }
+        ],
+        "responses": {
+          "200": { "description": "Daftar hasil pencarian iQIYI" }
+        }
+      }
+    },
         "/v2/search/bingimg": {
       "get": {
         "tags": [
