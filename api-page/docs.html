@@ -93,11 +93,6 @@
             to { transform: translateX(-50%) translateY(0); opacity: 1; }
         }
 
-        .api-header.active i {
-            transform: rotate(180deg);
-            transition: 0.3s;
-        }
-
         .search-container {
             flex: 1;
             max-width: 400px;
@@ -123,20 +118,6 @@
             color: var(--text-main);
             font-size: 13px;
             transition: 0.3s;
-        }
-
-        .loader {
-            width: 28px;
-            height: 28px;
-            border: 3px solid rgba(255,255,255,0.15);
-            border-top: 3px solid var(--primary);
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-            margin: 20px auto;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
         }
 
         .search-container input:focus { border-color: var(--primary); background: #FFFFFF; }
@@ -167,7 +148,6 @@
         }
 
         .search-item:hover { background: var(--card-hover); }
-        .search-item:last-child { border-bottom: none; }
         .search-item .m-tag { font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 4px; background: var(--primary); color: white; }
         .search-item .p-text { font-size: 13px; font-family: 'JetBrains Mono'; color: var(--text-main); font-weight: 600; }
 
@@ -197,18 +177,20 @@
         }
 
         .hero-img {
-            width: 100px;
-            height: 100px;
-            border-radius: 30px;
-            border: 2px solid var(--primary);
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px var(--primary-glow);
-            animation: float 4s ease-in-out infinite;
+            width: 120px;
+            height: 120px;
+            border-radius: 20px;
+            border: 4px solid var(--primary);
+            margin-bottom: 25px;
+            box-shadow: 15px 15px 0px var(--primary-glow);
+            transform: rotate(-8deg);
+            object-fit: cover;
+            transition: 0.5s var(--ease);
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        .hero-img:hover {
+            transform: rotate(0deg) scale(1.1);
+            box-shadow: 0px 0px 30px var(--primary-glow);
         }
 
         .hero-title {
@@ -242,20 +224,21 @@
             scroll-margin-top: 100px;
             animation: fadeIn 0.5s ease backwards;
         }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         
         .api-card:hover { border-color: var(--primary); background: #FFFFFF; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transform: translateY(-4px); }
 
         .api-header { padding: 24px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+        .api-header.active i { transform: rotate(180deg); }
         .method-badge { background: var(--primary); color: white; font-size: 10px; font-weight: 900; padding: 4px 12px; border-radius: 8px; text-transform: uppercase; }
         .path-text { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--text-main); margin-left: 15px; flex: 1; font-weight: 600; }
 
         .api-info-box { padding: 0 24px 20px 24px; margin-top: -10px; }
         .api-description { font-size: 13px; color: var(--text-dim); line-height: 1.5; padding-left: 56px; }
 
-        .api-details { display: none; background: #FFFFFF; border-top: 1px solid var(--border); animation: slideDown 0.4s var(--ease); }
+        .api-details { display: none; background: #FFFFFF; border-top: 1px solid var(--border); }
+        .api-details.active { display: block; animation: slideDown 0.4s var(--ease); }
+
         @keyframes slideDown { from { opacity:0; transform: translateY(-10px); } to { opacity:1; transform: translateY(0); } }
-        .api-details.active { display: block; }
 
         .detail-grid { display: grid; grid-template-columns: 1fr; }
         @media (min-width: 992px) { .detail-grid { grid-template-columns: 1fr 1fr; } }
@@ -276,13 +259,24 @@
         .code-tab { font-size: 10px; font-weight: 800; color: #94A3B8; cursor: pointer; padding: 4px 8px; border-radius: 4px; background: transparent; transition: 0.2s; border: none; }
         .code-tab.active { background: var(--primary); color: white; }
 
-        .code-body { padding: 20px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #94A3B8; max-height: 350px; overflow-y: auto; position: relative; }
+        .code-body { padding: 20px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #4ADE80; max-height: 350px; overflow-y: auto; position: relative; }
         .code-actions { display: flex; gap: 6px; }
         .copy-pill { background: rgba(255,255,255,0.1); color: white; font-size: 9px; font-weight: 800; padding: 4px 10px; border-radius: 4px; cursor: pointer; border: none; transition: 0.2s; }
         .copy-pill:hover { background: var(--primary); }
         .visit-pill { background: #27C93F; color: white; font-size: 9px; font-weight: 800; padding: 4px 10px; border-radius: 4px; cursor: pointer; border: none; text-decoration: none; display: inline-flex; align-items: center; }
         
-        pre { white-space: pre-wrap; word-break: break-all; color: #4ADE80; }
+        pre { white-space: pre-wrap; word-break: break-all; }
+
+        .loader {
+            width: 28px; height: 28px;
+            border: 3px solid rgba(255,255,255,0.15);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
 
         .side-panel { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.1); backdrop-filter: blur(10px); z-index: 2000; opacity: 0; visibility: hidden; transition: 0.4s; }
         .side-panel.active { opacity: 1; visibility: visible; }
@@ -309,7 +303,6 @@
             display: none;
             animation: slideInRight 0.5s var(--ease);
         }
-        @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         .nft-announcement.active { display: block; }
         .nft-close { position: absolute; top: 10px; right: 10px; cursor: pointer; color: var(--text-dim); font-size: 18px; }
     </style>
@@ -318,7 +311,7 @@
 
     <nav class="nav-float">
         <div style="display:flex; align-items:center; gap:10px;">
-            <img src="src/icon.jpg" style="width: 32px; height: 32px; border-radius: 10px;">
+            <img src="src/icon.jpg" style="width: 32px; height: 32px; border-radius: 8px; transform: rotate(-5deg);">
             <span style="font-family: 'Space Grotesk'; font-weight: 800; letter-spacing: 1px; font-size: 18px; color: var(--text-main);">XTE APIS</span>
         </div>
         <div class="search-container">
@@ -337,30 +330,15 @@
                 <h2 style="font-weight: 800; color: var(--text-main);">Menu</h2>
                 <i class="material-icons-round" style="cursor:pointer; color: var(--text-dim);" id="closeMenu">close</i>
             </div>
-<a href="/" class="nav-link">
-    <i class="material-icons-round">dashboard</i>
-    Dashboard
-</a>
-
-<a href="/docs" class="nav-link">
-    <i class="material-icons-round">api</i>
-    API Docs
-</a>
-
-<a href="/dev" class="nav-link">
-    <i class="material-icons-round">code</i>
-    Developer
-</a>
-
-<a href="https://t.me/depstore11" target="_blank" class="nav-link">
-    <i class="material-icons-round">campaign</i>
-    Updates
-</a>
+            <a href="/" class="nav-link"><i class="material-icons-round">dashboard</i>Dashboard</a>
+            <a href="/docs" class="nav-link"><i class="material-icons-round">api</i>API Docs</a>
+            <a href="/dev" class="nav-link"><i class="material-icons-round">code</i>Developer</a>
+            <a href="https://t.me/depstore11" target="_blank" class="nav-link"><i class="material-icons-round">campaign</i>Updates</a>
         </div>
     </div>
 
     <section class="hero">
-        <img src="src/icon.jpg" alt="Logo" class="hero-img">
+        <img src="src/lukontol.jpg" alt="Logo" class="hero-img">
         <h1 class="hero-title">XTE <span>APIS</span></h1>
         <p style="color: var(--text-dim); margin-top: 10px; font-weight: 600;">Modern API Documentation Interface</p>
     </section>
@@ -434,8 +412,10 @@ function toggleApi(id){
     if (!el || !card) return;
     const header = card.querySelector('.api-header');
     const isActive = el.classList.contains('active');
-    document.querySelectorAll('.api-details').forEach(d=>d.classList.remove('active'));
-    document.querySelectorAll('.api-header').forEach(h=>h.classList.remove('active'));
+    
+    document.querySelectorAll('.api-details').forEach(d => d.classList.remove('active'));
+    document.querySelectorAll('.api-header').forEach(h => h.classList.remove('active'));
+    
     if(!isActive){
         el.classList.add('active');
         header.classList.add('active');
@@ -461,7 +441,6 @@ async function shareEndpoint(id, method, path){
     }
 }
 
-// Fungsi Build URL (Khusus untuk GET / Query Params)
 function buildUrl(path, formId){
     const form = document.getElementById(formId);
     if(!form) return BASE_URL + path;
@@ -482,13 +461,9 @@ function switchTab(id, lang, method, path){
     tabs.forEach(t => t.classList.remove('active'));
     event.target.classList.add('active');
 
-    if(lang === 'curl'){
-        display.textContent = `curl -X ${method} "${url}"`;
-    } else if(lang === 'python'){
-        display.textContent = `import requests\n\nurl = "${url}"\nresponse = requests.${method.toLowerCase()}(url)\nprint(response.json())`;
-    } else if(lang === 'javascript'){
-        display.textContent = `fetch("${url}", { method: "${method}" })\n  .then(res => res.json())\n  .then(data => console.log(data));`;
-    }
+    if(lang === 'curl') display.textContent = `curl -X ${method} "${url}"`;
+    else if(lang === 'python') display.textContent = `import requests\n\nurl = "${url}"\nresponse = requests.${method.toLowerCase()}(url)\nprint(response.json())`;
+    else if(lang === 'javascript') display.textContent = `fetch("${url}", { method: "${method}" })\n  .then(res => res.json())\n  .then(data => console.log(data));`;
 }
 
 function updateSnippets(id, method, path){
@@ -501,10 +476,9 @@ function updateSnippets(id, method, path){
 
     if(activeTab === 'curl') display.textContent = `curl -X ${method} "${url}"`;
     else if(activeTab === 'python') display.textContent = `import requests\n\nurl = "${url}"\nresponse = requests.${method.toLowerCase()}(url)\nprint(response.json())`;
-    else if(activeTab === 'js') display.textContent = `fetch("${url}", { method: "${method}" })\n  .then(res => res.json())\n  .then(data => console.log(data));`;
+    else if(activeTab === 'js' || activeTab === 'javascript') display.textContent = `fetch("${url}", { method: "${method}" })\n  .then(res => res.json())\n  .then(data => console.log(data));`;
 }
 
-// --- FUNGSI EXECUTE (SUPPORT FILE UPLOAD) ---
 async function runRequest(id, method, path){
     const btn = document.getElementById(`btn-${id}`);
     const pre = document.getElementById(`res-${id}`);
@@ -519,12 +493,9 @@ async function runRequest(id, method, path){
         let url = BASE_URL + path;
         let fetchOptions = { method };
 
-        // Logic: Jika POST, gunakan FormData sebagai Body (Support File)
         if (method.toUpperCase() === 'POST') {
             fetchOptions.body = fd; 
-            // Jangan set Content-Type, browser otomatis set boundary multipart
         } else {
-            // Jika GET, masukkan params ke URL
             url = buildUrl(path, `form-${id}`);
         }
 
@@ -610,7 +581,6 @@ async function fetchNft(){
     } catch(e) {}
 }
 
-// --- FUNGSI LOAD SCHEMA (DENGAN SUPPORT REQUEST BODY) ---
 async function loadSchema(){
     const container = document.getElementById('apiContainer');
     const catRow = document.getElementById('catRow');
@@ -630,10 +600,7 @@ async function loadSchema(){
                 tags.add(tag);
                 apiDataStore.push({id,path,method,info,tag});
 
-                // Generate Fields (Support Parameters & RequestBody File)
                 let inputFields = '';
-                
-                // 1. Cek Parameters (GET/Query)
                 if (info.parameters) {
                     inputFields += info.parameters.map(p => `
                         <div class="field-group">
@@ -643,7 +610,6 @@ async function loadSchema(){
                     `).join('');
                 }
 
-                // 2. Cek RequestBody (POST Multipart/File)
                 if (info.requestBody && info.requestBody.content['multipart/form-data']) {
                     const schema = info.requestBody.content['multipart/form-data'].schema;
                     if (schema.properties) {
