@@ -1,111 +1,47 @@
-const https = require('https');
+const axios = require("axios");
 
 /**
- * Spotify Search (Bypass Center)
- * Path: /v1/search/spotify
- * Creator: D2:业
+ * 🎵 SPOTIFY SEARCH & DOWNLOADER
+ * Path: /v2/search/spotify
+ * Creator: AhmadXyz (Converted by D2:业)
  */
 
-class SpotifySearch {
-  constructor() {
-    this.baseUrl = 'https://api.spotify.com/v1'; // Base asli atau proxy googleusercontent
-    this.headers = {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-      'Accept': 'application/json',
-      'Accept-Language': 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7'
-    };
-  }
-
-  request(url, options = {}) {
-    return new Promise((resolve, reject) => {
-      const req = https.request(url, options, (res) => {
-        let body = '';
-        res.on('data', chunk => body += chunk);
-        res.on('end', () => resolve({ statusCode: res.statusCode, body }));
-      });
-      req.on('error', reject);
-      if (options.headers) {
-        Object.entries(options.headers).forEach(([k, v]) => req.setHeader(k, v));
-      }
-      req.end();
-    });
-  }
-
-  async getToken() {
-    try {
-      // Mengambil token dari endpoint web player (teknis bypass)
-      const response = await this.request('https://open.spotify.com/get_access_token?reason=transport&productType=web_player', {
-        method: 'GET',
-        headers: this.headers
-      });
-      if (response.statusCode !== 200) return null;
-      const data = JSON.parse(response.body);
-      return data.accessToken || null;
-    } catch {
-      return null;
-    }
-  }
-
-  async search(query, limit = 10) {
-    const token = await this.getToken();
-    if (!token) throw new Error('Gagal mendapatkan akses token dari pusat, Bos!');
-
-    const safeLimit = Math.max(1, Math.min(parseInt(limit) || 10, 50));
-    const url = `${this.baseUrl}/search?q=${encodeURIComponent(query)}&type=track&limit=${safeLimit}`;
-
-    const response = await this.request(url, {
-      method: 'GET',
-      headers: { ...this.headers, 'Authorization': `Bearer ${token}` }
-    });
-
-    if (response.statusCode !== 200) throw new Error(`Spotify API Error: ${response.statusCode}`);
-    
-    const data = JSON.parse(response.body);
-    return this.formatData(data);
-  }
-
-  formatData(data) {
-    if (!data.tracks || !data.tracks.items) return [];
-    return data.tracks.items.map(track => ({
-      title: track.name,
-      artist: track.artists.map(a => a.name).join(', '),
-      album: track.album.name,
-      duration: this.formatTime(track.duration_ms),
-      popularity: track.popularity,
-      releaseDate: track.album.release_date,
-      imageUrl: track.album.images[0]?.url || '',
-      trackUrl: `https://open.spotify.com/track/${track.id}`
-    }));
-  }
-
-  formatTime(ms) {
-    const min = Math.floor(ms / 60000);
-    const sec = ((ms % 60000) / 1000).toFixed(0);
-    return `${min}:${sec.padStart(2, '0')}`;
-  }
-}
-
-const spotify = new SpotifySearch();
-
 module.exports = function (app) {
-  app.get("/search/spotify", async (req, res) => {
-    try {
-      const { q, limit } = req.query;
-      if (!q) return res.status(400).json({ status: false, creator: "D2:业", error: "Judul lagunya mana, Aa? 🗿🖕" });
+    app.get("/v2/search/spotify", async (req, res) => {
+        const { q } = req.query;
 
-      const results = await spotify.search(q, limit);
+        if (!q) {
+            return res.status(400).json({
+                status: false,
+                message: "Mana judul atau link Spotify-nya, Mbut? 🗿"
+            });
+        }
 
-      res.json({
-        status: true,
-        creator: "D2:业",
-        result: results
-      });
-    } catch (err) {
-      res.status(500).json({
-        status: false,
-        creator: "D2:业",
-        error: err.message
-      });
-    }
-  });
+        try {
+            const response = await axios.get(
+                `https://spotdown.org/api/song-details?url=${encodeURIComponent(q)}`,
+                {
+                    headers: {
+                        "Accept": "application/json, text/plain, */*",
+                        "X-API-Key": "a3ef2775f0e82665c5cdcd9e3af1487f9c25b70c5e7994f5ec57f4f1502d1c41",
+                        "User-Agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Mobile Safari/537.36",
+                        "Referer": "https://spotdown.org/id/search"
+                    }
+                }
+            );
+
+            // Karena kita pakai middleware auto-json di index.js,
+            // kita cukup kirim datanya saja.
+            res.json({
+                status: true,
+                result: response.data
+            });
+
+        } catch (err) {
+            res.status(500).json({
+                status: false,
+                error: err.response?.data || err.message
+            });
+        }
+    });
 };
