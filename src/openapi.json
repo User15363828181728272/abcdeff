@@ -934,18 +934,25 @@
         }
       }
     },
-    "/search/spotify": {
+"/v2/search/spotify": {
       "get": {
-        "summary": "Spotify Search",
-        "description": "Mencari lagu di Spotify secara real-time langsung dari pusat (Bypass Access Token).",
         "tags": ["Search"],
+        "summary": "Spotify Downloader & Search",
+        "description": "Cari informasi lagu Spotify dan dapatkan link download-nya.",
         "parameters": [
-          { "name": "q", "in": "query", "required": true, "schema": { "type": "string" } },
-          { "name": "limit", "in": "query", "required": false, "schema": { "type": "integer", "default": 10 } }
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Judul lagu atau URL Spotify"
+          }
         ],
-        "responses": { "200": { "description": "Success" } }
+        "responses": {
+          "200": { "description": "Data lagu berhasil ditemukan" }
+        }
       }
-    },
+},
     "/v1/search/pinterest": {
       "get": {
         "summary": "Pinterest Image Search",
