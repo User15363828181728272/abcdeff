@@ -675,6 +675,37 @@
         "responses": { "200": { "description": "File ZIP" } }
       }
     },
+    "/v2/tools/removebg": {
+      "post": {
+        "tags": ["Tools"],
+        "summary": "AI Remove Background",
+        "description": "Hapus background gambar secara otomatis menggunakan AI.",
+        "parameters": [
+          {
+            "name": "url",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" },
+            "description": "URL gambar yang ingin dihapus background-nya"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": { "type": "string", "format": "binary" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Berhasil memproses gambar" }
+        }
+      }
+    },
     "/tools/ff-karakter": {
       "get": {
         "summary": "FF Character List Tool",
