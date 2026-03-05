@@ -992,6 +992,35 @@
         }
       }
     },
+    "/v2/search/freereels": {
+      "get": {
+        "tags": ["Search"],
+        "summary": "FreeReels Short Drama Engine",
+        "description": "Cari drama pendek, liat hotlist, atau ambil detail drama dari FreeReels.",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string" },
+            "description": "Keyword pencarian atau Series ID (untuk type=info)"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "schema": { 
+              "type": "string",
+              "enum": ["search", "hotlist", "info"]
+            },
+            "description": "Jenis request: search (default), hotlist (trending), info (detail drama)"
+          }
+        ],
+        "responses": {
+          "200": { "description": "Berhasil mendapatkan data drama" }
+        }
+      }
+    },
     "/v1/search/soundcloud": {
       "get": {
         "summary": "SoundCloud Search",
