@@ -1050,6 +1050,26 @@
         "responses": { "200": { "description": "Success" } }
       }
     },
+    "/v2/asupan/cecan": {
+      "get": {
+        "tags": ["Asupan"],
+        "summary": "Random Cecan China",
+        "description": "Menampilkan foto cecan China secara acak langsung dalam format gambar.",
+        "responses": {
+          "200": {
+            "description": "Berhasil mendapatkan gambar",
+            "content": {
+              "image/jpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/news/detik": {
       "get": {
         "summary": "Detik News",
