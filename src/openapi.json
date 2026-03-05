@@ -1070,6 +1070,66 @@
         }
       }
     },
+    "/v2/asupan/indonesia": {
+      "get": {
+        "tags": ["Asupan"],
+        "summary": "Random Cecan Indonesia",
+        "description": "Menampilkan foto cecan lokal (Indonesia) secara acak langsung dalam format gambar.",
+        "responses": {
+          "200": {
+            "description": "Berhasil mendapatkan gambar",
+            "content": {
+              "image/jpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/asupan/korea": {
+      "get": {
+        "tags": ["Asupan"],
+        "summary": "Random Cecan Korea",
+        "description": "Menampilkan foto cecan Korea secara acak langsung dalam format gambar.",
+        "responses": {
+          "200": {
+            "description": "Berhasil mendapatkan gambar",
+            "content": {
+              "image/jpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/asupan/japan": {
+      "get": {
+        "tags": ["Asupan"],
+        "summary": "Random Cecan Japan",
+        "description": "Menampilkan foto cecan Jepang secara acak langsung dalam format gambar.",
+        "responses": {
+          "200": {
+            "description": "Berhasil mendapatkan gambar",
+            "content": {
+              "image/jpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/news/detik": {
       "get": {
         "summary": "Detik News",
