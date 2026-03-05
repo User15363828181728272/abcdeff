@@ -423,6 +423,24 @@
         "responses": { "200": { "description": "Image PNG" } }
       }
     },
+    "/v2/maker/faketiktok": {
+      "get": {
+        "tags": ["Maker"],
+        "summary": "Fake TikTok Profile Generator",
+        "description": "Bikin screenshot profil TikTok palsu yang kelihatan real.",
+        "parameters": [
+          { "name": "name", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "username", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "url", "in": "query", "required": true, "schema": { "type": "string" }, "description": "URL Foto Profil" },
+          { "name": "following", "in": "query", "schema": { "type": "string" } },
+          { "name": "followers", "in": "query", "schema": { "type": "string" } },
+          { "name": "likes", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Fake TikTok berhasil dibuat" }
+        }
+      }
+    },
     "/v1/maker/tfdana": {
       "get": {
         "summary": "DANA Transfer Receipt Generator",
