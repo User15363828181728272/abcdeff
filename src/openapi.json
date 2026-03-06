@@ -548,7 +548,22 @@
         }
       }
     },
-    
+    "/v2/maker/fakegroupv2": {
+      "get": {
+        "tags": ["Maker"],
+        "summary": "Fake Group Maker V2",
+        "description": "Membuat tampilan grup palsu dengan fitur font yang otomatis menyesuaikan panjang teks.",
+        "parameters": [
+          { "name": "url", "in": "query", "required": true, "schema": { "type": "string" }, "description": "URL Foto Profil Grup" },
+          { "name": "title", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Nama Grup" },
+          { "name": "number", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Jumlah Anggota" },
+          { "name": "time", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Waktu (Contoh: 09:41)" }
+        ],
+        "responses": {
+          "200": { "description": "Gambar berhasil digenerate" }
+        }
+      }
+    },
     "/image/bluearchive": {
       "get": {
         "summary": "Blue Archive",
