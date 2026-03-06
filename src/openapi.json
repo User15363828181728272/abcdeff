@@ -475,6 +475,25 @@
         "responses": { "200": { "description": "Image JPEG" } }
       }
     },
+    "/v2/maker/fakedana": {
+      "get": {
+        "tags": ["Maker"],
+        "summary": "Fake DANA",
+        "description": "Menghasilkan gambar simulasi saldo DANA dengan nominal yang bisa diatur.",
+        "parameters": [
+          {
+            "name": "nominal",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Jumlah saldo (e.g., 100.000)"
+          }
+        ],
+        "responses": {
+          "200": { "description": "Gambar saldo berhasil dibuat" }
+        }
+      }
+    },
     "/v1/maker/tobotak": {
       "get": {
         "summary": "AI Bald Generator",
