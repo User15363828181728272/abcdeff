@@ -134,7 +134,7 @@ module.exports = function (app) {
         } catch (err) {
             res.status(500).json({ 
                 status: false, 
-                error: "Duh, Yuna lagi pusing: " + err.message 
+                error: "Duh, xteai lagi pusing: " + err.message 
             });
         }
     });
