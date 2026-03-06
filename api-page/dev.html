@@ -3,256 +3,832 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>XTE ID | Developer Profile</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Round">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'xte-orange': '#FF5F00',
-                        'xte-black': '#0F172A',
-                        'xte-bg': '#0B0F1A',
-                        'xte-card': '#161B26'
-                    },
-                    fontFamily: {
-                        'sans': ['Plus Jakarta Sans', 'sans-serif'],
-                        'display': ['Space Grotesk', 'sans-serif'],
-                        'mono': ['JetBrains Mono', 'monospace']
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #FF5F00; border-radius: 10px; }
-        
-        body { 
-            background-color: #0B0F1A;
-            color: #ffffff;
-            -webkit-font-smoothing: antialiased;
-        }
+    <title>XTE ID — Developer</title>
+    <meta name="theme-color" content="#060810">
+    <link rel="icon" href="src/icon.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Round">
+    </noscript>
 
-        .side-menu {
-            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
+<style>
+/* ────────────────────────────────────────────
+   TOKENS
+──────────────────────────────────────────── */
+:root {
+    --bg:         #060810;
+    --bg2:        #0C1018;
+    --card:       #0F1420;
+    --card2:      #141926;
+    --glass:      rgba(255,255,255,.038);
+    --glass2:     rgba(255,255,255,.06);
+    --line:       rgba(255,255,255,.07);
+    --line2:      rgba(255,255,255,.12);
 
-        .profile-card {
-            background: #161B26;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 3rem;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-        }
+    --txt:        #F2F4F8;
+    --txt2:       rgba(242,244,248,.5);
+    --txt3:       rgba(242,244,248,.25);
 
-        .profile-card:hover {
-            border-color: #FF5F00;
-            transform: translateY(-8px);
-            box-shadow: 0 25px 50px -12px rgba(255, 95, 0, 0.2);
-        }
+    --acc:        #FF5F00;
+    --acc2:       #FF8A3D;
+    --acc-glow:   rgba(255,95,0,.25);
+    --acc-soft:   rgba(255,95,0,.1);
 
-        .profile-image {
-            width: 140px;
-            height: 140px;
-            object-fit: cover;
-            border-radius: 2.5rem;
-            border: 2px solid rgba(255, 95, 0, 0.3);
-            transition: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
+    --green:      #22C55E;
+    --green-glow: rgba(34,197,94,.3);
 
-        .profile-card:hover .profile-image {
-            border-color: #FF5F00;
-            transform: scale(1.08) rotate(3deg);
-            box-shadow: 0 0 30px rgba(255, 95, 0, 0.3);
-        }
+    --font-d: 'Syne', sans-serif;
+    --font-b: 'DM Sans', sans-serif;
+    --font-m: 'JetBrains Mono', monospace;
 
-        .toast-notif {
-            transform: translateX(200%);
-            transition: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
+    --ease: cubic-bezier(.16,1,.3,1);
+    --spring: cubic-bezier(.34,1.56,.64,1);
+}
 
-        .toast-notif.active { transform: translateX(0); }
+/* ────────────────────────────────────────────
+   RESET + BASE
+──────────────────────────────────────────── */
+*, *::before, *::after {
+    margin: 0; padding: 0; box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        .animate-float { animation: float 4s ease-in-out infinite; }
+html { scroll-behavior: smooth; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade { animation: fadeIn 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
-    </style>
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--acc); border-radius: 10px; }
+
+body {
+    font-family: var(--font-b);
+    background: var(--bg);
+    color: var(--txt);
+    overflow-x: hidden;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ────────────────────────────────────────────
+   CANVAS (particles)
+──────────────────────────────────────────── */
+#canvas {
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 0;
+}
+
+/* ────────────────────────────────────────────
+   NOISE OVERLAY
+──────────────────────────────────────────── */
+.noise {
+    position: fixed; inset: 0; z-index: 1;
+    pointer-events: none;
+    opacity: .025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 200px;
+}
+
+/* ────────────────────────────────────────────
+   GLOW BLOBS (ambient)
+──────────────────────────────────────────── */
+.blob {
+    position: fixed; border-radius: 50%;
+    filter: blur(120px); pointer-events: none; z-index: 0;
+    animation: blobFloat 12s ease-in-out infinite;
+}
+
+.blob-1 {
+    width: 600px; height: 600px;
+    top: -200px; right: -200px;
+    background: radial-gradient(circle, rgba(255,95,0,.12) 0%, transparent 70%);
+    animation-delay: 0s;
+}
+
+.blob-2 {
+    width: 500px; height: 500px;
+    bottom: -150px; left: -150px;
+    background: radial-gradient(circle, rgba(255,95,0,.08) 0%, transparent 70%);
+    animation-delay: -6s;
+}
+
+.blob-3 {
+    width: 300px; height: 300px;
+    top: 40%; left: 40%;
+    background: radial-gradient(circle, rgba(255,138,61,.06) 0%, transparent 70%);
+    animation-delay: -3s;
+}
+
+@keyframes blobFloat {
+    0%,100% { transform: translate(0,0) scale(1); }
+    33%      { transform: translate(30px,-20px) scale(1.05); }
+    66%      { transform: translate(-20px,30px) scale(.96); }
+}
+
+/* ────────────────────────────────────────────
+   TOPBAR
+──────────────────────────────────────────── */
+.topbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: 68px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 28px;
+    background: rgba(6,8,16,.6);
+    backdrop-filter: blur(28px) saturate(160%);
+    -webkit-backdrop-filter: blur(28px) saturate(160%);
+    border-bottom: 1px solid var(--line);
+}
+
+.topbar-brand {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
+}
+
+.brand-logo {
+    width: 38px; height: 38px; border-radius: 12px;
+    border: 1px solid rgba(255,95,0,.25);
+    background: var(--acc-soft);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    transition: border-color .3s, box-shadow .3s;
+}
+
+.brand-logo:hover { border-color: var(--acc); box-shadow: 0 0 16px var(--acc-glow); }
+.brand-logo img   { width: 26px; height: 26px; border-radius: 8px; }
+
+.brand-name {
+    font-family: var(--font-d); font-size: 18px; font-weight: 800;
+    letter-spacing: -.5px; color: var(--txt);
+}
+
+.brand-name em { color: var(--acc); font-style: normal; }
+
+/* hamburger */
+.ham-btn {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: var(--glass2); border: 1px solid var(--line2);
+    color: var(--txt); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .25s, border-color .25s, transform .25s var(--spring), box-shadow .25s;
+}
+
+.ham-btn:hover {
+    background: var(--acc); border-color: var(--acc);
+    box-shadow: 0 0 20px var(--acc-glow);
+    transform: scale(1.08);
+}
+
+.ham-btn .mi { font-size: 20px; transition: transform .3s var(--spring); }
+.ham-btn:hover .mi { transform: rotate(90deg); }
+
+/* ────────────────────────────────────────────
+   SIDE DRAWER
+──────────────────────────────────────────── */
+.overlay {
+    position: fixed; inset: 0; z-index: 150;
+    background: rgba(0,0,0,.7);
+    backdrop-filter: blur(6px);
+    opacity: 0; visibility: hidden;
+    transition: opacity .4s, visibility .4s;
+}
+
+.overlay.open { opacity: 1; visibility: visible; }
+
+.drawer {
+    position: fixed; top: 12px; right: 12px; bottom: 12px;
+    width: min(300px, calc(100vw - 24px));
+    background: var(--card);
+    border: 1px solid var(--line2);
+    border-radius: 28px;
+    z-index: 200;
+    padding: 28px 22px;
+    transform: translateX(115%);
+    transition: transform .5s var(--spring);
+    box-shadow: 0 40px 120px rgba(0,0,0,.5), 0 0 0 1px var(--line);
+    display: flex; flex-direction: column; gap: 6px;
+    overflow-y: auto;
+}
+
+.drawer.open { transform: translateX(0); }
+
+.drawer-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 20px;
+}
+
+.drawer-label {
+    font: 700 10px/1 var(--font-m);
+    color: var(--txt3); text-transform: uppercase; letter-spacing: 2px;
+}
+
+.drawer-close {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--glass2); border: 1px solid var(--line);
+    color: var(--txt2); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .2s, color .2s, transform .3s var(--spring);
+}
+
+.drawer-close:hover { background: var(--acc); color: #fff; transform: rotate(90deg); }
+.drawer-close .mi   { font-size: 16px; }
+
+.d-link {
+    text-decoration: none; color: var(--txt2);
+    font: 600 13px/1 var(--font-b);
+    padding: 13px 16px; border-radius: 16px;
+    display: flex; align-items: center; gap: 12px;
+    border: 1px solid transparent;
+    transition: background .2s, color .2s, border-color .2s, transform .2s;
+    position: relative; overflow: hidden;
+}
+
+.d-link::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--acc);
+    transform: scaleX(0); transform-origin: left;
+    opacity: .08;
+    transition: transform .3s var(--ease);
+    border-radius: inherit;
+}
+
+.d-link:hover { color: var(--txt); transform: translateX(4px); }
+.d-link:hover::before { transform: scaleX(1); }
+.d-link.active { color: var(--acc); border-color: var(--acc-soft); background: var(--acc-soft); }
+.d-link .mi    { font-size: 18px; }
+
+/* ────────────────────────────────────────────
+   MAIN
+──────────────────────────────────────────── */
+main {
+    position: relative; z-index: 10;
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 100px 20px 60px;
+}
+
+/* ────────────────────────────────────────────
+   PROFILE CARD
+──────────────────────────────────────────── */
+.card-wrap {
+    width: 100%; max-width: 420px;
+}
+
+.profile-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 36px;
+    padding: 44px 36px;
+    text-align: center;
+    position: relative; overflow: hidden;
+    transition: border-color .4s, box-shadow .4s, transform .4s var(--ease);
+
+    /* entrance */
+    opacity: 0; transform: translateY(40px);
+    animation: cardIn .9s .2s var(--ease) forwards;
+}
+
+@keyframes cardIn {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.profile-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,95,0,.6), transparent);
+    opacity: 0; transition: opacity .4s;
+}
+
+.profile-card:hover { border-color: rgba(255,95,0,.3); box-shadow: 0 32px 80px rgba(0,0,0,.4), 0 0 60px rgba(255,95,0,.06); transform: translateY(-6px); }
+.profile-card:hover::before { opacity: 1; }
+
+/* bg watermark */
+.card-watermark {
+    position: absolute; top: -20px; right: -20px;
+    font-size: 200px; line-height: 1;
+    color: rgba(255,255,255,.025);
+    pointer-events: none; user-select: none;
+    font-family: var(--font-m);
+}
+
+/* ── AVATAR ── */
+.avatar-wrap {
+    display: inline-block; position: relative; margin-bottom: 28px;
+    animation: floatY 4s ease-in-out infinite;
+}
+
+@keyframes floatY {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(-10px); }
+}
+
+.avatar-ring {
+    position: absolute; inset: -6px;
+    border-radius: 32px;
+    border: 2px solid transparent;
+    background: linear-gradient(135deg, var(--acc), transparent, var(--acc2)) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    animation: ringRotate 6s linear infinite;
+}
+
+@keyframes ringRotate {
+    to { transform: rotate(360deg); }
+}
+
+.avatar-img {
+    width: 120px; height: 120px;
+    border-radius: 26px; object-fit: cover;
+    display: block;
+    transition: transform .5s var(--spring), box-shadow .4s;
+}
+
+.profile-card:hover .avatar-img { transform: scale(1.06) rotate(2deg); box-shadow: 0 16px 40px rgba(255,95,0,.25); }
+
+.avatar-status {
+    position: absolute; bottom: -2px; right: -2px;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--green);
+    border: 3px solid var(--card);
+    box-shadow: 0 0 12px var(--green-glow);
+    animation: statusPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+    0%,100% { box-shadow: 0 0 8px var(--green-glow); }
+    50%      { box-shadow: 0 0 20px var(--green-glow), 0 0 40px rgba(34,197,94,.15); }
+}
+
+/* ── BADGE ── */
+.role-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 14px; border-radius: 999px;
+    background: var(--acc-soft); border: 1px solid rgba(255,95,0,.2);
+    font: 700 9px/1 var(--font-m);
+    color: var(--acc); text-transform: uppercase; letter-spacing: 2px;
+    margin-bottom: 16px;
+
+    opacity: 0; animation: fadeUp .7s .5s var(--ease) forwards;
+}
+
+.badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--acc); animation: statusPulse 2s ease-in-out infinite; }
+
+/* ── NAME / TITLE ── */
+.name {
+    font: 800 40px/1 var(--font-d);
+    letter-spacing: -1.5px; color: var(--txt);
+    margin-bottom: 6px;
+    opacity: 0; animation: fadeUp .7s .6s var(--ease) forwards;
+}
+
+.name em { color: var(--acc); font-style: normal; }
+
+.subtitle {
+    font: 500 10px/1 var(--font-m);
+    color: var(--txt3); text-transform: uppercase; letter-spacing: 4px;
+    margin-bottom: 20px;
+    opacity: 0; animation: fadeUp .7s .7s var(--ease) forwards;
+}
+
+/* ── DIVIDER ── */
+.divider {
+    height: 1px; margin: 0 0 20px;
+    background: linear-gradient(90deg, transparent, var(--line2), transparent);
+    opacity: 0; animation: fadeIn .6s .8s forwards;
+}
+
+@keyframes fadeIn { to { opacity: 1; } }
+
+/* ── BIO ── */
+.bio {
+    font: 400 13px/1.75 var(--font-b);
+    color: var(--txt2); margin-bottom: 24px;
+    opacity: 0; animation: fadeUp .7s .85s var(--ease) forwards;
+}
+
+/* ── STATS ── */
+.stats {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; margin-bottom: 24px;
+    opacity: 0; animation: fadeUp .7s .95s var(--ease) forwards;
+}
+
+.stat-box {
+    background: rgba(0,0,0,.3);
+    border: 1px solid var(--line);
+    border-radius: 20px; padding: 18px 12px;
+    transition: border-color .25s, background .25s, transform .25s var(--spring);
+    cursor: default;
+}
+
+.stat-box:hover { border-color: rgba(255,95,0,.3); background: var(--acc-soft); transform: scale(1.03); }
+
+.stat-val {
+    font: 700 28px/1 var(--font-d);
+    color: var(--txt); letter-spacing: -1px;
+    display: block; margin-bottom: 5px;
+    transition: color .25s;
+}
+
+.stat-box:hover .stat-val { color: var(--acc); }
+
+.stat-lbl {
+    font: 700 8.5px/1 var(--font-m);
+    color: var(--txt3); text-transform: uppercase; letter-spacing: 1.8px;
+}
+
+/* ── ACTIONS ── */
+.actions {
+    display: flex; gap: 10px;
+    opacity: 0; animation: fadeUp .7s 1.05s var(--ease) forwards;
+}
+
+.btn-primary {
+    flex: 1; padding: 16px 20px;
+    background: var(--acc); color: #fff;
+    border: none; border-radius: 18px;
+    font: 700 11px/1 var(--font-b);
+    text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px;
+    letter-spacing: .5px; text-transform: uppercase;
+    box-shadow: 0 8px 28px rgba(255,95,0,.3);
+    transition: background .25s, transform .25s var(--spring), box-shadow .25s;
+    position: relative; overflow: hidden;
+}
+
+.btn-primary::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,.15), transparent);
+    opacity: 0; transition: opacity .25s;
+}
+
+.btn-primary:hover { background: var(--acc2); transform: translateY(-3px); box-shadow: 0 16px 40px rgba(255,95,0,.4); }
+.btn-primary:hover::after { opacity: 1; }
+.btn-primary:active { transform: scale(.97); }
+.btn-primary .mi { font-size: 15px; }
+
+.btn-icon {
+    width: 52px; flex-shrink: 0;
+    background: var(--glass2); border: 1px solid var(--line2);
+    border-radius: 18px; color: var(--txt2);
+    text-decoration: none; display: flex; align-items: center; justify-content: center;
+    transition: background .25s, border-color .25s, color .25s, transform .25s var(--spring), box-shadow .25s;
+}
+
+.btn-icon:hover { background: var(--acc); border-color: var(--acc); color: #fff; transform: translateY(-3px); box-shadow: 0 12px 28px var(--acc-glow); }
+.btn-icon .mi { font-size: 20px; }
+
+/* ── TOAST ── */
+.toast {
+    position: fixed; bottom: 24px; right: 24px; z-index: 300;
+    background: var(--card2); border: 1px solid var(--line2);
+    border-radius: 24px; padding: 18px 20px;
+    width: min(300px, calc(100vw - 48px));
+    box-shadow: 0 20px 60px rgba(0,0,0,.4);
+    transform: translateX(120%) scale(.9);
+    transition: transform .6s var(--spring), opacity .4s;
+    opacity: 0;
+    overflow: hidden;
+}
+
+.toast.show { transform: translateX(0) scale(1); opacity: 1; }
+
+.toast-bar {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    background: linear-gradient(180deg, var(--acc), var(--acc2));
+    border-radius: 3px 0 0 3px;
+}
+
+.toast-label {
+    font: 700 9px/1 var(--font-m); color: var(--acc);
+    text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 6px;
+}
+
+.toast-msg {
+    font: 400 12px/1.6 var(--font-b); color: var(--txt2); margin-bottom: 12px;
+}
+
+.toast-action {
+    display: flex; align-items: center; gap: 7px;
+    font: 600 11px/1 var(--font-b); color: var(--txt);
+    text-decoration: none; background: var(--glass2);
+    padding: 9px 14px; border-radius: 12px; border: 1px solid var(--line);
+    transition: background .2s, border-color .2s, transform .2s;
+    width: fit-content;
+}
+
+.toast-action:hover { background: var(--acc); border-color: var(--acc); transform: translateX(2px); }
+.toast-action .mi   { font-size: 14px; }
+
+.toast-close {
+    position: absolute; top: 12px; right: 12px;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--glass); border: 1px solid var(--line);
+    color: var(--txt3); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .2s, color .2s;
+}
+
+.toast-close:hover { background: var(--acc-soft); color: var(--acc); }
+.toast-close .mi   { font-size: 12px; }
+
+/* ── CLOCK ── */
+.clock-badge {
+    position: fixed; bottom: 22px; left: 22px; z-index: 50;
+    font: 500 10px/1 var(--font-m); color: var(--txt3);
+    background: var(--card); border: 1px solid var(--line);
+    padding: 8px 14px; border-radius: 999px;
+    display: flex; align-items: center; gap: 6px;
+    transition: border-color .2s, color .2s;
+}
+
+.clock-badge:hover { border-color: var(--line2); color: var(--txt2); }
+.clock-badge .dot  { width: 5px; height: 5px; border-radius: 50%; background: var(--green); animation: statusPulse 2s ease-in-out infinite; }
+
+/* ── FOOTER ── */
+footer {
+    text-align: center; margin-top: 24px;
+    font: 700 8px/1 var(--font-m); color: var(--txt3);
+    letter-spacing: 4px; text-transform: uppercase;
+    opacity: 0; animation: fadeUp .6s 1.2s var(--ease) forwards;
+}
+
+/* ── KEYFRAMES ── */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ────────────────────────────────────────────
+   RESPONSIVE
+──────────────────────────────────────────── */
+@media (max-width: 480px) {
+    .topbar { padding: 0 18px; }
+    .profile-card { padding: 36px 24px; border-radius: 28px; }
+    .name { font-size: 34px; }
+    .toast { bottom: 14px; right: 14px; width: calc(100vw - 28px); }
+    .clock-badge { display: none; }
+    .avatar-img { width: 100px; height: 100px; }
+}
+</style>
 </head>
-<body class="font-sans text-[14px] overflow-x-hidden">
+<body>
 
-    <nav class="fixed top-0 w-full h-[80px] bg-[#0B0F1A]/80 backdrop-blur-2xl border-b border-white/5 z-[100] px-8">
-        <div class="max-w-7xl mx-auto h-full flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-xte-orange/10 flex items-center justify-center border border-xte-orange/20">
-                    <img src="https://files.catbox.moe/piiki0.png" class="w-7 h-7 rounded-lg" alt="Logo">
-                </div>
-                <span class="font-display font-bold text-lg tracking-tight">XTE <span class="text-xte-orange">ID</span></span>
-            </div>
-            <button id="openMenu" class="w-12 h-12 flex items-center justify-center rounded-full bg-white/5 hover:bg-xte-orange transition-all group">
-                <i class="material-icons-round text-white group-hover:scale-110">menu</i>
-            </button>
-        </div>
-    </nav>
+<!-- canvas bg -->
+<canvas id="canvas"></canvas>
+<div class="noise"></div>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
 
-    <div id="overlay" class="fixed inset-0 bg-black/80 opacity-0 invisible transition-all duration-500 z-[199]"></div>
-    <div id="sideMenu" class="side-menu fixed top-4 right-4 bottom-4 w-[85%] max-w-[320px] bg-[#161B26] z-[200] p-10 translate-x-[120%] border border-white/10 rounded-[2.5rem] shadow-2xl">
-        <div class="flex justify-between items-center mb-12">
-            <span class="text-xs font-black uppercase tracking-widest text-white/20">XTE Navigation</span>
-            <button id="closeMenu" class="text-white/40 hover:text-white">
-                <i class="material-icons-round">close</i>
-            </button>
+<!-- ══ TOPBAR ══ -->
+<header class="topbar">
+    <a href="/" class="topbar-brand">
+        <div class="brand-logo">
+            <img src="https://files.catbox.moe/piiki0.png" alt="XTE">
         </div>
-        <div class="flex flex-col gap-2">
-            <a href="/" class="flex items-center gap-4 text-white/40 p-4 rounded-2xl hover:bg-white/5 hover:text-xte-orange transition-all">
-                <i class="material-icons-round">dashboard</i> 
-                <span class="font-bold">Dashboard</span>
-            </a>
-            <a href="/docs" class="flex items-center gap-4 text-white/40 p-4 rounded-2xl hover:bg-white/5 hover:text-xte-orange transition-all">
-                <i class="material-icons-round">api</i> 
-                <span class="font-bold">API Docs</span>
-            </a>
-            <a href="/dev" class="flex items-center gap-4 text-xte-orange p-4 rounded-2xl bg-xte-orange/10 font-bold">
-                <i class="material-icons-round">code</i> 
-                <span>Developer</span>
-            </a>
-        </div>
-    </div>
+        <span class="brand-name">XTE <em>ID</em></span>
+    </a>
+    <button class="ham-btn" id="openMenu" aria-label="Menu">
+        <span class="mi material-icons-round">menu</span>
+    </button>
+</header>
 
-    <div id="toast" class="toast-notif fixed bottom-8 right-8 bg-[#1E293B] border border-white/10 p-6 rounded-[2rem] z-[3000] w-[320px] shadow-2xl overflow-hidden">
-        <div class="absolute top-0 left-0 w-1.5 h-full bg-xte-orange"></div>
-        <button id="closeToast" class="absolute top-4 right-4 text-white/20 hover:text-white">
-            <i class="material-icons-round text-sm">close</i>
+<!-- ══ OVERLAY + DRAWER ══ -->
+<div class="overlay" id="overlay"></div>
+<div class="drawer" id="drawer">
+    <div class="drawer-head">
+        <span class="drawer-label">Navigation</span>
+        <button class="drawer-close" id="closeMenu">
+            <span class="mi material-icons-round">close</span>
         </button>
-        <p class="text-xte-orange text-[10px] font-black tracking-[3px] uppercase mb-2">Notice</p>
-        <p class="text-xs text-white/70 leading-relaxed mb-4 font-medium">Jangan lewatkan update terbaru dari API kami di Telegram.</p>
-        <a href="https://t.me/depstore11" target="_blank" class="flex items-center gap-2 text-[11px] font-bold text-white bg-white/5 px-4 py-2.5 rounded-xl hover:bg-xte-orange transition-colors">
-            <i class="material-icons-round text-sm">send</i> @depstore11
-        </a>
     </div>
+    <a href="/"    class="d-link"><span class="mi material-icons-round">dashboard</span>Dashboard</a>
+    <a href="/docs" class="d-link"><span class="mi material-icons-round">api</span>API Docs</a>
+    <a href="/dev"  class="d-link active"><span class="mi material-icons-round">code</span>Developer</a>
+    <a href="https://t.me/depstore11" target="_blank" rel="noopener" class="d-link"><span class="mi material-icons-round">campaign</span>Updates</a>
+</div>
 
-    <div class="fixed bottom-8 left-8 font-mono text-[10px] text-white/20 bg-[#161B26] px-4 py-2.5 rounded-full border border-white/5 hidden sm:block" id="clock">
-        WIB: 00:00:00
-    </div>
+<!-- ══ MAIN ══ -->
+<main>
+    <div class="card-wrap">
 
-    <main class="min-h-screen flex items-center justify-center p-8 pt-32">
-        <div class="max-w-md w-full animate-fade">
-            <div class="profile-card p-12 text-center relative overflow-hidden">
-                <div class="absolute -top-16 -right-16 text-white/5 pointer-events-none">
-                    <i class="material-icons-round text-[240px]">terminal</i>
+        <!-- profile card -->
+        <div class="profile-card">
+            <div class="card-watermark">&lt;/&gt;</div>
+
+            <!-- avatar -->
+            <div class="avatar-wrap">
+                <div class="avatar-ring"></div>
+                <img src="https://files.catbox.moe/piiki0.png" alt="XTE ID" class="avatar-img">
+                <div class="avatar-status"></div>
+            </div>
+
+            <!-- badge -->
+            <div class="role-badge">
+                <span class="badge-dot"></span>
+                Core Engineer
+            </div>
+
+            <!-- name -->
+            <h1 class="name">XTE <em>ID</em></h1>
+            <p class="subtitle">Infrastructure Architect</p>
+
+            <div class="divider"></div>
+
+            <!-- bio -->
+            <p class="bio">Crafting high-performance API solutions and scalable backend systems for the XTE Ecosystem.</p>
+
+            <!-- stats -->
+            <div class="stats">
+                <div class="stat-box">
+                    <span class="stat-val" id="apiCount">–</span>
+                    <span class="stat-lbl">Endpoints</span>
                 </div>
-
-                <div class="relative inline-block mb-10">
-                    <div class="animate-float">
-                        <img src="https://files.catbox.moe/piiki0.png" alt="XTE ID" class="profile-image shadow-2xl">
-                    </div>
-                    <div class="absolute -bottom-1 -right-1 bg-green-500 w-6 h-6 rounded-full border-[5px] border-xte-card ring-1 ring-green-500/20"></div>
-                </div>
-
-                <div class="mb-10">
-                    <div class="flex justify-center mb-6">
-                        <span class="px-5 py-2 bg-xte-orange/10 text-xte-orange text-[10px] font-black uppercase tracking-[3px] rounded-full border border-xte-orange/20">
-                            Core Engineer
-                        </span>
-                    </div>
-                    <h1 class="text-4xl font-display font-bold tracking-tight text-white mb-2 uppercase">XTE <span class="text-xte-orange">ID</span></h1>
-                    <p class="text-[11px] font-mono text-white/30 uppercase tracking-[5px]">Infrastructure Architect</p>
-                </div>
-
-                <p class="text-[12px] text-white/50 font-medium leading-relaxed mb-10 max-w-[280px] mx-auto">
-                    Crafting high-performance API solutions and scalable backend systems for the XTE Ecosystem.
-                </p>
-
-                <div class="grid grid-cols-2 gap-4 mb-10">
-                    <div class="py-6 bg-black/30 rounded-[2rem] border border-white/5">
-                        <p id="apiCount" class="text-2xl font-display font-bold text-white tracking-tighter">0</p>
-                        <p class="text-[9px] font-black text-white/20 uppercase tracking-[2px] mt-1">Endpoints</p>
-                    </div>
-                    <div class="py-6 bg-black/30 rounded-[2rem] border border-white/5">
-                        <p class="text-2xl font-display font-bold text-white tracking-tighter">99.9%</p>
-                        <p class="text-[9px] font-black text-white/20 uppercase tracking-[2px] mt-1">Uptime</p>
-                    </div>
-                </div>
-
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="https://wa.me/6288242449961" class="flex-1 bg-xte-orange text-white py-5 rounded-[1.5rem] text-[11px] font-black uppercase tracking-widest hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-xte-orange/20">
-                        Get in Touch
-                    </a>
-                    <a href="https://t.me/depstore11" class="w-full sm:w-20 bg-white/5 text-white py-5 rounded-[1.5rem] flex items-center justify-center hover:bg-white/10 border border-white/10 transition-all">
-                        <i class="material-icons-round text-xl">send</i>
-                    </a>
+                <div class="stat-box">
+                    <span class="stat-val">99.9%</span>
+                    <span class="stat-lbl">Uptime</span>
                 </div>
             </div>
-            
-            <footer class="text-center mt-12">
-                <p class="text-[9px] font-black text-white/10 uppercase tracking-[0.6em]">
-                    © <span id="year"></span> XTE AUTHORIZED OPERATOR
-                </p>
-            </footer>
+
+            <!-- actions -->
+            <div class="actions">
+                <a href="https://wa.me/6288242449961" class="btn-primary">
+                    <span class="mi material-icons-round">wechat</span>
+                    Get in Touch
+                </a>
+                <a href="https://t.me/depstore11" target="_blank" rel="noopener" class="btn-icon">
+                    <span class="mi material-icons-round">send</span>
+                </a>
+            </div>
         </div>
-    </main>
 
-    <script>
-        const openBtn = document.getElementById('openMenu');
-        const closeBtn = document.getElementById('closeMenu');
-        const sideMenu = document.getElementById('sideMenu');
-        const overlay = document.getElementById('overlay');
-        const toast = document.getElementById('toast');
-        const closeToast = document.getElementById('closeToast');
-        const clock = document.getElementById('clock');
-        const year = document.getElementById('year');
+        <footer>© <span id="year"></span> XTE Authorized Operator</footer>
+    </div>
+</main>
 
-        const toggleMenu = (isOpen) => {
-            sideMenu.style.transform = isOpen ? 'translateX(0)' : 'translateX(120%)';
-            overlay.style.opacity = isOpen ? '1' : '0';
-            overlay.style.visibility = isOpen ? 'visible' : 'hidden';
+<!-- ══ CLOCK ══ -->
+<div class="clock-badge" id="clock">
+    <span class="dot"></span>
+    <span id="clockTxt">--:--:--</span>
+</div>
+
+<!-- ══ TOAST ══ -->
+<div class="toast" id="toast">
+    <div class="toast-bar"></div>
+    <button class="toast-close" id="closeToast"><span class="mi material-icons-round">close</span></button>
+    <div class="toast-label">Notice</div>
+    <p class="toast-msg">Jangan lewatkan update terbaru dari API kami di Telegram.</p>
+    <a href="https://t.me/depstore11" target="_blank" rel="noopener" class="toast-action">
+        <span class="mi material-icons-round">send</span>
+        @depstore11
+    </a>
+</div>
+
+<script>
+/* ── DRAWER ── */
+const overlay   = document.getElementById('overlay');
+const drawer    = document.getElementById('drawer');
+const openMenu  = document.getElementById('openMenu');
+const closeMenu = document.getElementById('closeMenu');
+
+function openDrawer()  { overlay.classList.add('open'); drawer.classList.add('open'); }
+function closeDrawer() { overlay.classList.remove('open'); drawer.classList.remove('open'); }
+
+openMenu.onclick  = openDrawer;
+closeMenu.onclick = closeDrawer;
+overlay.onclick   = closeDrawer;
+
+/* ── TOAST ── */
+const toast      = document.getElementById('toast');
+const closeToast = document.getElementById('closeToast');
+closeToast.onclick = () => toast.classList.remove('show');
+
+/* ── CLOCK (timezone detect) ── */
+let tz = 'Asia/Jakarta';
+const clockTxt = document.getElementById('clockTxt');
+
+async function detectTz() {
+    try {
+        const d = await (await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(3500) })).json();
+        if (d.timezone) tz = d.timezone;
+    } catch {}
+}
+
+function tick() {
+    clockTxt.textContent = new Date().toLocaleTimeString('en-GB', { timeZone: tz, hour12: false });
+}
+
+/* ── API COUNT ── */
+async function fetchStats() {
+    try {
+        const d = await (await fetch('src/openapi.json')).json();
+        let c = 0;
+        if (d.paths) Object.keys(d.paths).forEach(p => { c += Object.keys(d.paths[p]).length; });
+        document.getElementById('apiCount').textContent = c > 0 ? c + '+' : '250+';
+    } catch { document.getElementById('apiCount').textContent = '250+'; }
+}
+
+/* ── YEAR ── */
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ── CANVAS PARTICLES ── */
+(function() {
+    const canvas = document.getElementById('canvas');
+    const ctx    = canvas.getContext('2d');
+    let W, H, pts, raf;
+
+    function resize() {
+        W = canvas.width  = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+    }
+
+    function mkPt() {
+        return {
+            x: Math.random() * W,
+            y: Math.random() * H,
+            r: Math.random() * 1.4 + .4,
+            vx: (Math.random() - .5) * .25,
+            vy: (Math.random() - .5) * .25,
+            a: Math.random(),
+            da: (Math.random() * .004 + .002) * (Math.random() < .5 ? 1 : -1),
         };
+    }
 
-        openBtn.onclick = () => toggleMenu(true);
-        closeBtn.onclick = () => toggleMenu(false);
-        overlay.onclick = () => toggleMenu(false);
-        closeToast.onclick = () => toast.classList.remove('active');
+    function init() {
+        resize();
+        pts = Array.from({ length: 80 }, mkPt);
+    }
 
-        function updateClock() {
-            const time = new Date().toLocaleTimeString('en-GB', { 
-                timeZone: 'Asia/Jakarta',
-                hour12: false
-            });
-            clock.textContent = `WIB: ${time}`;
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
+    function draw() {
+        ctx.clearRect(0, 0, W, H);
 
-        year.textContent = new Date().getFullYear();
+        pts.forEach(p => {
+            p.x += p.vx; p.y += p.vy; p.a += p.da;
+            if (p.a > 1 || p.a < 0) p.da *= -1;
+            if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+            if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
 
-        async function fetchStats() {
-            try {
-                const res = await fetch('src/openapi.json');
-                const data = await res.json();
-                let count = 0;
-                if(data.paths) {
-                    Object.keys(data.paths).forEach(p => count += Object.keys(data.paths[p]).length);
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255,95,0,${p.a * .45})`;
+            ctx.fill();
+        });
+
+        /* draw lines between close particles */
+        for (let i = 0; i < pts.length; i++) {
+            for (let j = i + 1; j < pts.length; j++) {
+                const dx = pts[i].x - pts[j].x;
+                const dy = pts[i].y - pts[j].y;
+                const d  = Math.sqrt(dx*dx + dy*dy);
+                if (d < 120) {
+                    ctx.beginPath();
+                    ctx.moveTo(pts[i].x, pts[i].y);
+                    ctx.lineTo(pts[j].x, pts[j].y);
+                    ctx.strokeStyle = `rgba(255,95,0,${(1 - d/120) * .08})`;
+                    ctx.lineWidth = .6;
+                    ctx.stroke();
                 }
-                document.getElementById('apiCount').textContent = count;
-            } catch(e) {
-                document.getElementById('apiCount').textContent = "250+";
             }
         }
 
-        window.onload = () => {
-            fetchStats();
-            setTimeout(() => toast.classList.add('active'), 2500);
-        };
-    </script>
+        raf = requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', () => { resize(); });
+    init(); draw();
+})();
+
+/* ── CURSOR GLOW (desktop only) ── */
+if (window.innerWidth > 768) {
+    const glow = document.createElement('div');
+    Object.assign(glow.style, {
+        position: 'fixed', pointerEvents: 'none', zIndex: '5',
+        width: '400px', height: '400px', borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(255,95,0,.06) 0%, transparent 70%)',
+        transform: 'translate(-50%,-50%)',
+        transition: 'left .12s ease, top .12s ease',
+        left: '50%', top: '50%',
+    });
+    document.body.appendChild(glow);
+    window.addEventListener('mousemove', e => {
+        glow.style.left = e.clientX + 'px';
+        glow.style.top  = e.clientY + 'px';
+    });
+}
+
+/* ── INIT ── */
+(async () => {
+    fetchStats();
+    await detectTz();
+    tick();
+    setInterval(tick, 1000);
+    setTimeout(() => toast.classList.add('show'), 2800);
+})();
+</script>
 </body>
 </html>
