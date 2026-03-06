@@ -25,19 +25,6 @@
     { "name": "Religi" }
   ],
   "paths": {
-    "/xteai": {
-      "get": {
-        "tags": ["AI"],
-        "summary": "XTE AI",
-        "description": "AI Pintar berbasis Meta AI dengan persona Yuna. Ditenagai oleh Llama 3.3.",
-        "parameters": [
-          { "name": "q", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Pertanyaan untuk AI" }
-        ],
-        "responses": {
-          "200": { "description": "Respon dari xteai" }
-        }
-      }
-    },
     "/v1/ai/gpt-nano": {
       "get": {
         "summary": "GPT-4.1 Nano Chat",
@@ -543,6 +530,25 @@
         "responses": { "200": { "description": "Image JPEG" } }
       }
     },
+    "/v2/maker/fakegroup": {
+      "get": {
+        "tags": ["Maker"],
+        "summary": "Fake WhatsApp Group V1",
+        "description": "Bikin tampilan info grup WhatsApp palsu dengan detail kustom.",
+        "parameters": [
+          { "name": "url", "in": "query", "required": true, "schema": { "type": "string" }, "description": "URL Foto Profil Grup" },
+          { "name": "name", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Nama Grup" },
+          { "name": "members", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Jumlah Anggota" },
+          { "name": "desc", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Deskripsi Grup" },
+          { "name": "author", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Nama Pembuat" },
+          { "name": "date", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Tanggal (Contoh: 06/03/26 17:26)" }
+        ],
+        "responses": {
+          "200": { "description": "Gambar grup berhasil dibuat" }
+        }
+      }
+    },
+    
     "/image/bluearchive": {
       "get": {
         "summary": "Blue Archive",
