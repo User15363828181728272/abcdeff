@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Round">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        * { margin:0; padding:0; box-sizing:border-box; outline:none; -webkit-tap-highlight-color:transparent; }
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; outline:none; -webkit-tap-highlight-color:transparent; }
 
         :root {
             --primary:      #FF5F00;
@@ -48,6 +48,8 @@
         ::-webkit-scrollbar-thumb { background:var(--border); border-radius:4px; }
         ::-webkit-scrollbar-thumb:hover { background:var(--primary); }
 
+        html { scroll-behavior:smooth; }
+
         body {
             font-family:'Plus Jakarta Sans', sans-serif;
             background:var(--bg);
@@ -60,29 +62,34 @@
             line-height:1.6;
         }
 
-        /* ─── TOPBAR ─── */
+        /* ══════════════════════════════
+           TOPBAR
+        ══════════════════════════════ */
         .topbar {
             position:fixed; top:0; left:0; right:0;
             height:var(--topbar-h);
-            background:rgba(255,255,255,0.95);
-            backdrop-filter:blur(16px);
+            background:rgba(255,255,255,0.96);
+            backdrop-filter:blur(18px);
+            -webkit-backdrop-filter:blur(18px);
             border-bottom:1px solid var(--border);
             z-index:1000;
             display:flex; align-items:center;
-            padding:0 16px; gap:12px;
+            padding:0 14px; gap:10px;
         }
 
+        /* brand */
         .topbar-brand {
             display:flex; align-items:center; gap:8px;
-            width:var(--sidebar-w); flex-shrink:0;
+            flex-shrink:0;
+            padding-right:14px;
             border-right:1px solid var(--border);
-            padding-right:16px;
         }
 
         .topbar-brand img { width:26px; height:26px; border-radius:6px; }
-        .topbar-brand span { font-weight:800; font-size:14px; letter-spacing:0.5px; }
+        .topbar-brand span { font-weight:800; font-size:14px; letter-spacing:0.4px; white-space:nowrap; }
 
-        .topbar-search { flex:1; max-width:440px; position:relative; }
+        /* search */
+        .topbar-search { flex:1; min-width:0; max-width:420px; position:relative; }
 
         .topbar-search i {
             position:absolute; left:10px; top:50%;
@@ -93,7 +100,7 @@
         .topbar-search input {
             width:100%; background:var(--card);
             border:1px solid var(--border);
-            padding:7px 12px 7px 32px;
+            padding:7px 10px 7px 32px;
             border-radius:8px; font-size:13px; font-family:inherit;
             color:var(--text-main); transition:border-color .2s, background .2s;
         }
@@ -105,7 +112,7 @@
             position:absolute; top:calc(100% + 6px); left:0; right:0;
             background:#fff; border:1px solid var(--border); border-radius:10px;
             box-shadow:0 8px 24px rgba(0,0,0,0.08);
-            max-height:320px; overflow-y:auto; display:none; z-index:1100;
+            max-height:300px; overflow-y:auto; display:none; z-index:1100;
         }
 
         .search-item {
@@ -117,14 +124,15 @@
         .search-item:last-child { border-bottom:none; }
         .search-item:hover { background:var(--card); }
         .search-item .m-tag { font-size:9px; font-weight:800; padding:2px 6px; border-radius:4px; background:var(--primary); color:#fff; flex-shrink:0; }
-        .search-item .p-text { font-size:12px; font-family:'JetBrains Mono',monospace; color:var(--text-main); }
+        .search-item .p-text { font-size:12px; font-family:'JetBrains Mono',monospace; color:var(--text-main); min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 
-        .topbar-right { margin-left:auto; display:flex; align-items:center; gap:14px; }
+        /* topbar right cluster */
+        .topbar-right { margin-left:auto; display:flex; align-items:center; gap:10px; flex-shrink:0; }
 
-        .topbar-stat { display:flex; align-items:center; gap:5px; font-size:12px; color:var(--text-dim); font-weight:600; }
-        .topbar-stat i { font-size:15px; color:var(--primary); }
+        .topbar-stat { display:flex; align-items:center; gap:4px; font-size:11px; color:var(--text-dim); font-weight:600; white-space:nowrap; }
+        .topbar-stat i { font-size:14px; color:var(--primary); }
 
-        /* hamburger – orange circle, preserved */
+        /* hamburger – orange circle, always visible */
         .menu-trigger {
             background:var(--primary); color:#fff; border:none;
             width:34px; height:34px; border-radius:50%;
@@ -136,10 +144,29 @@
         .menu-trigger:hover { opacity:.85; }
         .menu-trigger i { font-size:18px; }
 
-        /* ─── SHELL ─── */
-        .shell { display:flex; padding-top:var(--topbar-h); min-height:100vh; }
+        /* sidebar toggle button on mobile */
+        .sidebar-toggle {
+            background:transparent; color:var(--text-dim); border:1px solid var(--border);
+            width:34px; height:34px; border-radius:8px;
+            cursor:pointer; display:none; align-items:center; justify-content:center;
+            flex-shrink:0; transition:background .2s;
+        }
 
-        /* ─── SIDEBAR ─── */
+        .sidebar-toggle:hover { background:var(--card); }
+        .sidebar-toggle i { font-size:18px; }
+
+        /* ══════════════════════════════
+           APP SHELL
+        ══════════════════════════════ */
+        .shell {
+            display:flex;
+            padding-top:var(--topbar-h);
+            min-height:100vh;
+        }
+
+        /* ══════════════════════════════
+           SIDEBAR
+        ══════════════════════════════ */
         .sidebar {
             position:fixed;
             top:var(--topbar-h); left:0; bottom:0;
@@ -147,22 +174,22 @@
             background:var(--sidebar-bg);
             border-right:1px solid var(--border);
             overflow-y:auto; z-index:900;
-            transition:transform .3s cubic-bezier(.16,1,.3,1);
+            transition:transform .32s cubic-bezier(.16,1,.3,1);
+            will-change:transform;
         }
 
-        .sidebar-inner { padding:10px 0 24px; }
-
+        .sidebar-inner { padding:8px 0 24px; }
         .sidebar-section { margin-bottom:2px; }
 
         .sidebar-tag {
             display:block; font-size:9px; font-weight:800;
             color:var(--text-xs); text-transform:uppercase;
-            letter-spacing:.7px; padding:10px 16px 4px;
+            letter-spacing:.7px; padding:10px 14px 4px;
         }
 
         .sidebar-item {
-            display:flex; align-items:center; gap:8px;
-            padding:6px 14px 6px 16px; cursor:pointer;
+            display:flex; align-items:center; gap:7px;
+            padding:6px 14px; cursor:pointer;
             border-left:2px solid transparent;
             transition:background .15s, border-color .15s;
         }
@@ -171,102 +198,110 @@
         .sidebar-item.active { background:var(--primary-glow); border-left-color:var(--primary); }
 
         .si-method { font-size:8px; font-weight:800; padding:2px 5px; border-radius:3px; background:var(--primary); color:#fff; flex-shrink:0; }
-
         .si-path { font-size:11px; font-family:'JetBrains Mono',monospace; color:var(--text-dim); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
         .sidebar-item:hover .si-path, .sidebar-item.active .si-path { color:var(--text-main); }
 
-        @media (max-width:860px) { .sidebar { transform:translateX(-100%); } .sidebar.open { transform:translateX(0); } .main { margin-left:0 !important; } }
+        /* sidebar overlay (mobile) */
+        .sidebar-overlay {
+            display:none;
+            position:fixed; inset:0;
+            background:rgba(15,23,42,.25);
+            backdrop-filter:blur(3px);
+            -webkit-backdrop-filter:blur(3px);
+            z-index:899;
+            opacity:0; transition:opacity .3s;
+        }
 
-        /* ─── MAIN ─── */
+        .sidebar-overlay.show { opacity:1; }
+
+        /* ══════════════════════════════
+           MAIN
+        ══════════════════════════════ */
         .main { flex:1; margin-left:var(--sidebar-w); min-width:0; }
 
         /* hero strip */
         .hero-strip {
-            padding:26px 26px 0;
-            display:flex; align-items:center; gap:18px; flex-wrap:wrap;
+            padding:22px 22px 0;
+            display:flex; align-items:flex-start; gap:16px; flex-wrap:wrap;
             animation:fadeUp .6s cubic-bezier(.16,1,.3,1);
         }
 
         @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
 
-        .hero-title-block { flex:1; min-width:180px; }
-
-        .hero-eyebrow { font-size:10px; font-weight:700; color:var(--primary); text-transform:uppercase; letter-spacing:.8px; margin-bottom:3px; }
-
-        .hero-title { font-size:clamp(20px,3vw,26px); font-weight:800; letter-spacing:-.5px; }
+        .hero-title-block { flex:1; min-width:140px; }
+        .hero-eyebrow { font-size:9px; font-weight:700; color:var(--primary); text-transform:uppercase; letter-spacing:.8px; margin-bottom:2px; }
+        .hero-title { font-size:clamp(18px,3vw,24px); font-weight:800; letter-spacing:-.4px; }
         .hero-title span { color:var(--primary); }
-        .hero-sub { font-size:12px; color:var(--text-dim); margin-top:2px; }
+        .hero-sub { font-size:11px; color:var(--text-dim); margin-top:1px; }
 
-        .hero-stats { display:flex; gap:10px; flex-wrap:wrap; }
+        .hero-stats { display:flex; gap:8px; flex-wrap:wrap; align-items:flex-start; }
 
         .stat-chip {
             display:flex; align-items:center; gap:8px;
             background:#fff; border:1px solid var(--border);
-            border-radius:10px; padding:9px 14px;
+            border-radius:10px; padding:8px 12px;
             transition:border-color .2s;
         }
 
         .stat-chip:hover { border-color:var(--primary); }
-        .stat-chip i { font-size:16px; color:var(--primary); }
+        .stat-chip i { font-size:15px; color:var(--primary); }
         .stat-chip-label { font-size:9px; font-weight:700; color:var(--text-xs); text-transform:uppercase; letter-spacing:.4px; }
-        .stat-chip-val { font-size:13px; font-weight:700; font-family:'JetBrains Mono',monospace; color:var(--text-main); }
+        .stat-chip-val { font-size:12px; font-weight:700; font-family:'JetBrains Mono',monospace; color:var(--text-main); }
 
         /* filter */
-        .filter-row { padding:14px 26px 0; display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; }
+        .filter-row { padding:12px 22px 0; display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; }
         .filter-row::-webkit-scrollbar { display:none; }
 
         .cat-pill {
             background:#fff; border:1px solid var(--border);
-            color:var(--text-dim); padding:5px 13px; border-radius:6px;
+            color:var(--text-dim); padding:5px 12px; border-radius:6px;
             font-size:11px; font-weight:700; cursor:pointer; white-space:nowrap;
-            transition:background .15s, color .15s, border-color .15s; letter-spacing:.3px;
+            transition:background .15s, color .15s, border-color .15s; letter-spacing:.2px;
+            flex-shrink:0;
         }
 
         .cat-pill:hover, .cat-pill.active { background:var(--primary); color:#fff; border-color:var(--primary); }
 
         /* api list */
-        .api-list { padding:12px 26px 60px; }
+        .api-list { padding:10px 22px 60px; }
 
         .api-card {
             background:#fff; border:1px solid var(--border);
             border-radius:12px; margin-bottom:7px; overflow:hidden;
             transition:border-color .2s, box-shadow .2s;
-            scroll-margin-top:68px;
+            scroll-margin-top:62px;
             animation:fadeUp .4s ease backwards;
         }
 
         .api-card:hover { border-color:rgba(255,95,0,.4); box-shadow:0 2px 10px rgba(0,0,0,.04); }
 
-        .api-header { padding:13px 16px; display:flex; align-items:center; gap:10px; cursor:pointer; }
-        .api-header i { color:var(--border); margin-left:auto; transition:transform .3s; font-size:18px; }
-        .api-header.active i { transform:rotate(180deg); color:var(--primary); }
+        .api-header { padding:12px 14px; display:flex; align-items:center; gap:10px; cursor:pointer; }
+        .api-header .chevron { color:var(--border); margin-left:auto; transition:transform .3s; font-size:18px; flex-shrink:0; }
+        .api-header.active .chevron { transform:rotate(180deg); color:var(--primary); }
 
-        .method-badge { background:var(--primary); color:#fff; font-size:9px; font-weight:800; padding:3px 9px; border-radius:5px; text-transform:uppercase; letter-spacing:.4px; flex-shrink:0; }
+        .method-badge { background:var(--primary); color:#fff; font-size:9px; font-weight:800; padding:3px 8px; border-radius:5px; text-transform:uppercase; letter-spacing:.3px; flex-shrink:0; }
 
-        .path-text { font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--text-main); font-weight:500; flex:1; word-break:break-all; }
+        .path-text { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-main); font-weight:500; flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 
-        .api-desc-row { padding:0 16px 11px; }
-        .api-description { font-size:11px; color:var(--text-dim); padding-left:58px; line-height:1.5; }
+        .api-desc-row { padding:0 14px 10px; }
+        .api-description { font-size:11px; color:var(--text-dim); padding-left:54px; line-height:1.5; }
 
         .api-details { display:none; border-top:1px solid var(--border); }
         .api-details.active { display:block; animation:slideDown .25s ease; }
 
         @keyframes slideDown { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }
 
+        /* detail grid – stacked on mobile, side-by-side on desktop */
         .detail-grid { display:grid; grid-template-columns:1fr; }
-        @media(min-width:800px){ .detail-grid { grid-template-columns:1fr 1fr; } }
 
         /* form */
-        .form-section { padding:18px; border-right:1px solid var(--border); }
+        .form-section { padding:16px; }
 
-        .form-label-top { font-size:10px; font-weight:800; color:var(--text-xs); text-transform:uppercase; letter-spacing:.5px; margin-bottom:12px; }
+        .form-label-top { font-size:9px; font-weight:800; color:var(--text-xs); text-transform:uppercase; letter-spacing:.5px; margin-bottom:10px; }
 
-        .field-group { margin-bottom:12px; }
-
-        .field-group label { display:block; font-size:10px; font-weight:700; color:var(--text-dim); text-transform:uppercase; margin-bottom:5px; letter-spacing:.4px; }
-
-        .field-group input { width:100%; background:var(--card); border:1px solid var(--border); padding:9px 11px; border-radius:8px; color:var(--text-main); font-size:13px; font-family:inherit; transition:border-color .2s, box-shadow .2s; }
-
+        .field-group { margin-bottom:10px; }
+        .field-group label { display:block; font-size:10px; font-weight:700; color:var(--text-dim); text-transform:uppercase; margin-bottom:4px; letter-spacing:.3px; }
+        .field-group input { width:100%; background:var(--card); border:1px solid var(--border); padding:9px 10px; border-radius:8px; color:var(--text-main); font-size:13px; font-family:inherit; transition:border-color .2s, box-shadow .2s; }
         .field-group input:focus { border-color:var(--primary); background:#fff; box-shadow:0 0 0 3px var(--primary-glow); }
 
         .btn-exec { width:100%; padding:10px; background:var(--primary); color:#fff; border:none; border-radius:8px; font-weight:700; font-size:12px; font-family:inherit; cursor:pointer; letter-spacing:.4px; transition:opacity .2s; }
@@ -275,106 +310,195 @@
         .btn-exec:disabled { opacity:.45; cursor:not-allowed; }
 
         /* console */
-        .console-section { padding:18px; background:#F8FAFC; }
+        .console-section { padding:16px; background:#F8FAFC; border-top:1px solid var(--border); }
 
-        .code-window { background:#0F172A; border-radius:10px; overflow:hidden; margin-bottom:12px; border:1px solid rgba(255,255,255,.05); }
-
-        .code-header { background:#1E293B; padding:7px 12px; display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; }
-
-        .code-tabs { display:flex; gap:5px; }
-
-        .code-tab { font-size:9px; font-weight:800; color:#94A3B8; cursor:pointer; padding:3px 8px; border-radius:4px; background:transparent; border:none; transition:background .15s, color .15s; letter-spacing:.3px; }
+        .code-window { background:#0F172A; border-radius:10px; overflow:hidden; margin-bottom:10px; border:1px solid rgba(255,255,255,.05); }
+        .code-header { background:#1E293B; padding:7px 12px; display:flex; align-items:center; justify-content:space-between; gap:6px; flex-wrap:wrap; }
+        .code-tabs { display:flex; gap:4px; }
+        .code-tab { font-size:9px; font-weight:800; color:#94A3B8; cursor:pointer; padding:3px 8px; border-radius:4px; background:transparent; border:none; transition:background .15s, color .15s; }
         .code-tab.active { background:var(--primary); color:#fff; }
-
-        .code-body { padding:14px; font-family:'JetBrains Mono',monospace; font-size:11px; color:#4ADE80; max-height:260px; overflow-y:auto; }
-
-        .code-actions { display:flex; gap:5px; align-items:center; }
-
+        .code-body { padding:12px; font-family:'JetBrains Mono',monospace; font-size:11px; color:#4ADE80; max-height:240px; overflow-y:auto; }
+        .code-actions { display:flex; gap:4px; align-items:center; }
         .copy-pill { background:rgba(255,255,255,.07); color:#fff; font-size:9px; font-weight:700; padding:3px 8px; border-radius:4px; cursor:pointer; border:none; transition:background .15s; }
         .copy-pill:hover { background:var(--primary); }
-
         .visit-pill { background:#22C55E; color:#fff; font-size:9px; font-weight:700; padding:3px 8px; border-radius:4px; text-decoration:none; display:inline-flex; align-items:center; }
 
         pre { white-space:pre-wrap; word-break:break-all; }
 
-        .loader { width:20px; height:20px; border:2px solid rgba(255,255,255,.1); border-top-color:var(--primary); border-radius:50%; animation:spin .7s linear infinite; margin:14px auto; }
-
+        .loader { width:18px; height:18px; border:2px solid rgba(255,255,255,.1); border-top-color:var(--primary); border-radius:50%; animation:spin .7s linear infinite; margin:12px auto; }
         @keyframes spin { to{transform:rotate(360deg)} }
 
-        /* side drawer */
-        .side-panel { position:fixed; inset:0; background:rgba(15,23,42,.08); backdrop-filter:blur(6px); z-index:2000; opacity:0; visibility:hidden; transition:opacity .3s, visibility .3s; }
+        /* ══════════════════════════════
+           SIDE DRAWER (hamburger)
+        ══════════════════════════════ */
+        .side-panel {
+            position:fixed; inset:0;
+            background:rgba(15,23,42,.1);
+            backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+            z-index:2000; opacity:0; visibility:hidden;
+            transition:opacity .3s, visibility .3s;
+        }
+
         .side-panel.active { opacity:1; visibility:visible; }
 
-        .panel-content { position:absolute; right:14px; top:14px; bottom:14px; width:240px; background:#fff; border-radius:20px; padding:24px 18px; transform:translateX(110%); transition:transform .4s cubic-bezier(.16,1,.3,1); border:1px solid var(--border); box-shadow:0 12px 40px rgba(0,0,0,.08); }
+        .panel-content {
+            position:absolute; right:14px; top:14px; bottom:14px; width:240px;
+            background:#fff; border-radius:20px; padding:22px 16px;
+            transform:translateX(110%);
+            transition:transform .38s cubic-bezier(.16,1,.3,1);
+            border:1px solid var(--border);
+            box-shadow:0 12px 40px rgba(0,0,0,.08);
+            overflow-y:auto;
+        }
+
         .side-panel.active .panel-content { transform:translateX(0); }
 
-        .panel-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:22px; }
+        .panel-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
         .panel-head h2 { font-size:15px; font-weight:700; }
         .panel-close { cursor:pointer; color:var(--text-dim); font-size:20px; }
 
-        .nav-link { text-decoration:none; color:var(--text-main); font-weight:600; font-size:13px; padding:10px 13px; background:var(--card); border-radius:10px; display:flex; align-items:center; gap:11px; margin-bottom:7px; transition:background .2s, color .2s; }
+        .nav-link { text-decoration:none; color:var(--text-main); font-weight:600; font-size:13px; padding:10px 12px; background:var(--card); border-radius:10px; display:flex; align-items:center; gap:10px; margin-bottom:7px; transition:background .2s, color .2s; }
         .nav-link i { font-size:17px; color:var(--primary); }
         .nav-link:hover { background:var(--primary); color:#fff; }
         .nav-link:hover i { color:#fff; }
 
-        /* toast */
-        .notification { position:fixed; bottom:20px; left:50%; transform:translateX(-50%) translateY(70px); background:#0F172A; color:#fff; padding:10px 20px; border-radius:50px; display:flex; align-items:center; gap:9px; box-shadow:0 8px 20px rgba(0,0,0,.14); z-index:9999; transition:transform .4s cubic-bezier(.16,1,.3,1); font-size:13px; font-weight:600; }
-        .notification.active { transform:translateX(-50%) translateY(0); }
-        .notification i { color:var(--primary); font-size:15px; }
+        /* panel clock section */
+        .panel-clock-box {
+            background:var(--card); border:1px solid var(--border);
+            border-radius:12px; padding:14px; margin-bottom:14px;
+            text-align:center;
+        }
 
-        /* nft */
-        .nft-announcement { position:fixed; bottom:14px; right:14px; width:250px; background:#fff; border:1px solid var(--border); border-radius:14px; padding:13px; box-shadow:0 6px 20px rgba(0,0,0,.07); z-index:900; display:none; }
+        .panel-clock-time { font-family:'JetBrains Mono',monospace; font-size:22px; font-weight:700; color:var(--text-main); letter-spacing:1px; }
+        .panel-clock-label { font-size:10px; color:var(--text-dim); font-weight:600; margin-top:2px; }
+        .panel-clock-tz { font-size:10px; color:var(--primary); font-weight:700; margin-top:2px; letter-spacing:.3px; }
+
+        /* ══════════════════════════════
+           TOAST & NFT
+        ══════════════════════════════ */
+        .notification { position:fixed; bottom:18px; left:50%; transform:translateX(-50%) translateY(70px); background:#0F172A; color:#fff; padding:9px 18px; border-radius:50px; display:flex; align-items:center; gap:8px; box-shadow:0 8px 20px rgba(0,0,0,.14); z-index:9999; transition:transform .4s cubic-bezier(.16,1,.3,1); font-size:12px; font-weight:600; white-space:nowrap; }
+        .notification.active { transform:translateX(-50%) translateY(0); }
+        .notification i { color:var(--primary); font-size:14px; }
+
+        .nft-announcement { position:fixed; bottom:14px; right:14px; width:min(250px, calc(100vw - 28px)); background:#fff; border:1px solid var(--border); border-radius:14px; padding:13px; box-shadow:0 6px 20px rgba(0,0,0,.07); z-index:900; display:none; }
         .nft-announcement.active { display:block; animation:slideInR .4s cubic-bezier(.16,1,.3,1); }
         @keyframes slideInR { from{opacity:0;transform:translateX(16px)} to{opacity:1;transform:translateX(0)} }
         .nft-close { position:absolute; top:9px; right:9px; cursor:pointer; color:var(--text-dim); font-size:16px; }
         .nft-inner { display:flex; gap:10px; align-items:center; }
         .nft-icon { background:var(--primary-glow); padding:7px; border-radius:9px; flex-shrink:0; }
-        .nft-icon i { color:var(--primary); font-size:17px; }
+        .nft-icon i { color:var(--primary); font-size:17px; display:block; }
 
-        .sidebar-overlay { display:none; position:fixed; inset:0; z-index:899; }
-        @media(max-width:860px){ .sidebar-overlay.show { display:block; } }
+        /* ══════════════════════════════
+           RESPONSIVE BREAKPOINTS
+        ══════════════════════════════ */
+
+        /* TABLET ≤ 900px: sidebar hidden by default, togglable */
+        @media (max-width:900px) {
+            .sidebar { transform:translateX(-100%); box-shadow:none; }
+            .sidebar.open { transform:translateX(0); box-shadow:4px 0 20px rgba(0,0,0,.08); }
+            .sidebar-overlay.show { display:block; }
+            .main { margin-left:0; }
+            .sidebar-toggle { display:flex; }
+        }
+
+        /* DESKTOP ≥ 901px: sidebar always visible */
+        @media (min-width:901px) {
+            .detail-grid { grid-template-columns:1fr 1fr; }
+            .console-section { border-top:none; border-left:1px solid var(--border); }
+            .topbar-brand { border-right:1px solid var(--border); width:var(--sidebar-w); }
+            .topbar-stat { display:flex; }
+        }
+
+        /* MOBILE ≤ 600px */
+        @media (max-width:600px) {
+            :root { --topbar-h:50px; }
+
+            .topbar { padding:0 10px; gap:8px; }
+            .topbar-brand { border-right:none; padding-right:0; width:auto; }
+            .topbar-brand span { font-size:13px; }
+            .topbar-search { max-width:none; }
+            .topbar-stat { display:none; } /* stats go to drawer on mobile */
+
+            .hero-strip { padding:16px 14px 0; gap:12px; }
+            .hero-stats { width:100%; }
+            .stat-chip { flex:1; }
+
+            .filter-row { padding:10px 14px 0; }
+            .api-list { padding:8px 14px 60px; }
+
+            .api-header { padding:11px 12px; }
+            .path-text { font-size:11px; }
+            .api-desc-row { padding:0 12px 9px; }
+            .api-description { padding-left:0; }
+
+            .form-section { padding:14px; }
+            .console-section { padding:14px; }
+
+            .code-body { font-size:10px; max-height:200px; }
+
+            .panel-content { right:10px; top:10px; bottom:10px; width:calc(100vw - 20px); }
+        }
+
+        /* VERY SMALL ≤ 360px */
+        @media (max-width:360px) {
+            .topbar-search { display:none; }
+            .topbar-search.expanded { display:block; position:fixed; top:var(--topbar-h); left:0; right:0; padding:8px; background:#fff; border-bottom:1px solid var(--border); z-index:1001; max-width:none; }
+        }
     </style>
 </head>
 <body>
 
+<!-- ══ TOPBAR ══ -->
 <header class="topbar">
+    <!-- sidebar toggle (mobile) -->
+    <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()" aria-label="Toggle sidebar">
+        <i class="material-icons-round">menu_open</i>
+    </button>
+
     <div class="topbar-brand">
         <img src="src/icon.jpg" alt="XTE">
         <span>XTE APIS</span>
     </div>
 
-    <div class="topbar-search">
+    <div class="topbar-search" id="topbarSearch">
         <i class="material-icons-round">search</i>
         <input type="text" id="apiSearch" placeholder="Search endpoints..." autocomplete="off">
         <div class="search-results-popover" id="searchResults"></div>
     </div>
 
     <div class="topbar-right">
-        <div class="topbar-stat">
+        <!-- clock & weather: visible on tablet+ -->
+        <div class="topbar-stat" id="clockStatBar">
             <i class="material-icons-round">schedule</i>
-            <span id="clockDisplay">--:--:--</span>
+            <span id="clockBarDisplay">--:--</span>
         </div>
-        <div class="topbar-stat">
-            <i class="material-icons-round" id="weatherIcon">cloud</i>
-            <span id="weatherDisplay">--°C</span>
+        <div class="topbar-stat" id="weatherStatBar">
+            <i class="material-icons-round" id="weatherIconBar">cloud</i>
+            <span id="weatherBarDisplay">--°C</span>
         </div>
-        <button class="menu-trigger" id="openMenu">
+
+        <!-- hamburger – always visible, orange circle -->
+        <button class="menu-trigger" id="openMenu" aria-label="Open menu">
             <i class="material-icons-round">menu</i>
         </button>
     </div>
 </header>
 
+<!-- ══ SHELL ══ -->
 <div class="shell">
 
+    <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-inner" id="sidebarContent">
-            <div style="padding:16px;font-size:11px;color:var(--text-xs);">Loading...</div>
+            <div style="padding:14px;font-size:11px;color:var(--text-xs)">Loading...</div>
         </div>
     </aside>
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
+    <!-- MAIN -->
     <main class="main">
 
+        <!-- hero -->
         <div class="hero-strip">
             <div class="hero-title-block">
                 <div class="hero-eyebrow">REST API Platform</div>
@@ -399,13 +523,15 @@
             </div>
         </div>
 
+        <!-- filter -->
         <div class="filter-row" id="catRow">
             <button class="cat-pill active" id="btn-all" onclick="filterByTag('all')">ALL</button>
         </div>
 
+        <!-- api cards -->
         <div class="api-list" id="apiContainer">
-            <div style="text-align:center;padding:80px;color:var(--text-dim)">
-                <i class="material-icons-round" style="font-size:36px;display:block;margin-bottom:8px;animation:spin 2s linear infinite">sync</i>
+            <div style="text-align:center;padding:70px;color:var(--text-dim)">
+                <i class="material-icons-round" style="font-size:34px;display:block;margin-bottom:8px;animation:spin 2s linear infinite">sync</i>
                 Initializing...
             </div>
         </div>
@@ -413,12 +539,32 @@
     </main>
 </div>
 
+<!-- ══ SIDE DRAWER (hamburger) ══ -->
 <div class="side-panel" id="sidePanel">
     <div class="panel-content">
         <div class="panel-head">
             <h2>Menu</h2>
             <i class="material-icons-round panel-close" id="closeMenu">close</i>
         </div>
+
+        <!-- clock display in drawer -->
+        <div class="panel-clock-box">
+            <div class="panel-clock-time" id="drawerClock">--:--:--</div>
+            <div class="panel-clock-label" id="drawerDate">---</div>
+            <div class="panel-clock-tz" id="drawerTz">Detecting timezone...</div>
+        </div>
+
+        <!-- weather in drawer (mobile) -->
+        <div class="panel-clock-box" style="margin-bottom:14px">
+            <div style="display:flex;align-items:center;justify-content:center;gap:8px">
+                <i class="material-icons-round" id="weatherIconDrawer" style="color:var(--primary);font-size:22px">cloud</i>
+                <div>
+                    <div class="panel-clock-time" id="weatherDrawerTemp">--°C</div>
+                    <div class="panel-clock-label" id="weatherDrawerStatus">Loading...</div>
+                </div>
+            </div>
+        </div>
+
         <a href="/"  class="nav-link"><i class="material-icons-round">dashboard</i>Dashboard</a>
         <a href="/docs" class="nav-link"><i class="material-icons-round">api</i>API Docs</a>
         <a href="/dev" class="nav-link"><i class="material-icons-round">code</i>Developer</a>
@@ -426,6 +572,7 @@
     </div>
 </div>
 
+<!-- NFT box -->
 <div class="nft-announcement" id="nftBox">
     <i class="material-icons-round nft-close" onclick="closeNft()">close</i>
     <div class="nft-inner">
@@ -437,65 +584,188 @@
     </div>
 </div>
 
+<!-- Toast -->
 <div class="notification" id="toast">
     <i class="material-icons-round">check_circle</i>
     <span id="toastMsg">Action successful</span>
 </div>
 
 <script>
+/* ─── Constants ─── */
 const BASE_URL = "https://api.xte.web.id";
 
-const sidePanel        = document.getElementById('sidePanel');
-const openMenu         = document.getElementById('openMenu');
-const closeMenu        = document.getElementById('closeMenu');
-const toast            = document.getElementById('toast');
-const apiSearch        = document.getElementById('apiSearch');
-const searchResults    = document.getElementById('searchResults');
-const nftBox           = document.getElementById('nftBox');
-const clockDisplay     = document.getElementById('clockDisplay');
-const weatherDisplay   = document.getElementById('weatherDisplay');
-const weatherIcon      = document.getElementById('weatherIcon');
-const endpointsCount   = document.getElementById('endpointsCount');
-const sidebar          = document.getElementById('sidebar');
-const sidebarOverlay   = document.getElementById('sidebarOverlay');
+/* ─── DOM refs ─── */
+const sidePanel       = document.getElementById('sidePanel');
+const openMenu        = document.getElementById('openMenu');
+const closeMenu       = document.getElementById('closeMenu');
+const toast           = document.getElementById('toast');
+const apiSearch       = document.getElementById('apiSearch');
+const searchResults   = document.getElementById('searchResults');
+const nftBox          = document.getElementById('nftBox');
+const endpointsCount  = document.getElementById('endpointsCount');
+const sidebar         = document.getElementById('sidebar');
+const sidebarOverlay  = document.getElementById('sidebarOverlay');
 
+/* ─── State ─── */
 let apiDataStore = [], searchTimer;
+let userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+let tzLabel      = userTimezone;
 
+/* ══════════════════════
+   TIMEZONE + GEOLOCATION
+══════════════════════ */
+async function detectTimezone() {
+    // Use browser-native timezone first (most reliable)
+    userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    // Try to get a friendly label via IP geolocation
+    try {
+        const r    = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(4000) });
+        const data = await r.json();
+        if (data.timezone) {
+            userTimezone = data.timezone;
+            // Build display label: city + offset
+            const city   = data.city || data.region || '';
+            const offset = getUTCOffset(data.timezone);
+            tzLabel = city ? `${city} (${offset})` : offset;
+        } else {
+            tzLabel = getUTCOffset(userTimezone);
+        }
+    } catch(e) {
+        tzLabel = getUTCOffset(userTimezone);
+    }
+
+    document.getElementById('drawerTz').textContent = `${userTimezone} · ${tzLabel}`;
+}
+
+function getUTCOffset(tz) {
+    try {
+        const now  = new Date();
+        const parts = new Intl.DateTimeFormat('en-US', {
+            timeZone: tz, timeZoneName: 'shortOffset'
+        }).formatToParts(now);
+        const tzName = parts.find(p => p.type === 'timeZoneName');
+        return tzName ? tzName.value : 'UTC';
+    } catch(e) { return 'UTC'; }
+}
+
+/* ══════════════════════
+   CLOCK
+══════════════════════ */
+function updateClock() {
+    const now = new Date();
+
+    // Format for user's detected timezone
+    const timeStr = now.toLocaleTimeString('en-GB', {
+        timeZone:  userTimezone,
+        hour:      '2-digit',
+        minute:    '2-digit',
+        second:    '2-digit',
+        hour12:    false
+    });
+
+    const shortTime = now.toLocaleTimeString('en-GB', {
+        timeZone:  userTimezone,
+        hour:      '2-digit',
+        minute:    '2-digit',
+        hour12:    false
+    });
+
+    const dateStr = now.toLocaleDateString('en-GB', {
+        timeZone: userTimezone,
+        weekday:  'short',
+        day:      'numeric',
+        month:    'short'
+    });
+
+    // Drawer (full HH:MM:SS)
+    document.getElementById('drawerClock').textContent = timeStr;
+    document.getElementById('drawerDate').textContent  = dateStr;
+
+    // Topbar bar (HH:MM only, compact)
+    document.getElementById('clockBarDisplay').textContent = shortTime;
+}
+
+/* ══════════════════════
+   WEATHER
+══════════════════════ */
+async function updateWeather() {
+    try {
+        // Get lat/lon from geolocation or fallback to ipapi
+        let lat = 0, lon = 0;
+        try {
+            const geo = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(4000) });
+            const g   = await geo.json();
+            lat = g.latitude  || 0;
+            lon = g.longitude || 0;
+        } catch(e) {}
+
+        const r  = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code,is_day`);
+        const d  = await r.json();
+        const t  = Math.round(d.current.temperature_2m);
+        const wc = d.current.weather_code;
+        const dy = d.current.is_day;
+
+        let icon = dy ? 'wb_sunny' : 'nights_stay';
+        let status = dy ? 'Sunny' : 'Clear';
+        if (wc >= 1  && wc <= 2)  { icon = 'wb_cloudy';   status = 'Partly Cloudy'; }
+        if (wc === 3)               { icon = 'cloud';        status = 'Overcast'; }
+        if (wc >= 45 && wc <= 48)  { icon = 'cloud_queue';  status = 'Foggy'; }
+        if (wc >= 51 && wc <= 67)  { icon = 'grain';        status = 'Rainy'; }
+        if (wc >= 80 && wc <= 82)  { icon = 'water_drop';   status = 'Showers'; }
+        if (wc >= 85 && wc <= 86)  { icon = 'ac_unit';      status = 'Snow'; }
+        if (wc >= 95)               { icon = 'flash_on';     status = 'Stormy'; }
+
+        // Topbar
+        document.getElementById('weatherBarDisplay').textContent  = `${t}°C`;
+        document.getElementById('weatherIconBar').textContent      = icon;
+
+        // Drawer
+        document.getElementById('weatherDrawerTemp').textContent   = `${t}°C`;
+        document.getElementById('weatherDrawerStatus').textContent = status;
+        document.getElementById('weatherIconDrawer').textContent   = icon;
+
+    } catch(e) {
+        document.getElementById('weatherBarDisplay').textContent   = 'N/A';
+        document.getElementById('weatherDrawerTemp').textContent   = 'N/A';
+        document.getElementById('weatherDrawerStatus').textContent = 'Unavailable';
+    }
+}
+
+/* ══════════════════════
+   SIDEBAR TOGGLE
+══════════════════════ */
+function toggleSidebar() {
+    if (sidebar.classList.contains('open')) { closeSidebar(); }
+    else { openSidebar(); }
+}
+
+function openSidebar() {
+    sidebar.classList.add('open');
+    sidebarOverlay.classList.add('show');
+    sidebarOverlay.style.display = 'block';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    sidebarOverlay.classList.remove('show');
+    setTimeout(() => { if (!sidebarOverlay.classList.contains('show')) sidebarOverlay.style.display = ''; }, 300);
+}
+
+/* ══════════════════════
+   SIDE DRAWER (hamburger)
+══════════════════════ */
 openMenu.onclick  = () => sidePanel.classList.add('active');
 closeMenu.onclick = () => sidePanel.classList.remove('active');
 sidePanel.onclick = (e) => { if (e.target === sidePanel) sidePanel.classList.remove('active'); };
 
-function openSidebar()  { sidebar.classList.add('open'); sidebarOverlay.classList.add('show'); }
-function closeSidebar() { sidebar.classList.remove('open'); sidebarOverlay.classList.remove('show'); }
-
-function updateClock() {
-    const n = new Date();
-    clockDisplay.textContent = [n.getHours(),n.getMinutes(),n.getSeconds()].map(v=>String(v).padStart(2,'0')).join(':');
-}
-
-async function updateWeather() {
-    try {
-        const d  = await (await fetch('https://api.open-meteo.com/v1/forecast?latitude=0&longitude=0&current=temperature_2m,weather_code,is_day')).json();
-        const t  = Math.round(d.current.temperature_2m);
-        const wc = d.current.weather_code;
-        const dy = d.current.is_day;
-        let icon = dy ? 'wb_sunny' : 'nights_stay';
-        if (wc>=1&&wc<=2)   icon='wb_cloudy';
-        if (wc===3)          icon='cloud';
-        if (wc>=45&&wc<=48) icon='cloud_queue';
-        if (wc>=51&&wc<=67) icon='grain';
-        if (wc>=80&&wc<=82) icon='water_drop';
-        if (wc>=85&&wc<=86) icon='ac_unit';
-        if (wc>=95)          icon='flash_on';
-        weatherDisplay.textContent = `${t}°C`;
-        weatherIcon.textContent    = icon;
-    } catch(e) { weatherDisplay.textContent='N/A'; weatherIcon.textContent='cloud_off'; }
-}
-
+/* ══════════════════════
+   TOAST & NFT
+══════════════════════ */
 function showToast(msg) {
     document.getElementById('toastMsg').textContent = msg;
     toast.classList.add('active');
-    setTimeout(()=>toast.classList.remove('active'), 2800);
+    setTimeout(() => toast.classList.remove('active'), 2800);
 }
 
 function closeNft() { nftBox.classList.remove('active'); }
@@ -505,163 +775,201 @@ function copyToClipboard(id) {
     showToast("Copied to clipboard!");
 }
 
+/* ══════════════════════
+   FILTER
+══════════════════════ */
 function filterByTag(tag) {
-    document.querySelectorAll('.cat-pill').forEach(b=>b.classList.remove('active'));
-    if (tag==='all') document.getElementById('btn-all')?.classList.add('active');
-    document.querySelectorAll('.api-card').forEach(el=>{
-        el.style.display = (tag==='all'||el.dataset.tag===tag) ? 'block' : 'none';
+    document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
+    if (tag === 'all') document.getElementById('btn-all')?.classList.add('active');
+    document.querySelectorAll('.api-card').forEach(el => {
+        el.style.display = (tag === 'all' || el.dataset.tag === tag) ? 'block' : 'none';
     });
-    document.querySelectorAll('.sidebar-item').forEach(el=>{
-        el.classList.toggle('active', tag!=='all' && el.dataset.tag===tag);
+    document.querySelectorAll('.sidebar-item').forEach(el => {
+        el.classList.toggle('active', tag !== 'all' && el.dataset.tag === tag);
     });
 }
 
-apiSearch.oninput = () => { clearTimeout(searchTimer); searchTimer=setTimeout(runSearch,120); };
+/* ══════════════════════
+   SEARCH
+══════════════════════ */
+apiSearch.oninput = () => { clearTimeout(searchTimer); searchTimer = setTimeout(runSearch, 120); };
 
 function runSearch() {
     const val = apiSearch.value.toLowerCase().trim();
-    if (!val) { searchResults.style.display='none'; return; }
-    const matches = apiDataStore.filter(i=>
-        i.path.toLowerCase().includes(val)||(i.info.summary&&i.info.summary.toLowerCase().includes(val))
+    if (!val) { searchResults.style.display = 'none'; return; }
+    const matches = apiDataStore.filter(i =>
+        i.path.toLowerCase().includes(val) ||
+        (i.info.summary && i.info.summary.toLowerCase().includes(val))
     );
     searchResults.innerHTML = matches.length
-        ? matches.map(m=>`<div class="search-item" onclick="selectSearch(${m.id})"><span class="m-tag">${m.method.toUpperCase()}</span><span class="p-text">${m.path}</span></div>`).join('')
+        ? matches.map(m => `<div class="search-item" onclick="selectSearch(${m.id})"><span class="m-tag">${m.method.toUpperCase()}</span><span class="p-text">${m.path}</span></div>`).join('')
         : `<div class="search-item"><span class="p-text">No results found</span></div>`;
-    searchResults.style.display='block';
+    searchResults.style.display = 'block';
 }
 
 function selectSearch(id) {
-    searchResults.style.display='none'; apiSearch.value='';
+    searchResults.style.display = 'none'; apiSearch.value = '';
     filterByTag('all');
-    setTimeout(()=>toggleApi(id),100);
+    // close sidebar on mobile after selection
+    closeSidebar();
+    setTimeout(() => toggleApi(id), 100);
 }
 
-document.addEventListener('click',(e)=>{
-    if (!apiSearch.contains(e.target)&&!searchResults.contains(e.target)) searchResults.style.display='none';
+document.addEventListener('click', (e) => {
+    if (!apiSearch.contains(e.target) && !searchResults.contains(e.target))
+        searchResults.style.display = 'none';
 });
 
+/* ══════════════════════
+   TOGGLE API CARD
+══════════════════════ */
 function toggleApi(id) {
     const el   = document.getElementById(`details-${id}`);
     const card = document.getElementById(`card-${id}`);
-    if (!el||!card) return;
+    if (!el || !card) return;
     const header = card.querySelector('.api-header');
     const was    = el.classList.contains('active');
-    document.querySelectorAll('.api-details').forEach(d=>d.classList.remove('active'));
-    document.querySelectorAll('.api-header').forEach(h=>h.classList.remove('active'));
-    document.querySelectorAll('.sidebar-item').forEach(s=>s.classList.remove('active'));
+
+    document.querySelectorAll('.api-details').forEach(d => d.classList.remove('active'));
+    document.querySelectorAll('.api-header').forEach(h => h.classList.remove('active'));
+    document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+
     if (!was) {
         el.classList.add('active'); header.classList.add('active');
         document.querySelector(`.sidebar-item[data-id="${id}"]`)?.classList.add('active');
-        card.scrollIntoView({behavior:'smooth',block:'start'});
+        // close sidebar on mobile automatically
+        if (window.innerWidth <= 900) closeSidebar();
+        setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
     }
 }
 
+/* ══════════════════════
+   SHARE & URL BUILD
+══════════════════════ */
 async function shareEndpoint(id, method, path) {
     const url = buildUrl(path, `form-${id}`);
     if (navigator.share) {
-        try { await navigator.share({title:`XTE APIS - ${method} ${path}`,text:`Coba endpoint ini:\n${method} ${path}`,url}); showToast("Shared successfully"); }
+        try { await navigator.share({ title:`XTE APIS - ${method} ${path}`, text:`Coba endpoint:\n${method} ${path}`, url }); showToast("Shared!"); }
         catch(e) { showToast("Share cancelled"); }
-    } else { navigator.clipboard.writeText(url); showToast("Link dicopy ke clipboard."); }
+    } else { navigator.clipboard.writeText(url); showToast("Link copied!"); }
 }
 
 function buildUrl(path, formId) {
     const form = document.getElementById(formId);
-    if (!form) return BASE_URL+path;
-    const fd=new FormData(form), p=new URLSearchParams();
-    for (let [k,v] of fd.entries()) if (v&&typeof v==='string') p.append(k,v);
-    return BASE_URL+path+(p.toString()?'?'+p.toString():'');
+    if (!form) return BASE_URL + path;
+    const fd = new FormData(form), p = new URLSearchParams();
+    for (let [k, v] of fd.entries()) if (v && typeof v === 'string') p.append(k, v);
+    return BASE_URL + path + (p.toString() ? '?' + p.toString() : '');
 }
 
+/* ══════════════════════
+   CODE SNIPPETS
+══════════════════════ */
 function setSnippet(el, lang, method, url) {
-    if (lang==='curl')       el.textContent=`curl -X ${method} "${url}"`;
-    else if(lang==='python') el.textContent=`import requests\n\nurl = "${url}"\nresponse = requests.${method.toLowerCase()}(url)\nprint(response.json())`;
-    else                     el.textContent=`fetch("${url}", { method: "${method}" })\n  .then(res => res.json())\n  .then(data => console.log(data));`;
+    const l = lang.toLowerCase();
+    if (l === 'curl')       el.textContent = `curl -X ${method} "${url}"`;
+    else if (l === 'python') el.textContent = `import requests\n\nurl = "${url}"\nres = requests.${method.toLowerCase()}(url)\nprint(res.json())`;
+    else                     el.textContent = `fetch("${url}", { method: "${method}" })\n  .then(r => r.json())\n  .then(d => console.log(d));`;
 }
 
 function switchTab(id, lang, method, path) {
-    const url=buildUrl(path,`form-${id}`);
-    document.querySelectorAll(`#tabs-${id} .code-tab`).forEach(t=>t.classList.remove('active'));
+    const url = buildUrl(path, `form-${id}`);
+    document.querySelectorAll(`#tabs-${id} .code-tab`).forEach(t => t.classList.remove('active'));
     event.target.classList.add('active');
     setSnippet(document.getElementById(`code-${id}`), lang, method, url);
 }
 
 function updateSnippets(id, method, path) {
-    const url    = buildUrl(path,`form-${id}`);
+    const url    = buildUrl(path, `form-${id}`);
     const tabEl  = document.querySelector(`#tabs-${id} .code-tab.active`);
-    const lang   = tabEl ? tabEl.textContent.toLowerCase() : 'curl';
+    const lang   = tabEl ? tabEl.textContent : 'curl';
     const visit  = document.getElementById(`visit-${id}`);
-    if (visit) visit.href=url;
+    if (visit) visit.href = url;
     setSnippet(document.getElementById(`code-${id}`), lang, method, url);
 }
 
+/* ══════════════════════
+   EXECUTE REQUEST
+══════════════════════ */
 async function runRequest(id, method, path) {
-    const btn=document.getElementById(`btn-${id}`);
-    const pre=document.getElementById(`res-${id}`);
-    btn.textContent="LOADING..."; btn.disabled=true;
-    pre.innerHTML=`<div class="loader"></div>`;
+    const btn = document.getElementById(`btn-${id}`);
+    const pre = document.getElementById(`res-${id}`);
+    btn.textContent = "LOADING..."; btn.disabled = true;
+    pre.innerHTML = `<div class="loader"></div>`;
     try {
-        const form=document.getElementById(`form-${id}`);
-        let url=BASE_URL+path, opts={method};
-        if (method.toUpperCase()==='POST') { opts.body=new FormData(form); }
-        else { url=buildUrl(path,`form-${id}`); }
-        const res=await fetch(url,opts), type=res.headers.get("content-type")||"";
+        const form = document.getElementById(`form-${id}`);
+        let url  = BASE_URL + path, opts = { method };
+        if (method.toUpperCase() === 'POST') { opts.body = new FormData(form); }
+        else { url = buildUrl(path, `form-${id}`); }
+        const res  = await fetch(url, opts);
+        const type = res.headers.get("content-type") || "";
         if (type.includes("image")) {
-            pre.innerHTML=`<img src="${URL.createObjectURL(await res.blob())}" style="max-width:100%;border-radius:8px;margin-top:6px">`;
+            pre.innerHTML = `<img src="${URL.createObjectURL(await res.blob())}" style="max-width:100%;border-radius:8px;margin-top:6px">`;
         } else if (type.includes("application/json")) {
-            pre.textContent=JSON.stringify(await res.json(),null,2);
-        } else { pre.textContent=await res.text(); }
-    } catch(e) { pre.textContent="Error: "+e.message; }
-    finally { btn.textContent="EXECUTE"; btn.disabled=false; }
+            pre.textContent = JSON.stringify(await res.json(), null, 2);
+        } else {
+            pre.textContent = await res.text();
+        }
+    } catch(e) { pre.textContent = "Error: " + e.message; }
+    finally { btn.textContent = "EXECUTE"; btn.disabled = false; }
 }
 
+/* ══════════════════════
+   NFT
+══════════════════════ */
 async function fetchNft() {
     try {
-        const data=await (await fetch('src/nft.json')).json();
+        const data = await (await fetch('src/nft.json')).json();
         if (data?.title) {
-            document.getElementById('nftTitle').textContent=data.title;
-            document.getElementById('nftMsg').textContent=data.message;
-            setTimeout(()=>nftBox.classList.add('active'),2000);
+            document.getElementById('nftTitle').textContent = data.title;
+            document.getElementById('nftMsg').textContent   = data.message;
+            setTimeout(() => nftBox.classList.add('active'), 2000);
         }
     } catch(e) {}
 }
 
+/* ══════════════════════
+   LOAD SCHEMA
+══════════════════════ */
 async function loadSchema() {
-    const container=document.getElementById('apiContainer');
-    const catRow   =document.getElementById('catRow');
-    const sbContent=document.getElementById('sidebarContent');
+    const container = document.getElementById('apiContainer');
+    const catRow    = document.getElementById('catRow');
+    const sbContent = document.getElementById('sidebarContent');
+
     try {
-        const data=await (await fetch('src/openapi.json')).json();
-        const tags=new Set();
-        let html='', sbMap={}, idx=0;
+        const data = await (await fetch('src/openapi.json')).json();
+        const tags = new Set();
+        let html = '', sbMap = {}, idx = 0;
 
-        Object.entries(data.paths).forEach(([path,methods])=>{
-            Object.entries(methods).forEach(([method,info])=>{
-                const id  =idx++;
-                const tag =info.tags?.[0]||'General';
-                const m   =method.toUpperCase();
-                const desc=info.summary||info.description||"No description available.";
-                tags.add(tag); apiDataStore.push({id,path,method,info,tag});
+        Object.entries(data.paths).forEach(([path, methods]) => {
+            Object.entries(methods).forEach(([method, info]) => {
+                const id   = idx++;
+                const tag  = info.tags?.[0] || 'General';
+                const m    = method.toUpperCase();
+                const desc = info.summary || info.description || "No description available.";
+                tags.add(tag);
+                apiDataStore.push({ id, path, method, info, tag });
 
-                if (!sbMap[tag]) sbMap[tag]='';
-                sbMap[tag]+=`<div class="sidebar-item" data-id="${id}" data-tag="${tag}" onclick="toggleApi(${id})"><span class="si-method">${m}</span><span class="si-path" title="${path}">${path}</span></div>`;
+                if (!sbMap[tag]) sbMap[tag] = '';
+                sbMap[tag] += `<div class="sidebar-item" data-id="${id}" data-tag="${tag}" onclick="toggleApi(${id})"><span class="si-method">${m}</span><span class="si-path" title="${path}">${path}</span></div>`;
 
-                let fields='';
-                info.parameters?.forEach(p=>{
-                    fields+=`<div class="field-group"><label>${p.name}${p.required?' <span style="color:var(--primary)">*</span>':''}</label><input type="text" name="${p.name}" placeholder="${p.description||''}" oninput="updateSnippets(${id},'${m}','${path}')"></div>`;
+                let fields = '';
+                info.parameters?.forEach(p => {
+                    fields += `<div class="field-group"><label>${p.name}${p.required ? ' <span style="color:var(--primary)">*</span>' : ''}</label><input type="text" name="${p.name}" placeholder="${p.description || ''}" oninput="updateSnippets(${id},'${m}','${path}')"></div>`;
                 });
                 if (info.requestBody?.content?.['multipart/form-data']?.schema?.properties) {
-                    Object.entries(info.requestBody.content['multipart/form-data'].schema.properties).forEach(([name,prop])=>{
-                        const isFile=prop.format==='binary'||prop.type==='file';
-                        fields+=`<div class="field-group"><label>${name}${isFile?' (FILE)':''}</label><input type="${isFile?'file':'text'}" name="${name}" placeholder="${prop.description||''}" ${isFile?'':`oninput="updateSnippets(${id},'${m}','${path}')"`}></div>`;
+                    Object.entries(info.requestBody.content['multipart/form-data'].schema.properties).forEach(([name, prop]) => {
+                        const isFile = prop.format === 'binary' || prop.type === 'file';
+                        fields += `<div class="field-group"><label>${name}${isFile ? ' (FILE)' : ''}</label><input type="${isFile ? 'file' : 'text'}" name="${name}" placeholder="${prop.description || ''}" ${isFile ? '' : `oninput="updateSnippets(${id},'${m}','${path}')"`}></div>`;
                     });
                 }
 
-                html+=`
-                <div class="api-card" id="card-${id}" data-tag="${tag}" style="animation-delay:${idx*.025}s">
+                html += `
+                <div class="api-card" id="card-${id}" data-tag="${tag}" style="animation-delay:${idx * .025}s">
                     <div class="api-header" onclick="toggleApi(${id})">
                         <span class="method-badge">${m}</span>
                         <span class="path-text">${path}</span>
-                        <i class="material-icons-round">expand_more</i>
+                        <i class="material-icons-round chevron">expand_more</i>
                     </div>
                     <div class="api-desc-row"><p class="api-description">${desc}</p></div>
                     <div class="api-details" id="details-${id}">
@@ -669,7 +977,7 @@ async function loadSchema() {
                             <div class="form-section">
                                 <p class="form-label-top">Parameters</p>
                                 <form id="form-${id}" onsubmit="return false">
-                                    ${fields||'<p style="font-size:11px;color:var(--text-xs);margin-bottom:12px">No parameters required.</p>'}
+                                    ${fields || '<p style="font-size:11px;color:var(--text-xs);margin-bottom:10px">No parameters required.</p>'}
                                     <button class="btn-exec" id="btn-${id}" onclick="runRequest(${id},'${m}','${path}')">EXECUTE</button>
                                 </form>
                             </div>
@@ -703,27 +1011,42 @@ async function loadSchema() {
             });
         });
 
-        endpointsCount.textContent=idx;
+        endpointsCount.textContent = idx;
 
-        let sb='';
-        Array.from(tags).sort().forEach(t=>{ sb+=`<div class="sidebar-section"><span class="sidebar-tag">${t}</span>${sbMap[t]}</div>`; });
-        sbContent.innerHTML=sb;
+        let sb = '';
+        Array.from(tags).sort().forEach(t => { sb += `<div class="sidebar-section"><span class="sidebar-tag">${t}</span>${sbMap[t]}</div>`; });
+        sbContent.innerHTML = sb;
 
-        Array.from(tags).sort().forEach(t=>{
-            const b=document.createElement('button');
-            b.className='cat-pill'; b.textContent=t.toUpperCase();
-            b.onclick=(e)=>{ document.querySelectorAll('.cat-pill').forEach(btn=>btn.classList.remove('active')); filterByTag(t); e.target.classList.add('active'); };
+        Array.from(tags).sort().forEach(t => {
+            const b = document.createElement('button');
+            b.className   = 'cat-pill';
+            b.textContent = t.toUpperCase();
+            b.onclick = (e) => {
+                document.querySelectorAll('.cat-pill').forEach(btn => btn.classList.remove('active'));
+                filterByTag(t); e.target.classList.add('active');
+            };
             catRow.appendChild(b);
         });
 
-        container.innerHTML=html;
+        container.innerHTML = html;
         fetchNft();
+
     } catch(e) {
-        container.innerHTML=`<div style="text-align:center;color:var(--primary);padding:50px">LOAD FAILED: ${e.message}</div>`;
+        container.innerHTML = `<div style="text-align:center;color:var(--primary);padding:50px">LOAD FAILED: ${e.message}</div>`;
     }
 }
 
-window.onload=()=>{ loadSchema(); updateClock(); updateWeather(); setInterval(updateClock,1000); setInterval(updateWeather,600000); };
+/* ══════════════════════
+   INIT
+══════════════════════ */
+window.onload = async () => {
+    loadSchema();
+    await detectTimezone();   // get tz first so clock is correct
+    updateClock();
+    updateWeather();
+    setInterval(updateClock, 1000);
+    setInterval(updateWeather, 600000);
+};
 </script>
 </body>
 </html>
