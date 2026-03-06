@@ -1041,35 +1041,7 @@
         }
       }
     },
-    "/v2/search/freereels": {
-      "get": {
-        "tags": ["Search"],
-        "summary": "FreeReels Short Drama Engine",
-        "description": "Cari drama pendek, liat hotlist, atau ambil detail drama dari FreeReels.",
-        "parameters": [
-          {
-            "name": "q",
-            "in": "query",
-            "required": false,
-            "schema": { "type": "string" },
-            "description": "Keyword pencarian atau Series ID (untuk type=info)"
-          },
-          {
-            "name": "type",
-            "in": "query",
-            "required": false,
-            "schema": { 
-              "type": "string",
-              "enum": ["search", "hotlist", "info"]
-            },
-            "description": "Jenis request: search (default), hotlist (trending), info (detail drama)"
-          }
-        ],
-        "responses": {
-          "200": { "description": "Berhasil mendapatkan data drama" }
-        }
-      }
-    },
+    
     "/v1/search/soundcloud": {
       "get": {
         "summary": "SoundCloud Search",
@@ -1089,6 +1061,25 @@
           { "name": "apikey", "in": "query", "required": true, "schema": { "type": "string" } }
         ],
         "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/v2/search/apkmirror": {
+      "get": {
+        "tags": ["Search"],
+        "summary": "APKMirror Search",
+        "description": "Mencari aplikasi Android di APKMirror dengan bypass proteksi Cloudflare.",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Nama aplikasi (Contoh: Dana, WhatsApp)"
+          }
+        ],
+        "responses": {
+          "200": { "description": "Daftar aplikasi ditemukan" }
+        }
       }
     },
     "/v1/religi/quran": {
