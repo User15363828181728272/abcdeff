@@ -2,939 +2,1059 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="Akselerasi development Anda dengan koleksi REST API terlengkap dan stabil. Gratis dan performa tinggi.">
-    <meta name="keywords" content="XTE APIS, Rest API, Developer Tools, Free API">
-    <meta name="author" content="XTE ID">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>XTE APIS</title>
-    <link rel="icon" href="src/icon.jpg">
-    <meta property="og:site_name" content="XTE APIS">
-    <meta property="og:title" content="XTE APIS">
-    <meta property="og:description" content="Akselerasi development Anda dengan koleksi REST API terlengkap dan stabil. Gratis dan performa tinggi.">
-    <meta property="og:url" content="https://apis.xte.web.id">
+    
+    <meta name="description" content="XTE APIS provides enterprise-grade REST APIs for AI, Media Downloaders, and Developer Tools. Fast, reliable, and secure with 99.9% uptime for modern applications.">
+    <meta name="keywords" content="XTE APIS, Rest API, Developer Tools, AI API, TikTok Downloader API, Deepseek API, Free API Gateway, Indonesia API, Web Scraping">
+    <meta name="author" content="XTE ID">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#FF5F00">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+    <meta name="rating" content="general">
+    
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://apis.xte.web.id/src/icon.jpg">
-    <meta property="og:image:secure_url" content="https://apis.xte.web.id/src/icon.jpg">
-    <meta property="og:image:type" content="image/jpeg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="https://api.xte.web.id/">
+    <meta property="og:title" content="XTE APIS - Powering Your Applications with Robust APIs">
+    <meta property="og:description" content="Access 300+ reliable API endpoints including AI, Social Media Downloaders, and Tools. Start building for free.">
+    <meta property="og:image" content="https://api.xte.web.id/src/icon.jpg">
+    <meta property="og:site_name" content="XTE ID">
+
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="XTE APIS">
-    <meta name="twitter:description" content="Akselerasi development Anda dengan koleksi REST API terlengkap dan stabil. Gratis dan performa tinggi.">
-    <meta name="twitter:image" content="https://apis.xte.web.id/src/icon.jpg">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Round">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <meta name="twitter:url" content="https://api.xte.web.id/">
+    <meta name="twitter:title" content="XTE APIS - High-Performance REST API Gateway">
+    <meta name="twitter:description" content="Build faster with enterprise-grade REST APIs. Reliable, low-latency, and easy integration.">
+    <meta name="twitter:image" content="https://api.xte.web.id/src/icon.jpg">
+
+    <link rel="canonical" href="https://api.xte.web.id/">
+    <link rel="icon" type="image/x-icon" href="src/icon.jpg">
+    <link rel="apple-touch-icon" href="src/icon.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Round">
+    </noscript>
     <style>
-        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; outline:none; -webkit-tap-highlight-color:transparent; }
-
-        :root {
-            --primary:      #FF5F00;
-            --primary-glow: rgba(255,95,0,0.12);
-            --bg:           #FFFFFF;
-            --sidebar-bg:   #FAFAFA;
-            --card:         #F4F6F8;
-            --text-main:    #0F172A;
-            --text-dim:     #64748B;
-            --text-xs:      #94A3B8;
-            --border:       #E2E8F0;
-            --grid-color:   rgba(15,23,42,0.04);
-            --grid-size:    32px;
-            --sidebar-w:    240px;
-            --topbar-h:     52px;
-        }
-
-        ::-webkit-scrollbar { width:4px; height:4px; }
-        ::-webkit-scrollbar-track { background:transparent; }
-        ::-webkit-scrollbar-thumb { background:var(--border); border-radius:4px; }
-        ::-webkit-scrollbar-thumb:hover { background:var(--primary); }
-
-        html { scroll-behavior:smooth; }
-
-        body {
-            font-family:'Plus Jakarta Sans', sans-serif;
-            background:var(--bg);
-            background-image:
-                linear-gradient(var(--grid-color) 1px, transparent 1px),
-                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-            background-size:var(--grid-size) var(--grid-size);
-            color:var(--text-main);
-            overflow-x:hidden;
-            line-height:1.6;
-        }
-
-        /* ══════════════════════════════
-           TOPBAR
-        ══════════════════════════════ */
-        .topbar {
-            position:fixed; top:0; left:0; right:0;
-            height:var(--topbar-h);
-            background:rgba(255,255,255,0.96);
-            backdrop-filter:blur(18px);
-            -webkit-backdrop-filter:blur(18px);
-            border-bottom:1px solid var(--border);
-            z-index:1000;
-            display:flex; align-items:center;
-            padding:0 14px; gap:10px;
-        }
-
-        /* brand */
-        .topbar-brand {
-            display:flex; align-items:center; gap:8px;
-            flex-shrink:0;
-            padding-right:14px;
-            border-right:1px solid var(--border);
-        }
-
-        .topbar-brand img { width:26px; height:26px; border-radius:6px; }
-        .topbar-brand span { font-weight:800; font-size:14px; letter-spacing:0.4px; white-space:nowrap; }
-
-        /* search */
-        .topbar-search { flex:1; min-width:0; max-width:420px; position:relative; }
-
-        .topbar-search i {
-            position:absolute; left:10px; top:50%;
-            transform:translateY(-50%);
-            color:var(--primary); font-size:16px; pointer-events:none;
-        }
-
-        .topbar-search input {
-            width:100%; background:var(--card);
-            border:1px solid var(--border);
-            padding:7px 10px 7px 32px;
-            border-radius:8px; font-size:13px; font-family:inherit;
-            color:var(--text-main); transition:border-color .2s, background .2s;
-        }
-
-        .topbar-search input:focus { border-color:var(--primary); background:#fff; }
-        .topbar-search input::placeholder { color:var(--text-xs); }
-
-        .search-results-popover {
-            position:absolute; top:calc(100% + 6px); left:0; right:0;
-            background:#fff; border:1px solid var(--border); border-radius:10px;
-            box-shadow:0 8px 24px rgba(0,0,0,0.08);
-            max-height:300px; overflow-y:auto; display:none; z-index:1100;
-        }
-
-        .search-item {
-            padding:9px 14px; border-bottom:1px solid var(--border);
-            cursor:pointer; display:flex; align-items:center; gap:10px;
-            transition:background .15s;
-        }
-
-        .search-item:last-child { border-bottom:none; }
-        .search-item:hover { background:var(--card); }
-        .search-item .m-tag { font-size:9px; font-weight:800; padding:2px 6px; border-radius:4px; background:var(--primary); color:#fff; flex-shrink:0; }
-        .search-item .p-text { font-size:12px; font-family:'JetBrains Mono',monospace; color:var(--text-main); min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-
-        /* topbar right cluster */
-        .topbar-right { margin-left:auto; display:flex; align-items:center; gap:10px; flex-shrink:0; }
-
-        .topbar-stat { display:flex; align-items:center; gap:4px; font-size:11px; color:var(--text-dim); font-weight:600; white-space:nowrap; }
-        .topbar-stat i { font-size:14px; color:var(--primary); }
-
-        /* hamburger – orange circle, always visible */
-        .menu-trigger {
-            background:var(--primary); color:#fff; border:none;
-            width:34px; height:34px; border-radius:50%;
-            cursor:pointer; display:flex; align-items:center; justify-content:center;
-            box-shadow:0 2px 8px var(--primary-glow);
-            transition:opacity .2s; flex-shrink:0;
-        }
-
-        .menu-trigger:hover { opacity:.85; }
-        .menu-trigger i { font-size:18px; }
-
-        /* sidebar toggle button on mobile */
-        .sidebar-toggle {
-            background:transparent; color:var(--text-dim); border:1px solid var(--border);
-            width:34px; height:34px; border-radius:8px;
-            cursor:pointer; display:none; align-items:center; justify-content:center;
-            flex-shrink:0; transition:background .2s;
-        }
-
-        .sidebar-toggle:hover { background:var(--card); }
-        .sidebar-toggle i { font-size:18px; }
-
-        /* ══════════════════════════════
-           APP SHELL
-        ══════════════════════════════ */
-        .shell {
-            display:flex;
-            padding-top:var(--topbar-h);
-            min-height:100vh;
-        }
-
-        /* ══════════════════════════════
-           SIDEBAR
-        ══════════════════════════════ */
-        .sidebar {
-            position:fixed;
-            top:var(--topbar-h); left:0; bottom:0;
-            width:var(--sidebar-w);
-            background:var(--sidebar-bg);
-            border-right:1px solid var(--border);
-            overflow-y:auto; z-index:900;
-            transition:transform .32s cubic-bezier(.16,1,.3,1);
-            will-change:transform;
-        }
-
-        .sidebar-inner { padding:8px 0 24px; }
-        .sidebar-section { margin-bottom:2px; }
-
-        .sidebar-tag {
-            display:block; font-size:9px; font-weight:800;
-            color:var(--text-xs); text-transform:uppercase;
-            letter-spacing:.7px; padding:10px 14px 4px;
-        }
-
-        .sidebar-item {
-            display:flex; align-items:center; gap:7px;
-            padding:6px 14px; cursor:pointer;
-            border-left:2px solid transparent;
-            transition:background .15s, border-color .15s;
-        }
-
-        .sidebar-item:hover  { background:var(--card); border-left-color:var(--border); }
-        .sidebar-item.active { background:var(--primary-glow); border-left-color:var(--primary); }
-
-        .si-method { font-size:8px; font-weight:800; padding:2px 5px; border-radius:3px; background:var(--primary); color:#fff; flex-shrink:0; }
-        .si-path { font-size:11px; font-family:'JetBrains Mono',monospace; color:var(--text-dim); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-        .sidebar-item:hover .si-path, .sidebar-item.active .si-path { color:var(--text-main); }
-
-        /* sidebar overlay (mobile) */
-        .sidebar-overlay {
-            display:none;
-            position:fixed; inset:0;
-            background:rgba(15,23,42,.25);
-            backdrop-filter:blur(3px);
-            -webkit-backdrop-filter:blur(3px);
-            z-index:899;
-            opacity:0; transition:opacity .3s;
-        }
-
-        .sidebar-overlay.show { opacity:1; }
-
-        /* ══════════════════════════════
-           MAIN
-        ══════════════════════════════ */
-        .main { flex:1; margin-left:var(--sidebar-w); min-width:0; }
-
-        /* hero strip */
-        .hero-strip {
-            padding:22px 22px 0;
-            display:flex; align-items:flex-start; gap:16px; flex-wrap:wrap;
-            animation:fadeUp .6s cubic-bezier(.16,1,.3,1);
-        }
-
-        @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
-
-        .hero-title-block { flex:1; min-width:140px; }
-        .hero-eyebrow { font-size:9px; font-weight:700; color:var(--primary); text-transform:uppercase; letter-spacing:.8px; margin-bottom:2px; }
-        .hero-title { font-size:clamp(18px,3vw,24px); font-weight:800; letter-spacing:-.4px; }
-        .hero-title span { color:var(--primary); }
-        .hero-sub { font-size:11px; color:var(--text-dim); margin-top:1px; }
-
-        .hero-stats { display:flex; gap:8px; flex-wrap:wrap; align-items:flex-start; }
-
-        .stat-chip {
-            display:flex; align-items:center; gap:8px;
-            background:#fff; border:1px solid var(--border);
-            border-radius:10px; padding:8px 12px;
-            transition:border-color .2s;
-        }
-
-        .stat-chip:hover { border-color:var(--primary); }
-        .stat-chip i { font-size:15px; color:var(--primary); }
-        .stat-chip-label { font-size:9px; font-weight:700; color:var(--text-xs); text-transform:uppercase; letter-spacing:.4px; }
-        .stat-chip-val { font-size:12px; font-weight:700; font-family:'JetBrains Mono',monospace; color:var(--text-main); }
-
-        /* filter */
-        .filter-row { padding:12px 22px 0; display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; }
-        .filter-row::-webkit-scrollbar { display:none; }
-
-        .cat-pill {
-            background:#fff; border:1px solid var(--border);
-            color:var(--text-dim); padding:5px 12px; border-radius:6px;
-            font-size:11px; font-weight:700; cursor:pointer; white-space:nowrap;
-            transition:background .15s, color .15s, border-color .15s; letter-spacing:.2px;
-            flex-shrink:0;
-        }
-
-        .cat-pill:hover, .cat-pill.active { background:var(--primary); color:#fff; border-color:var(--primary); }
-
-        /* api list */
-        .api-list { padding:10px 22px 60px; }
-
-        .api-card {
-            background:#fff; border:1px solid var(--border);
-            border-radius:12px; margin-bottom:7px; overflow:hidden;
-            transition:border-color .2s, box-shadow .2s;
-            scroll-margin-top:62px;
-            animation:fadeUp .4s ease backwards;
-        }
-
-        .api-card:hover { border-color:rgba(255,95,0,.4); box-shadow:0 2px 10px rgba(0,0,0,.04); }
-
-        .api-header { padding:12px 14px; display:flex; align-items:center; gap:10px; cursor:pointer; }
-        .api-header .chevron { color:var(--border); margin-left:auto; transition:transform .3s; font-size:18px; flex-shrink:0; }
-        .api-header.active .chevron { transform:rotate(180deg); color:var(--primary); }
-
-        .method-badge { background:var(--primary); color:#fff; font-size:9px; font-weight:800; padding:3px 8px; border-radius:5px; text-transform:uppercase; letter-spacing:.3px; flex-shrink:0; }
-
-        .path-text { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-main); font-weight:500; flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-
-        .api-desc-row { padding:0 14px 10px; }
-        .api-description { font-size:11px; color:var(--text-dim); padding-left:54px; line-height:1.5; }
-
-        .api-details { display:none; border-top:1px solid var(--border); }
-        .api-details.active { display:block; animation:slideDown .25s ease; }
-
-        @keyframes slideDown { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }
-
-        /* detail grid – stacked on mobile, side-by-side on desktop */
-        .detail-grid { display:grid; grid-template-columns:1fr; }
-
-        /* form */
-        .form-section { padding:16px; }
-
-        .form-label-top { font-size:9px; font-weight:800; color:var(--text-xs); text-transform:uppercase; letter-spacing:.5px; margin-bottom:10px; }
-
-        .field-group { margin-bottom:10px; }
-        .field-group label { display:block; font-size:10px; font-weight:700; color:var(--text-dim); text-transform:uppercase; margin-bottom:4px; letter-spacing:.3px; }
-        .field-group input { width:100%; background:var(--card); border:1px solid var(--border); padding:9px 10px; border-radius:8px; color:var(--text-main); font-size:13px; font-family:inherit; transition:border-color .2s, box-shadow .2s; }
-        .field-group input:focus { border-color:var(--primary); background:#fff; box-shadow:0 0 0 3px var(--primary-glow); }
-
-        .btn-exec { width:100%; padding:10px; background:var(--primary); color:#fff; border:none; border-radius:8px; font-weight:700; font-size:12px; font-family:inherit; cursor:pointer; letter-spacing:.4px; transition:opacity .2s; }
-        .btn-exec:hover { opacity:.88; }
-        .btn-exec:active { transform:scale(.99); }
-        .btn-exec:disabled { opacity:.45; cursor:not-allowed; }
-
-        /* console */
-        .console-section { padding:16px; background:#F8FAFC; border-top:1px solid var(--border); }
-
-        .code-window { background:#0F172A; border-radius:10px; overflow:hidden; margin-bottom:10px; border:1px solid rgba(255,255,255,.05); }
-        .code-header { background:#1E293B; padding:7px 12px; display:flex; align-items:center; justify-content:space-between; gap:6px; flex-wrap:wrap; }
-        .code-tabs { display:flex; gap:4px; }
-        .code-tab { font-size:9px; font-weight:800; color:#94A3B8; cursor:pointer; padding:3px 8px; border-radius:4px; background:transparent; border:none; transition:background .15s, color .15s; }
-        .code-tab.active { background:var(--primary); color:#fff; }
-        .code-body { padding:12px; font-family:'JetBrains Mono',monospace; font-size:11px; color:#4ADE80; max-height:240px; overflow-y:auto; }
-        .code-actions { display:flex; gap:4px; align-items:center; }
-        .copy-pill { background:rgba(255,255,255,.07); color:#fff; font-size:9px; font-weight:700; padding:3px 8px; border-radius:4px; cursor:pointer; border:none; transition:background .15s; }
-        .copy-pill:hover { background:var(--primary); }
-        .visit-pill { background:#22C55E; color:#fff; font-size:9px; font-weight:700; padding:3px 8px; border-radius:4px; text-decoration:none; display:inline-flex; align-items:center; }
-
-        pre { white-space:pre-wrap; word-break:break-all; }
-
-        .loader { width:18px; height:18px; border:2px solid rgba(255,255,255,.1); border-top-color:var(--primary); border-radius:50%; animation:spin .7s linear infinite; margin:12px auto; }
-        @keyframes spin { to{transform:rotate(360deg)} }
-
-        /* ══════════════════════════════
-           SIDE DRAWER (hamburger)
-        ══════════════════════════════ */
-        .side-panel {
-            position:fixed; inset:0;
-            background:rgba(15,23,42,.1);
-            backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
-            z-index:2000; opacity:0; visibility:hidden;
-            transition:opacity .3s, visibility .3s;
-        }
-
-        .side-panel.active { opacity:1; visibility:visible; }
-
-        .panel-content {
-            position:absolute; right:14px; top:14px; bottom:14px; width:240px;
-            background:#fff; border-radius:20px; padding:22px 16px;
-            transform:translateX(110%);
-            transition:transform .38s cubic-bezier(.16,1,.3,1);
-            border:1px solid var(--border);
-            box-shadow:0 12px 40px rgba(0,0,0,.08);
-            overflow-y:auto;
-        }
-
-        .side-panel.active .panel-content { transform:translateX(0); }
-
-        .panel-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
-        .panel-head h2 { font-size:15px; font-weight:700; }
-        .panel-close { cursor:pointer; color:var(--text-dim); font-size:20px; }
-
-        .nav-link { text-decoration:none; color:var(--text-main); font-weight:600; font-size:13px; padding:10px 12px; background:var(--card); border-radius:10px; display:flex; align-items:center; gap:10px; margin-bottom:7px; transition:background .2s, color .2s; }
-        .nav-link i { font-size:17px; color:var(--primary); }
-        .nav-link:hover { background:var(--primary); color:#fff; }
-        .nav-link:hover i { color:#fff; }
-
-        /* panel clock section */
-        .panel-clock-box {
-            background:var(--card); border:1px solid var(--border);
-            border-radius:12px; padding:14px; margin-bottom:14px;
-            text-align:center;
-        }
-
-        .panel-clock-time { font-family:'JetBrains Mono',monospace; font-size:22px; font-weight:700; color:var(--text-main); letter-spacing:1px; }
-        .panel-clock-label { font-size:10px; color:var(--text-dim); font-weight:600; margin-top:2px; }
-        .panel-clock-tz { font-size:10px; color:var(--primary); font-weight:700; margin-top:2px; letter-spacing:.3px; }
-
-        /* ══════════════════════════════
-           TOAST & NFT
-        ══════════════════════════════ */
-        .notification { position:fixed; bottom:18px; left:50%; transform:translateX(-50%) translateY(70px); background:#0F172A; color:#fff; padding:9px 18px; border-radius:50px; display:flex; align-items:center; gap:8px; box-shadow:0 8px 20px rgba(0,0,0,.14); z-index:9999; transition:transform .4s cubic-bezier(.16,1,.3,1); font-size:12px; font-weight:600; white-space:nowrap; }
-        .notification.active { transform:translateX(-50%) translateY(0); }
-        .notification i { color:var(--primary); font-size:14px; }
-
-        .nft-announcement { position:fixed; bottom:14px; right:14px; width:min(250px, calc(100vw - 28px)); background:#fff; border:1px solid var(--border); border-radius:14px; padding:13px; box-shadow:0 6px 20px rgba(0,0,0,.07); z-index:900; display:none; }
-        .nft-announcement.active { display:block; animation:slideInR .4s cubic-bezier(.16,1,.3,1); }
-        @keyframes slideInR { from{opacity:0;transform:translateX(16px)} to{opacity:1;transform:translateX(0)} }
-        .nft-close { position:absolute; top:9px; right:9px; cursor:pointer; color:var(--text-dim); font-size:16px; }
-        .nft-inner { display:flex; gap:10px; align-items:center; }
-        .nft-icon { background:var(--primary-glow); padding:7px; border-radius:9px; flex-shrink:0; }
-        .nft-icon i { color:var(--primary); font-size:17px; display:block; }
-
-        /* ══════════════════════════════
-           RESPONSIVE BREAKPOINTS
-        ══════════════════════════════ */
-
-        /* TABLET ≤ 900px: sidebar hidden by default, togglable */
-        @media (max-width:900px) {
-            .sidebar { transform:translateX(-100%); box-shadow:none; }
-            .sidebar.open { transform:translateX(0); box-shadow:4px 0 20px rgba(0,0,0,.08); }
-            .sidebar-overlay.show { display:block; }
-            .main { margin-left:0; }
-            .sidebar-toggle { display:flex; }
-        }
-
-        /* DESKTOP ≥ 901px: sidebar always visible */
-        @media (min-width:901px) {
-            .detail-grid { grid-template-columns:1fr 1fr; }
-            .console-section { border-top:none; border-left:1px solid var(--border); }
-            .topbar-brand { border-right:1px solid var(--border); width:var(--sidebar-w); }
-            .topbar-stat { display:flex; }
-        }
-
-        /* MOBILE ≤ 600px */
-        @media (max-width:600px) {
-            :root { --topbar-h:50px; }
-
-            .topbar { padding:0 10px; gap:8px; }
-            .topbar-brand { border-right:none; padding-right:0; width:auto; }
-            .topbar-brand span { font-size:13px; }
-            .topbar-search { max-width:none; }
-            .topbar-stat { display:none; } /* stats go to drawer on mobile */
-
-            .hero-strip { padding:16px 14px 0; gap:12px; }
-            .hero-stats { width:100%; }
-            .stat-chip { flex:1; }
-
-            .filter-row { padding:10px 14px 0; }
-            .api-list { padding:8px 14px 60px; }
-
-            .api-header { padding:11px 12px; }
-            .path-text { font-size:11px; }
-            .api-desc-row { padding:0 12px 9px; }
-            .api-description { padding-left:0; }
-
-            .form-section { padding:14px; }
-            .console-section { padding:14px; }
-
-            .code-body { font-size:10px; max-height:200px; }
-
-            .panel-content { right:10px; top:10px; bottom:10px; width:calc(100vw - 20px); }
-        }
-
-        /* VERY SMALL ≤ 360px */
-        @media (max-width:360px) {
-            .topbar-search { display:none; }
-            .topbar-search.expanded { display:block; position:fixed; top:var(--topbar-h); left:0; right:0; padding:8px; background:#fff; border-bottom:1px solid var(--border); z-index:1001; max-width:none; }
-        }
+    /* ─────────────────────────────────────────────
+       RESET + TOKENS
+    ───────────────────────────────────────────── */
+    *, *::before, *::after {
+        margin: 0; padding: 0;
+        box-sizing: border-box;
+        outline: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+        /* Surfaces */
+        --bg:          #F6F6F7;
+        --surface:     #FFFFFF;
+        --surface-2:   #F0F0F2;
+        --surface-3:   #E8E8EB;
+
+        /* Text */
+        --text-1:      #111113;
+        --text-2:      #6B6B74;
+        --text-3:      #9898A0;
+
+        /* Border */
+        --line:        #E2E2E6;
+        --line-strong: #C8C8CE;
+
+        /* Accent — slate */
+        --a:           #3E3E46;
+        --a-soft:      rgba(62,62,70,.07);
+        --a-glow:      rgba(62,62,70,.12);
+
+        /* Status */
+        --green:       #22C55E;
+
+        /* Layout */
+        --sidebar-w:   252px;
+        --topbar-h:    52px;
+
+        /* Radii */
+        --r-xs:  6px;
+        --r-sm:  10px;
+        --r-md:  14px;
+        --r-lg:  18px;
+        --r-xl:  24px;
+        --r-2xl: 32px;
+        --r-oo:  999px;
+
+        /* Type */
+        --font: 'Inter', system-ui, -apple-system, sans-serif;
+        --mono: 'JetBrains Mono', ui-monospace, monospace;
+
+        /* Motion */
+        --spring: cubic-bezier(.16,1,.3,1);
+        --ease:   cubic-bezier(.4,0,.2,1);
+
+        /* Grid */
+        --grid-c: rgba(17,17,19,.028);
+        --grid-s: 30px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--a); }
+
+    body {
+        font-family: var(--font);
+        background: var(--bg);
+        background-image:
+            linear-gradient(var(--grid-c) 1px, transparent 1px),
+            linear-gradient(90deg, var(--grid-c) 1px, transparent 1px);
+        background-size: var(--grid-s) var(--grid-s);
+        color: var(--text-1);
+        overflow-x: hidden;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ─────────────────────────────────────────────
+       TOPBAR
+    ───────────────────────────────────────────── */
+    .topbar {
+        position: fixed; top: 0; left: 0; right: 0;
+        height: var(--topbar-h);
+        background: rgba(246,246,247,.88);
+        backdrop-filter: blur(24px) saturate(180%);
+        -webkit-backdrop-filter: blur(24px) saturate(180%);
+        border-bottom: 1px solid var(--line);
+        z-index: 200;
+        display: flex; align-items: center;
+        padding: 0 16px; gap: 10px;
+    }
+
+    /* sidebar-toggle (mobile only) */
+    .sb-btn {
+        display: none; align-items: center; justify-content: center;
+        width: 32px; height: 32px; border-radius: var(--r-sm);
+        background: transparent; border: 1px solid var(--line);
+        color: var(--text-2); cursor: pointer; flex-shrink: 0;
+        transition: background .15s;
+    }
+    .sb-btn:hover { background: var(--surface-2); }
+    .sb-btn .mi   { font-size: 17px; }
+
+    /* brand */
+    .topbar-brand {
+        display: flex; align-items: center; gap: 8px;
+        text-decoration: none; color: var(--text-1);
+        flex-shrink: 0; padding-right: 14px;
+        border-right: 1px solid var(--line);
+        white-space: nowrap;
+    }
+
+    .topbar-brand img  { width: 24px; height: 24px; border-radius: 7px; }
+    .topbar-brand span { font-size: 13.5px; font-weight: 700; letter-spacing: -.3px; }
+
+    /* search */
+    .search-wrap { flex: 1; min-width: 0; max-width: 380px; position: relative; }
+
+    .search-wrap .mi {
+        position: absolute; left: 9px; top: 50%; transform: translateY(-50%);
+        font-size: 15px; color: var(--text-3); pointer-events: none;
+    }
+
+    .search-wrap input {
+        width: 100%;
+        background: var(--surface-2);
+        border: 1px solid var(--line);
+        padding: 6px 10px 6px 30px;
+        border-radius: var(--r-sm);
+        font: 13px/1 var(--font);
+        color: var(--text-1);
+        transition: border-color .15s, background .15s, box-shadow .15s;
+    }
+
+    .search-wrap input:focus {
+        border-color: var(--a);
+        background: var(--surface);
+        box-shadow: 0 0 0 3px var(--a-soft);
+    }
+
+    .search-wrap input::placeholder { color: var(--text-3); }
+
+    .search-drop {
+        position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+        background: var(--surface); border: 1px solid var(--line);
+        border-radius: var(--r-md); overflow: hidden;
+        box-shadow: 0 8px 32px rgba(0,0,0,.08), 0 2px 8px rgba(0,0,0,.04);
+        max-height: 280px; overflow-y: auto; display: none; z-index: 300;
+    }
+
+    .s-row {
+        padding: 8px 12px; cursor: pointer;
+        display: flex; align-items: center; gap: 9px;
+        border-bottom: 1px solid var(--line);
+        transition: background .12s;
+    }
+    .s-row:last-child { border-bottom: none; }
+    .s-row:hover { background: var(--surface-2); }
+    .s-badge { font: 700 9px/1 var(--mono); padding: 2px 6px; border-radius: var(--r-xs); background: var(--a); color: #fff; flex-shrink: 0; letter-spacing: .4px; }
+    .s-path  { font: 500 12px/1 var(--mono); color: var(--text-1); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    /* topbar right */
+    .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+    .tb-stat { display: flex; align-items: center; gap: 4px; font: 500 11px/1 var(--font); color: var(--text-2); white-space: nowrap; }
+    .tb-stat .mi { font-size: 14px; color: var(--a); }
+
+    /* hamburger — slate pill */
+    .ham-btn {
+        display: flex; align-items: center; justify-content: center;
+        width: 32px; height: 32px; border-radius: var(--r-oo);
+        background: var(--a); color: #fff; border: none; cursor: pointer;
+        box-shadow: 0 1px 4px var(--a-glow);
+        transition: background .15s, transform .15s; flex-shrink: 0;
+    }
+    .ham-btn:hover { background: #52525B; transform: scale(1.06); }
+    .ham-btn .mi   { font-size: 17px; }
+
+    /* ─────────────────────────────────────────────
+       LAYOUT SHELL
+    ───────────────────────────────────────────── */
+    .shell {
+        display: flex;
+        padding-top: var(--topbar-h);
+        min-height: 100vh;
+    }
+
+    /* ─────────────────────────────────────────────
+       SIDEBAR
+    ───────────────────────────────────────────── */
+    .sidebar {
+        position: fixed;
+        top: var(--topbar-h); left: 0; bottom: 0;
+        width: var(--sidebar-w);
+        background: var(--surface);
+        border-right: 1px solid var(--line);
+        overflow-y: auto; z-index: 100;
+        transition: transform .3s var(--spring);
+        will-change: transform;
+        display: flex; flex-direction: column;
+    }
+
+    .sb-head {
+        padding: 16px 14px 10px;
+        border-bottom: 1px solid var(--line);
+        flex-shrink: 0;
+    }
+
+    .sb-head-label {
+        font: 700 9px/1 var(--font);
+        color: var(--text-3); text-transform: uppercase; letter-spacing: .8px;
+    }
+
+    .sb-body { flex: 1; overflow-y: auto; padding: 8px 0 24px; }
+
+    .sb-group  { margin-top: 6px; }
+
+    .sb-group-label {
+        font: 600 9.5px/1 var(--font);
+        color: var(--text-3); text-transform: uppercase; letter-spacing: .7px;
+        padding: 10px 14px 4px; display: block;
+    }
+
+    .sb-item {
+        display: flex; align-items: center; gap: 8px;
+        padding: 6px 14px 6px 12px;
+        cursor: pointer; position: relative;
+        border-left: 2px solid transparent;
+        transition: background .12s, border-color .12s;
+    }
+
+    .sb-item::before {
+        content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+        width: 2px; background: var(--a);
+        transform: scaleY(0); transition: transform .2s var(--spring);
+        border-radius: 0 2px 2px 0;
+    }
+
+    .sb-item:hover { background: var(--surface-2); }
+
+    .sb-item.on { background: var(--a-soft); }
+    .sb-item.on::before { transform: scaleY(1); }
+
+    .sb-method {
+        font: 700 8.5px/1 var(--mono);
+        padding: 2px 6px; border-radius: var(--r-xs);
+        background: var(--surface-2); color: var(--text-2);
+        flex-shrink: 0; letter-spacing: .4px;
+        transition: background .12s, color .12s;
+    }
+
+    .sb-item.on .sb-method { background: var(--a); color: #fff; }
+
+    .sb-path {
+        font: 500 11px/1.3 var(--mono); color: var(--text-2);
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        transition: color .12s;
+    }
+
+    .sb-item:hover .sb-path, .sb-item.on .sb-path { color: var(--text-1); }
+
+    /* sidebar overlay (mobile) */
+    .sb-overlay {
+        display: none; position: fixed; inset: 0;
+        background: rgba(17,17,19,.18);
+        backdrop-filter: blur(4px);
+        z-index: 99; opacity: 0; transition: opacity .25s;
+    }
+    .sb-overlay.show { opacity: 1; }
+
+    /* ─────────────────────────────────────────────
+       MAIN CONTENT
+    ───────────────────────────────────────────── */
+    .main {
+        flex: 1; margin-left: var(--sidebar-w);
+        min-width: 0;
+    }
+
+    /* ── banner (hero strip) ── */
+    .banner {
+        padding: 20px 22px 0;
+        display: flex; align-items: flex-start;
+        justify-content: space-between; gap: 14px; flex-wrap: wrap;
+    }
+
+    .banner-left {}
+    .banner-tag  { font: 600 10px/1 var(--font); color: var(--text-3); text-transform: uppercase; letter-spacing: .7px; margin-bottom: 4px; }
+    .banner-title { font: 700 22px/1.1 var(--font); letter-spacing: -.5px; }
+    .banner-title span { color: var(--text-2); font-weight: 500; }
+    .banner-sub  { font: 400 12px/1.5 var(--font); color: var(--text-2); margin-top: 3px; }
+
+    .banner-chips { display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-start; }
+
+    .chip {
+        display: flex; align-items: center; gap: 7px;
+        background: var(--surface); border: 1px solid var(--line);
+        border-radius: var(--r-md); padding: 8px 12px;
+        transition: border-color .15s;
+    }
+
+    .chip:hover { border-color: var(--a); }
+    .chip .mi   { font-size: 15px; color: var(--a); }
+    .chip-label { font: 600 9px/1 var(--font); color: var(--text-3); text-transform: uppercase; letter-spacing: .4px; }
+    .chip-val   { font: 700 13px/1 var(--mono); color: var(--text-1); margin-top: 2px; }
+
+    /* ── filter pills ── */
+    .filter-bar {
+        padding: 12px 22px 0;
+        display: flex; gap: 5px; overflow-x: auto; scrollbar-width: none;
+    }
+    .filter-bar::-webkit-scrollbar { display: none; }
+
+    .f-pill {
+        padding: 4px 13px; border-radius: var(--r-oo);
+        border: 1px solid var(--line); background: var(--surface);
+        font: 600 11px/1 var(--font); color: var(--text-2);
+        cursor: pointer; white-space: nowrap; flex-shrink: 0;
+        transition: background .15s, color .15s, border-color .15s;
+    }
+
+    .f-pill:hover { border-color: var(--a); color: var(--text-1); }
+    .f-pill.on    { background: var(--a); color: #fff; border-color: var(--a); }
+
+    /* ── api list ── */
+    .api-list { padding: 10px 22px 80px; }
+
+    /* skeleton */
+    @keyframes pulse-sk { 0%,100%{opacity:.5} 50%{opacity:1} }
+    .sk { border-radius: var(--r-lg); background: var(--surface); height: 52px; margin-bottom: 7px; animation: pulse-sk 1.8s ease infinite; }
+
+    /* card */
+    .api-card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        margin-bottom: 7px; overflow: hidden;
+        transition: border-color .18s, box-shadow .18s;
+        scroll-margin-top: 64px;
+    }
+
+    .api-card:hover { border-color: var(--line-strong); box-shadow: 0 2px 12px rgba(0,0,0,.05); }
+    .api-card.active-card { border-color: var(--a); }
+
+    .card-head {
+        padding: 11px 14px;
+        display: flex; align-items: center; gap: 10px;
+        cursor: pointer; user-select: none;
+    }
+
+    .m-badge {
+        font: 700 9px/1 var(--mono);
+        padding: 3px 8px; border-radius: var(--r-oo);
+        background: var(--a); color: #fff;
+        flex-shrink: 0; letter-spacing: .5px; text-transform: uppercase;
+    }
+
+    .c-path {
+        font: 500 12.5px/1 var(--mono); color: var(--text-1);
+        flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+
+    .c-chevron {
+        font-size: 17px; color: var(--line-strong);
+        margin-left: auto; flex-shrink: 0;
+        transition: transform .25s var(--spring), color .15s;
+    }
+
+    .card-head.open .c-chevron { transform: rotate(180deg); color: var(--a); }
+
+    .card-desc-row { padding: 0 14px 10px; }
+    .card-desc     { font: 400 11.5px/1.55 var(--font); color: var(--text-2); padding-left: 58px; }
+
+    /* card body */
+    .card-body { display: none; border-top: 1px solid var(--line); }
+    .card-body.open { display: block; animation: unfold .22s var(--spring); }
+
+    @keyframes unfold {
+        from { opacity: 0; transform: translateY(-5px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .body-grid { display: grid; grid-template-columns: 1fr; }
+
+    /* form pane */
+    .pane-form { padding: 16px; }
+
+    .pane-title { font: 600 9px/1 var(--font); color: var(--text-3); text-transform: uppercase; letter-spacing: .7px; margin-bottom: 12px; }
+
+    .field-row { margin-bottom: 10px; }
+    .field-row label { display: block; font: 600 10px/1 var(--font); color: var(--text-2); text-transform: uppercase; letter-spacing: .3px; margin-bottom: 5px; }
+
+    .field-row input {
+        width: 100%;
+        background: var(--surface-2); border: 1px solid var(--line);
+        padding: 8px 10px; border-radius: var(--r-sm);
+        font: 400 13px/1 var(--font); color: var(--text-1);
+        transition: border-color .15s, box-shadow .15s, background .15s;
+    }
+
+    .field-row input:focus {
+        border-color: var(--a); background: var(--surface);
+        box-shadow: 0 0 0 3px var(--a-soft);
+    }
+
+    .exec-btn {
+        width: 100%; padding: 9px;
+        background: var(--text-1); color: #fff; border: none;
+        border-radius: var(--r-sm); font: 600 12px/1 var(--font);
+        cursor: pointer; letter-spacing: -.1px;
+        transition: background .15s, transform .1s;
+    }
+
+    .exec-btn:hover   { background: var(--a); }
+    .exec-btn:active  { transform: scale(.99); }
+    .exec-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+    /* console pane */
+    .pane-console {
+        padding: 16px;
+        background: var(--bg);
+        border-top: 1px solid var(--line);
+    }
+
+    .code-block {
+        background: #1C1C1F; border-radius: var(--r-md);
+        overflow: hidden; margin-bottom: 10px;
+        border: 1px solid rgba(255,255,255,.04);
+    }
+
+    .code-top {
+        background: #232326; padding: 7px 12px;
+        display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .c-tabs { display: flex; gap: 3px; }
+
+    .c-tab {
+        font: 700 9px/1 var(--mono); color: #71717A;
+        padding: 3px 8px; border-radius: var(--r-xs);
+        background: transparent; border: none; cursor: pointer;
+        transition: background .15s, color .15s; letter-spacing: .4px;
+    }
+
+    .c-tab.on { background: var(--a); color: #fff; }
+
+    .c-acts { display: flex; gap: 4px; align-items: center; }
+
+    .c-pill {
+        font: 600 9px/1 var(--mono); color: #A1A1AA;
+        padding: 3px 9px; border-radius: var(--r-xs);
+        background: rgba(255,255,255,.06); border: none; cursor: pointer;
+        transition: background .15s, color .15s; letter-spacing: .3px;
+    }
+
+    .c-pill:hover { background: var(--a); color: #fff; }
+
+    .raw-link {
+        font: 600 9px/1 var(--mono); color: #fff;
+        padding: 3px 9px; border-radius: var(--r-xs);
+        background: #22C55E; text-decoration: none; display: inline-flex; align-items: center;
+        letter-spacing: .3px;
+    }
+
+    .code-body {
+        padding: 13px 14px;
+        font: 400 11.5px/2 var(--mono);
+        color: #A1A1AA; max-height: 220px; overflow-y: auto;
+    }
+
+    .code-body.green pre { color: #86EFAC; white-space: pre-wrap; word-break: break-all; }
+
+    pre { white-space: pre-wrap; word-break: break-all; }
+
+    .spin { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.1); border-top-color: #86EFAC; border-radius: 50%; animation: sp .7s linear infinite; margin: 10px auto; }
+    @keyframes sp { to { transform: rotate(360deg); } }
+
+    /* ─────────────────────────────────────────────
+       SIDE DRAWER (hamburger)
+    ───────────────────────────────────────────── */
+    .drawer-overlay {
+        position: fixed; inset: 0;
+        background: rgba(17,17,19,.08);
+        backdrop-filter: blur(8px);
+        z-index: 400; opacity: 0; visibility: hidden;
+        transition: opacity .28s, visibility .28s;
+    }
+
+    .drawer-overlay.open { opacity: 1; visibility: visible; }
+
+    .drawer {
+        position: absolute; right: 14px; top: 14px; bottom: 14px;
+        width: 260px; background: var(--surface);
+        border-radius: var(--r-2xl); padding: 20px 16px;
+        transform: translateX(115%);
+        transition: transform .36s var(--spring);
+        border: 1px solid var(--line);
+        box-shadow: 0 16px 48px rgba(0,0,0,.08);
+        overflow-y: auto; display: flex; flex-direction: column; gap: 8px;
+    }
+
+    .drawer-overlay.open .drawer { transform: translateX(0); }
+
+    .drawer-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+    .drawer-head h2 { font: 700 14px/1 var(--font); letter-spacing: -.2px; }
+    .drawer-x { cursor: pointer; color: var(--text-2); font-size: 19px; line-height: 1; transition: color .15s; }
+    .drawer-x:hover { color: var(--text-1); }
+
+    /* info widgets */
+    .info-widget {
+        background: var(--surface-2); border: 1px solid var(--line);
+        border-radius: var(--r-lg); padding: 13px; text-align: center;
+    }
+
+    .iw-time  { font: 600 20px/1.1 var(--mono); color: var(--text-1); letter-spacing: .5px; }
+    .iw-sub   { font: 500 10px/1 var(--font); color: var(--text-2); margin-top: 4px; }
+    .iw-tz    { font: 600 9px/1 var(--font); color: var(--a); margin-top: 3px; letter-spacing: .2px; }
+
+    .iw-weather { display: flex; align-items: center; justify-content: center; gap: 10px; }
+    .iw-weather .mi { font-size: 22px; color: var(--a); }
+
+    /* nav links */
+    .d-link {
+        text-decoration: none; color: var(--text-1);
+        font: 500 13px/1 var(--font);
+        padding: 10px 12px; background: var(--surface-2);
+        border-radius: var(--r-md); display: flex; align-items: center; gap: 9px;
+        border: 1px solid transparent;
+        transition: background .15s, border-color .15s, color .15s;
+    }
+
+    .d-link .mi  { font-size: 16px; color: var(--a); }
+    .d-link:hover { background: var(--a); color: #fff; border-color: var(--a); }
+    .d-link:hover .mi { color: #fff; }
+
+    /* ─────────────────────────────────────────────
+       TOAST + NFT
+    ───────────────────────────────────────────── */
+    .toast {
+        position: fixed; bottom: 18px; left: 50%;
+        transform: translateX(-50%) translateY(90px);
+        background: var(--text-1); color: #fff;
+        padding: 9px 16px; border-radius: var(--r-oo);
+        display: flex; align-items: center; gap: 7px;
+        box-shadow: 0 6px 24px rgba(0,0,0,.14);
+        z-index: 999; transition: transform .4s var(--spring);
+        font: 500 12.5px/1 var(--font); white-space: nowrap;
+    }
+
+    .toast.on { transform: translateX(-50%) translateY(0); }
+    .toast .mi { font-size: 14px; color: #86EFAC; }
+
+    .nft {
+        position: fixed; bottom: 14px; right: 14px;
+        width: min(244px, calc(100vw - 28px));
+        background: var(--surface); border: 1px solid var(--line);
+        border-radius: var(--r-xl); padding: 13px;
+        box-shadow: 0 6px 24px rgba(0,0,0,.06);
+        z-index: 150; display: none;
+    }
+
+    .nft.on { display: block; animation: slideR .36s var(--spring); }
+    @keyframes slideR { from{opacity:0;transform:translateX(14px)} to{opacity:1;transform:translateX(0)} }
+
+    .nft-x { position: absolute; top: 10px; right: 10px; cursor: pointer; color: var(--text-3); font-size: 15px; transition: color .15s; }
+    .nft-x:hover { color: var(--text-1); }
+    .nft-row { display: flex; gap: 10px; align-items: center; }
+    .nft-ico { background: var(--surface-2); padding: 8px; border-radius: var(--r-md); flex-shrink: 0; }
+    .nft-ico .mi { color: var(--a); font-size: 17px; display: block; }
+
+    /* ─────────────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────────────── */
+    @media (min-width: 900px) {
+        .body-grid     { grid-template-columns: 1fr 1fr; }
+        .pane-console  { border-top: none; border-left: 1px solid var(--line); }
+        .topbar-brand  { width: var(--sidebar-w); border-right: 1px solid var(--line); }
+    }
+
+    @media (max-width: 899px) {
+        .sidebar { transform: translateX(-100%); box-shadow: none; }
+        .sidebar.open { transform: translateX(0); box-shadow: 6px 0 20px rgba(0,0,0,.06); }
+        .sb-overlay.show { display: block; }
+        .main { margin-left: 0 !important; }
+        .sb-btn { display: flex; }
+        .topbar-brand { border-right: none; }
+    }
+
+    @media (max-width: 600px) {
+        :root { --topbar-h: 50px; }
+        .topbar { padding: 0 12px; gap: 8px; }
+        .topbar-brand { padding-right: 0; }
+        .tb-stat { display: none; }
+        .search-wrap { max-width: none; }
+        .banner { padding: 14px 14px 0; }
+        .filter-bar { padding: 10px 14px 0; }
+        .api-list   { padding: 10px 14px 80px; }
+        .card-head  { padding: 10px 12px; }
+        .c-path     { font-size: 11px; }
+        .card-desc  { padding-left: 0; }
+        .pane-form, .pane-console { padding: 13px; }
+        .code-body  { font-size: 10.5px; max-height: 180px; }
+        .drawer     { right: 10px; top: 10px; bottom: 10px; width: calc(100vw - 20px); }
+        .nft        { right: 10px; bottom: 10px; width: calc(100vw - 20px); }
+        .banner-chips { width: 100%; }
+        .chip { flex: 1; }
+    }
     </style>
 </head>
 <body>
 
-<!-- ══ TOPBAR ══ -->
+<!-- ╔══ TOPBAR ══╗ -->
 <header class="topbar">
-    <!-- sidebar toggle (mobile) -->
-    <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()" aria-label="Toggle sidebar">
-        <i class="material-icons-round">menu_open</i>
+    <button class="sb-btn" id="sbBtn" aria-label="Toggle sidebar">
+        <span class="mi material-icons-round">menu_open</span>
     </button>
 
-    <div class="topbar-brand">
-        <img src="src/icon.jpg" alt="XTE">
+    <a href="/" class="topbar-brand">
+        <img src="src/icon.jpg" alt="XTE" width="24" height="24" loading="eager">
         <span>XTE APIS</span>
-    </div>
+    </a>
 
-    <div class="topbar-search" id="topbarSearch">
-        <i class="material-icons-round">search</i>
-        <input type="text" id="apiSearch" placeholder="Search endpoints..." autocomplete="off">
-        <div class="search-results-popover" id="searchResults"></div>
+    <div class="search-wrap">
+        <span class="mi material-icons-round">search</span>
+        <input type="text" id="apiSearch" placeholder="Search endpoints…" autocomplete="off" spellcheck="false">
+        <div class="search-drop" id="searchDrop"></div>
     </div>
 
     <div class="topbar-right">
-        <!-- clock & weather: visible on tablet+ -->
-        <div class="topbar-stat" id="clockStatBar">
-            <i class="material-icons-round">schedule</i>
-            <span id="clockBarDisplay">--:--</span>
+        <div class="tb-stat">
+            <span class="mi material-icons-round">schedule</span>
+            <span id="clkTxt">--:--</span>
         </div>
-        <div class="topbar-stat" id="weatherStatBar">
-            <i class="material-icons-round" id="weatherIconBar">cloud</i>
-            <span id="weatherBarDisplay">--°C</span>
+        <div class="tb-stat">
+            <span class="mi material-icons-round" id="wIcon">cloud</span>
+            <span id="wTxt">--°C</span>
         </div>
-
-        <!-- hamburger – always visible, orange circle -->
-        <button class="menu-trigger" id="openMenu" aria-label="Open menu">
-            <i class="material-icons-round">menu</i>
+        <button class="ham-btn" id="openDrawer" aria-label="Menu">
+            <span class="mi material-icons-round">menu</span>
         </button>
     </div>
 </header>
 
-<!-- ══ SHELL ══ -->
+<!-- ╔══ SHELL ══╗ -->
 <div class="shell">
 
     <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
-        <div class="sidebar-inner" id="sidebarContent">
-            <div style="padding:14px;font-size:11px;color:var(--text-xs)">Loading...</div>
+        <div class="sb-head">
+            <span class="sb-head-label">API Reference</span>
+        </div>
+        <div class="sb-body" id="sbBody">
+            <div style="padding:16px;font:400 11px/1 var(--font);color:var(--text-3)">Loading…</div>
         </div>
     </aside>
-    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    <div class="sb-overlay" id="sbOverlay" onclick="closeSb()"></div>
 
     <!-- MAIN -->
     <main class="main">
 
-        <!-- hero -->
-        <div class="hero-strip">
-            <div class="hero-title-block">
-                <div class="hero-eyebrow">REST API Platform</div>
-                <h1 class="hero-title">XTE <span>APIS</span></h1>
-                <p class="hero-sub">Modern API Documentation Interface</p>
+        <!-- banner -->
+        <div class="banner">
+            <div class="banner-left">
+                <div class="banner-tag">REST API Platform</div>
+                <h1 class="banner-title">XTE <span>APIS</span></h1>
+                <p class="banner-sub">Interactive API Documentation</p>
             </div>
-            <div class="hero-stats">
-                <div class="stat-chip">
-                    <i class="material-icons-round">api</i>
+            <div class="banner-chips">
+                <div class="chip">
+                    <span class="mi material-icons-round">api</span>
                     <div>
-                        <div class="stat-chip-label">Endpoints</div>
-                        <div class="stat-chip-val" id="endpointsCount">0</div>
+                        <div class="chip-label">Endpoints</div>
+                        <div class="chip-val" id="epCnt">–</div>
                     </div>
                 </div>
-                <div class="stat-chip">
-                    <i class="material-icons-round">bolt</i>
+                <div class="chip">
+                    <span class="mi material-icons-round">bolt</span>
                     <div>
-                        <div class="stat-chip-label">Status</div>
-                        <div class="stat-chip-val" style="color:#22C55E">LIVE</div>
+                        <div class="chip-label">Status</div>
+                        <div class="chip-val" style="color:var(--green)">LIVE</div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- filter -->
-        <div class="filter-row" id="catRow">
-            <button class="cat-pill active" id="btn-all" onclick="filterByTag('all')">ALL</button>
+        <div class="filter-bar" id="filterBar">
+            <button class="f-pill on" id="pill-all" onclick="filterTag('all')">All</button>
         </div>
 
         <!-- api cards -->
-        <div class="api-list" id="apiContainer">
-            <div style="text-align:center;padding:70px;color:var(--text-dim)">
-                <i class="material-icons-round" style="font-size:34px;display:block;margin-bottom:8px;animation:spin 2s linear infinite">sync</i>
-                Initializing...
-            </div>
+        <div class="api-list" id="apiList">
+            <div class="sk"></div>
+            <div class="sk" style="opacity:.7"></div>
+            <div class="sk" style="opacity:.5"></div>
+            <div class="sk" style="opacity:.3"></div>
         </div>
 
     </main>
 </div>
 
-<!-- ══ SIDE DRAWER (hamburger) ══ -->
-<div class="side-panel" id="sidePanel">
-    <div class="panel-content">
-        <div class="panel-head">
+<!-- ╔══ SIDE DRAWER (hamburger) ══╗ -->
+<div class="drawer-overlay" id="drawerOverlay">
+    <div class="drawer" id="drawer">
+        <div class="drawer-head">
             <h2>Menu</h2>
-            <i class="material-icons-round panel-close" id="closeMenu">close</i>
+            <span class="mi material-icons-round drawer-x" id="closeDrawer">close</span>
         </div>
 
-        <!-- clock display in drawer -->
-        <div class="panel-clock-box">
-            <div class="panel-clock-time" id="drawerClock">--:--:--</div>
-            <div class="panel-clock-label" id="drawerDate">---</div>
-            <div class="panel-clock-tz" id="drawerTz">Detecting timezone...</div>
+        <!-- clock widget -->
+        <div class="info-widget">
+            <div class="iw-time" id="dwClk">--:--:--</div>
+            <div class="iw-sub"  id="dwDate">---</div>
+            <div class="iw-tz"   id="dwTz">Detecting timezone…</div>
         </div>
 
-        <!-- weather in drawer (mobile) -->
-        <div class="panel-clock-box" style="margin-bottom:14px">
-            <div style="display:flex;align-items:center;justify-content:center;gap:8px">
-                <i class="material-icons-round" id="weatherIconDrawer" style="color:var(--primary);font-size:22px">cloud</i>
+        <!-- weather widget -->
+        <div class="info-widget">
+            <div class="iw-weather">
+                <span class="mi material-icons-round" id="dwWIcon">cloud</span>
                 <div>
-                    <div class="panel-clock-time" id="weatherDrawerTemp">--°C</div>
-                    <div class="panel-clock-label" id="weatherDrawerStatus">Loading...</div>
+                    <div class="iw-time" id="dwWTemp">--°C</div>
+                    <div class="iw-sub"  id="dwWStat">Loading…</div>
                 </div>
             </div>
         </div>
 
-        <a href="/"  class="nav-link"><i class="material-icons-round">dashboard</i>Dashboard</a>
-        <a href="/docs" class="nav-link"><i class="material-icons-round">api</i>API Docs</a>
-        <a href="/dev" class="nav-link"><i class="material-icons-round">code</i>Developer</a>
-        <a href="https://t.me/depstore11" target="_blank" class="nav-link"><i class="material-icons-round">campaign</i>Updates</a>
+        <a href="/"    class="d-link"><span class="mi material-icons-round">home</span>Home</a>
+        <a href="/docs" class="d-link"><span class="mi material-icons-round">api</span>API Docs</a>
+        <a href="/dev"  class="d-link"><span class="mi material-icons-round">code</span>Developer</a>
+        <a href="https://t.me/depstore11" target="_blank" rel="noopener" class="d-link">
+            <span class="mi material-icons-round">campaign</span>Updates
+        </a>
     </div>
 </div>
 
-<!-- NFT box -->
-<div class="nft-announcement" id="nftBox">
-    <i class="material-icons-round nft-close" onclick="closeNft()">close</i>
-    <div class="nft-inner">
-        <div class="nft-icon"><i class="material-icons-round">notifications_active</i></div>
+<!-- NFT -->
+<div class="nft" id="nftBox">
+    <span class="mi material-icons-round nft-x" onclick="closeNft()">close</span>
+    <div class="nft-row">
+        <div class="nft-ico"><span class="mi material-icons-round">notifications_active</span></div>
         <div>
-            <p id="nftTitle" style="font-weight:700;font-size:13px;color:var(--text-main);margin:0">System Alert</p>
-            <p id="nftMsg"   style="font-size:11px;color:var(--text-dim);margin:0">Checking for updates...</p>
+            <p id="nftTitle" style="font:600 13px/1.3 var(--font);color:var(--text-1);margin:0">System Alert</p>
+            <p id="nftMsg"   style="font:400 11px/1.4 var(--font);color:var(--text-2);margin:2px 0 0">Checking for updates…</p>
         </div>
     </div>
 </div>
 
 <!-- Toast -->
-<div class="notification" id="toast">
-    <i class="material-icons-round">check_circle</i>
-    <span id="toastMsg">Action successful</span>
+<div class="toast" id="toast">
+    <span class="mi material-icons-round">check_circle</span>
+    <span id="toastTxt">Done!</span>
 </div>
 
 <script>
-/* ─── Constants ─── */
-const BASE_URL = "https://api.xte.web.id";
+/* ══ CONFIG ══ */
+const BASE = 'https://api.xte.web.id';
 
-/* ─── DOM refs ─── */
-const sidePanel       = document.getElementById('sidePanel');
-const openMenu        = document.getElementById('openMenu');
-const closeMenu       = document.getElementById('closeMenu');
-const toast           = document.getElementById('toast');
-const apiSearch       = document.getElementById('apiSearch');
-const searchResults   = document.getElementById('searchResults');
-const nftBox          = document.getElementById('nftBox');
-const endpointsCount  = document.getElementById('endpointsCount');
-const sidebar         = document.getElementById('sidebar');
-const sidebarOverlay  = document.getElementById('sidebarOverlay');
+/* ══ REFS ══ */
+const drawerOverlay = document.getElementById('drawerOverlay');
+const openDrawerBtn = document.getElementById('openDrawer');
+const closeDrawerBtn= document.getElementById('closeDrawer');
+const toast         = document.getElementById('toast');
+const apiSearch     = document.getElementById('apiSearch');
+const searchDrop    = document.getElementById('searchDrop');
+const nftBox        = document.getElementById('nftBox');
+const epCnt         = document.getElementById('epCnt');
+const sidebar       = document.getElementById('sidebar');
+const sbOverlay     = document.getElementById('sbOverlay');
 
-/* ─── State ─── */
-let apiDataStore = [], searchTimer;
-let userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-let tzLabel      = userTimezone;
+/* ══ STATE ══ */
+let store = [], timer;
+let tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+let geo = null;
 
-/* ══════════════════════
-   TIMEZONE + GEOLOCATION
-══════════════════════ */
-async function detectTimezone() {
-    // Use browser-native timezone first (most reliable)
-    userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+/* ══ DRAWER ══ */
+openDrawerBtn.onclick  = () => drawerOverlay.classList.add('open');
+closeDrawerBtn.onclick = () => drawerOverlay.classList.remove('open');
+drawerOverlay.onclick  = (e) => { if (e.target === drawerOverlay) drawerOverlay.classList.remove('open'); };
 
-    // Try to get a friendly label via IP geolocation
-    try {
-        const r    = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(4000) });
-        const data = await r.json();
-        if (data.timezone) {
-            userTimezone = data.timezone;
-            // Build display label: city + offset
-            const city   = data.city || data.region || '';
-            const offset = getUTCOffset(data.timezone);
-            tzLabel = city ? `${city} (${offset})` : offset;
-        } else {
-            tzLabel = getUTCOffset(userTimezone);
-        }
-    } catch(e) {
-        tzLabel = getUTCOffset(userTimezone);
-    }
+/* ══ SIDEBAR MOBILE ══ */
+document.getElementById('sbBtn').onclick = () => sidebar.classList.contains('open') ? closeSb() : openSb();
 
-    document.getElementById('drawerTz').textContent = `${userTimezone} · ${tzLabel}`;
-}
-
-function getUTCOffset(tz) {
-    try {
-        const now  = new Date();
-        const parts = new Intl.DateTimeFormat('en-US', {
-            timeZone: tz, timeZoneName: 'shortOffset'
-        }).formatToParts(now);
-        const tzName = parts.find(p => p.type === 'timeZoneName');
-        return tzName ? tzName.value : 'UTC';
-    } catch(e) { return 'UTC'; }
-}
-
-/* ══════════════════════
-   CLOCK
-══════════════════════ */
-function updateClock() {
-    const now = new Date();
-
-    // Format for user's detected timezone
-    const timeStr = now.toLocaleTimeString('en-GB', {
-        timeZone:  userTimezone,
-        hour:      '2-digit',
-        minute:    '2-digit',
-        second:    '2-digit',
-        hour12:    false
-    });
-
-    const shortTime = now.toLocaleTimeString('en-GB', {
-        timeZone:  userTimezone,
-        hour:      '2-digit',
-        minute:    '2-digit',
-        hour12:    false
-    });
-
-    const dateStr = now.toLocaleDateString('en-GB', {
-        timeZone: userTimezone,
-        weekday:  'short',
-        day:      'numeric',
-        month:    'short'
-    });
-
-    // Drawer (full HH:MM:SS)
-    document.getElementById('drawerClock').textContent = timeStr;
-    document.getElementById('drawerDate').textContent  = dateStr;
-
-    // Topbar bar (HH:MM only, compact)
-    document.getElementById('clockBarDisplay').textContent = shortTime;
-}
-
-/* ══════════════════════
-   WEATHER
-══════════════════════ */
-async function updateWeather() {
-    try {
-        // Get lat/lon from geolocation or fallback to ipapi
-        let lat = 0, lon = 0;
-        try {
-            const geo = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(4000) });
-            const g   = await geo.json();
-            lat = g.latitude  || 0;
-            lon = g.longitude || 0;
-        } catch(e) {}
-
-        const r  = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code,is_day`);
-        const d  = await r.json();
-        const t  = Math.round(d.current.temperature_2m);
-        const wc = d.current.weather_code;
-        const dy = d.current.is_day;
-
-        let icon = dy ? 'wb_sunny' : 'nights_stay';
-        let status = dy ? 'Sunny' : 'Clear';
-        if (wc >= 1  && wc <= 2)  { icon = 'wb_cloudy';   status = 'Partly Cloudy'; }
-        if (wc === 3)               { icon = 'cloud';        status = 'Overcast'; }
-        if (wc >= 45 && wc <= 48)  { icon = 'cloud_queue';  status = 'Foggy'; }
-        if (wc >= 51 && wc <= 67)  { icon = 'grain';        status = 'Rainy'; }
-        if (wc >= 80 && wc <= 82)  { icon = 'water_drop';   status = 'Showers'; }
-        if (wc >= 85 && wc <= 86)  { icon = 'ac_unit';      status = 'Snow'; }
-        if (wc >= 95)               { icon = 'flash_on';     status = 'Stormy'; }
-
-        // Topbar
-        document.getElementById('weatherBarDisplay').textContent  = `${t}°C`;
-        document.getElementById('weatherIconBar').textContent      = icon;
-
-        // Drawer
-        document.getElementById('weatherDrawerTemp').textContent   = `${t}°C`;
-        document.getElementById('weatherDrawerStatus').textContent = status;
-        document.getElementById('weatherIconDrawer').textContent   = icon;
-
-    } catch(e) {
-        document.getElementById('weatherBarDisplay').textContent   = 'N/A';
-        document.getElementById('weatherDrawerTemp').textContent   = 'N/A';
-        document.getElementById('weatherDrawerStatus').textContent = 'Unavailable';
-    }
-}
-
-/* ══════════════════════
-   SIDEBAR TOGGLE
-══════════════════════ */
-function toggleSidebar() {
-    if (sidebar.classList.contains('open')) { closeSidebar(); }
-    else { openSidebar(); }
-}
-
-function openSidebar() {
+function openSb() {
     sidebar.classList.add('open');
-    sidebarOverlay.classList.add('show');
-    sidebarOverlay.style.display = 'block';
+    sbOverlay.classList.add('show');
+    sbOverlay.style.display = 'block';
 }
 
-function closeSidebar() {
+function closeSb() {
     sidebar.classList.remove('open');
-    sidebarOverlay.classList.remove('show');
-    setTimeout(() => { if (!sidebarOverlay.classList.contains('show')) sidebarOverlay.style.display = ''; }, 300);
+    sbOverlay.classList.remove('show');
+    setTimeout(() => { if (!sbOverlay.classList.contains('show')) sbOverlay.style.display = ''; }, 280);
 }
 
-/* ══════════════════════
-   SIDE DRAWER (hamburger)
-══════════════════════ */
-openMenu.onclick  = () => sidePanel.classList.add('active');
-closeMenu.onclick = () => sidePanel.classList.remove('active');
-sidePanel.onclick = (e) => { if (e.target === sidePanel) sidePanel.classList.remove('active'); };
+/* ══ GEO (shared, cached) ══ */
+async function getGeo() {
+    if (geo) return geo;
+    try { geo = await (await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(4500) })).json(); }
+    catch { geo = {}; }
+    return geo;
+}
 
-/* ══════════════════════
-   TOAST & NFT
-══════════════════════ */
+/* ══ TIMEZONE ══ */
+async function detectTz() {
+    const d = await getGeo();
+    if (d.timezone) {
+        tz = d.timezone;
+        const city = d.city || d.region || '';
+        const off  = tzOff(tz);
+        document.getElementById('dwTz').textContent = city ? `${city} · ${off}` : `${tz} · ${off}`;
+    } else {
+        document.getElementById('dwTz').textContent = `${tz} · ${tzOff(tz)}`;
+    }
+}
+
+function tzOff(zone) {
+    try {
+        const parts = new Intl.DateTimeFormat('en-US', { timeZone: zone, timeZoneName: 'shortOffset' }).formatToParts(new Date());
+        return parts.find(p => p.type === 'timeZoneName')?.value || 'UTC';
+    } catch { return 'UTC'; }
+}
+
+/* ══ CLOCK ══ */
+function tick() {
+    const n = new Date(), o = { timeZone: tz, hour12: false };
+    document.getElementById('clkTxt').textContent  = n.toLocaleTimeString('en-GB', { ...o, hour: '2-digit', minute: '2-digit' });
+    document.getElementById('dwClk').textContent   = n.toLocaleTimeString('en-GB', { ...o, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    document.getElementById('dwDate').textContent  = n.toLocaleDateString('en-GB',  { timeZone: tz, weekday: 'short', day: 'numeric', month: 'short' });
+}
+
+/* ══ WEATHER ══ */
+async function loadWeather() {
+    try {
+        const g   = await getGeo();
+        const lat = g.latitude || 0, lon = g.longitude || 0;
+        const d   = await (await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code,is_day`)).json();
+        const t   = Math.round(d.current.temperature_2m);
+        const wc  = d.current.weather_code, dy = d.current.is_day;
+        let ic = dy ? 'wb_sunny' : 'nights_stay', st = dy ? 'Sunny' : 'Clear';
+        if (wc>=1&&wc<=2)    { ic='wb_cloudy';  st='Partly Cloudy'; }
+        if (wc===3)           { ic='cloud';       st='Overcast'; }
+        if (wc>=45&&wc<=48)  { ic='cloud_queue'; st='Foggy'; }
+        if (wc>=51&&wc<=67)  { ic='grain';       st='Rainy'; }
+        if (wc>=80&&wc<=82)  { ic='water_drop';  st='Showers'; }
+        if (wc>=85&&wc<=86)  { ic='ac_unit';     st='Snow'; }
+        if (wc>=95)           { ic='flash_on';    st='Stormy'; }
+        document.getElementById('wTxt').textContent    = `${t}°C`;
+        document.getElementById('wIcon').textContent   = ic;
+        document.getElementById('dwWTemp').textContent = `${t}°C`;
+        document.getElementById('dwWStat').textContent = st;
+        document.getElementById('dwWIcon').textContent = ic;
+    } catch { document.getElementById('wTxt').textContent = 'N/A'; }
+}
+
+/* ══ TOAST ══ */
 function showToast(msg) {
-    document.getElementById('toastMsg').textContent = msg;
-    toast.classList.add('active');
-    setTimeout(() => toast.classList.remove('active'), 2800);
+    document.getElementById('toastTxt').textContent = msg;
+    toast.classList.add('on');
+    setTimeout(() => toast.classList.remove('on'), 2600);
 }
 
-function closeNft() { nftBox.classList.remove('active'); }
+function closeNft() { nftBox.classList.remove('on'); }
 
-function copyToClipboard(id) {
+function copyText(id) {
     navigator.clipboard.writeText(document.getElementById(id).textContent);
-    showToast("Copied to clipboard!");
+    showToast('Copied!');
 }
 
-/* ══════════════════════
-   FILTER
-══════════════════════ */
-function filterByTag(tag) {
-    document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
-    if (tag === 'all') document.getElementById('btn-all')?.classList.add('active');
+/* ══ FILTER ══ */
+function filterTag(tag) {
+    document.querySelectorAll('.f-pill').forEach(p => p.classList.remove('on'));
+    document.getElementById('pill-all')?.classList[tag === 'all' ? 'add' : 'remove']('on');
     document.querySelectorAll('.api-card').forEach(el => {
-        el.style.display = (tag === 'all' || el.dataset.tag === tag) ? 'block' : 'none';
+        el.style.display = (tag === 'all' || el.dataset.tag === tag) ? '' : 'none';
     });
-    document.querySelectorAll('.sidebar-item').forEach(el => {
-        el.classList.toggle('active', tag !== 'all' && el.dataset.tag === tag);
+    document.querySelectorAll('.sb-item').forEach(el => {
+        el.classList.toggle('on', tag !== 'all' && el.dataset.tag === tag);
     });
 }
 
-/* ══════════════════════
-   SEARCH
-══════════════════════ */
-apiSearch.oninput = () => { clearTimeout(searchTimer); searchTimer = setTimeout(runSearch, 120); };
+/* ══ SEARCH ══ */
+apiSearch.oninput = () => { clearTimeout(timer); timer = setTimeout(doSearch, 120); };
 
-function runSearch() {
-    const val = apiSearch.value.toLowerCase().trim();
-    if (!val) { searchResults.style.display = 'none'; return; }
-    const matches = apiDataStore.filter(i =>
-        i.path.toLowerCase().includes(val) ||
-        (i.info.summary && i.info.summary.toLowerCase().includes(val))
-    );
-    searchResults.innerHTML = matches.length
-        ? matches.map(m => `<div class="search-item" onclick="selectSearch(${m.id})"><span class="m-tag">${m.method.toUpperCase()}</span><span class="p-text">${m.path}</span></div>`).join('')
-        : `<div class="search-item"><span class="p-text">No results found</span></div>`;
-    searchResults.style.display = 'block';
+function doSearch() {
+    const q = apiSearch.value.toLowerCase().trim();
+    if (!q) { searchDrop.style.display = 'none'; return; }
+    const hits = store.filter(i => i.path.toLowerCase().includes(q) || (i.info.summary || '').toLowerCase().includes(q));
+    searchDrop.innerHTML = hits.length
+        ? hits.map(h => `<div class="s-row" onclick="pickResult(${h.id})"><span class="s-badge">${h.method.toUpperCase()}</span><span class="s-path">${h.path}</span></div>`).join('')
+        : `<div class="s-row"><span class="s-path" style="color:var(--text-3)">No results</span></div>`;
+    searchDrop.style.display = 'block';
 }
 
-function selectSearch(id) {
-    searchResults.style.display = 'none'; apiSearch.value = '';
-    filterByTag('all');
-    // close sidebar on mobile after selection
-    closeSidebar();
-    setTimeout(() => toggleApi(id), 100);
+function pickResult(id) {
+    searchDrop.style.display = 'none'; apiSearch.value = '';
+    filterTag('all');
+    if (window.innerWidth < 900) closeSb();
+    setTimeout(() => openCard(id), 80);
 }
 
-document.addEventListener('click', (e) => {
-    if (!apiSearch.contains(e.target) && !searchResults.contains(e.target))
-        searchResults.style.display = 'none';
+document.addEventListener('click', e => {
+    if (!apiSearch.contains(e.target) && !searchDrop.contains(e.target))
+        searchDrop.style.display = 'none';
 });
 
-/* ══════════════════════
-   TOGGLE API CARD
-══════════════════════ */
-function toggleApi(id) {
-    const el   = document.getElementById(`details-${id}`);
+/* ══ CARD OPEN/CLOSE ══ */
+function openCard(id) {
+    const body = document.getElementById(`cb-${id}`);
     const card = document.getElementById(`card-${id}`);
-    if (!el || !card) return;
-    const header = card.querySelector('.api-header');
-    const was    = el.classList.contains('active');
-
-    document.querySelectorAll('.api-details').forEach(d => d.classList.remove('active'));
-    document.querySelectorAll('.api-header').forEach(h => h.classList.remove('active'));
-    document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
-
+    if (!body || !card) return;
+    const hdr = card.querySelector('.card-head');
+    const was = body.classList.contains('open');
+    document.querySelectorAll('.card-body').forEach(b => b.classList.remove('open'));
+    document.querySelectorAll('.card-head').forEach(h => h.classList.remove('open'));
+    document.querySelectorAll('.api-card').forEach(c => c.classList.remove('active-card'));
+    document.querySelectorAll('.sb-item').forEach(s => s.classList.remove('on'));
     if (!was) {
-        el.classList.add('active'); header.classList.add('active');
-        document.querySelector(`.sidebar-item[data-id="${id}"]`)?.classList.add('active');
-        // close sidebar on mobile automatically
-        if (window.innerWidth <= 900) closeSidebar();
-        setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+        body.classList.add('open');
+        hdr.classList.add('open');
+        card.classList.add('active-card');
+        document.querySelector(`.sb-item[data-id="${id}"]`)?.classList.add('on');
+        if (window.innerWidth < 900) closeSb();
+        setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'start' }), 40);
     }
 }
 
-/* ══════════════════════
-   SHARE & URL BUILD
-══════════════════════ */
-async function shareEndpoint(id, method, path) {
-    const url = buildUrl(path, `form-${id}`);
-    if (navigator.share) {
-        try { await navigator.share({ title:`XTE APIS - ${method} ${path}`, text:`Coba endpoint:\n${method} ${path}`, url }); showToast("Shared!"); }
-        catch(e) { showToast("Share cancelled"); }
-    } else { navigator.clipboard.writeText(url); showToast("Link copied!"); }
-}
-
-function buildUrl(path, formId) {
-    const form = document.getElementById(formId);
-    if (!form) return BASE_URL + path;
+/* ══ URL BUILD ══ */
+function buildUrl(path, fid) {
+    const form = document.getElementById(fid);
+    if (!form) return BASE + path;
     const fd = new FormData(form), p = new URLSearchParams();
-    for (let [k, v] of fd.entries()) if (v && typeof v === 'string') p.append(k, v);
-    return BASE_URL + path + (p.toString() ? '?' + p.toString() : '');
+    for (const [k, v] of fd.entries()) if (v && typeof v === 'string') p.append(k, v);
+    return BASE + path + (p.toString() ? '?' + p.toString() : '');
 }
 
-/* ══════════════════════
-   CODE SNIPPETS
-══════════════════════ */
+async function shareEp(id, method, path) {
+    const url = buildUrl(path, `fm-${id}`);
+    if (navigator.share) {
+        try { await navigator.share({ title: `XTE APIS — ${method} ${path}`, url }); showToast('Shared!'); }
+        catch { showToast('Cancelled'); }
+    } else { navigator.clipboard.writeText(url); showToast('Link copied!'); }
+}
+
+/* ══ SNIPPETS ══ */
 function setSnippet(el, lang, method, url) {
     const l = lang.toLowerCase();
-    if (l === 'curl')       el.textContent = `curl -X ${method} "${url}"`;
-    else if (l === 'python') el.textContent = `import requests\n\nurl = "${url}"\nres = requests.${method.toLowerCase()}(url)\nprint(res.json())`;
-    else                     el.textContent = `fetch("${url}", { method: "${method}" })\n  .then(r => r.json())\n  .then(d => console.log(d));`;
+    if (l === 'curl')
+        el.textContent = `curl -X ${method} "${url}"`;
+    else if (l === 'python')
+        el.textContent = `import requests\n\nurl = "${url}"\nres = requests.${method.toLowerCase()}(url)\nprint(res.json())`;
+    else
+        el.textContent = `fetch("${url}", { method: "${method}" })\n  .then(r => r.json())\n  .then(d => console.log(d));`;
 }
 
 function switchTab(id, lang, method, path) {
-    const url = buildUrl(path, `form-${id}`);
-    document.querySelectorAll(`#tabs-${id} .code-tab`).forEach(t => t.classList.remove('active'));
-    event.target.classList.add('active');
-    setSnippet(document.getElementById(`code-${id}`), lang, method, url);
+    const url = buildUrl(path, `fm-${id}`);
+    document.querySelectorAll(`#tabs-${id} .c-tab`).forEach(t => t.classList.remove('on'));
+    event.target.classList.add('on');
+    setSnippet(document.getElementById(`snip-${id}`), lang, method, url);
 }
 
 function updateSnippets(id, method, path) {
-    const url    = buildUrl(path, `form-${id}`);
-    const tabEl  = document.querySelector(`#tabs-${id} .code-tab.active`);
-    const lang   = tabEl ? tabEl.textContent : 'curl';
-    const visit  = document.getElementById(`visit-${id}`);
+    const url   = buildUrl(path, `fm-${id}`);
+    const tabEl = document.querySelector(`#tabs-${id} .c-tab.on`);
+    const lang  = tabEl ? tabEl.textContent : 'curl';
+    const visit = document.getElementById(`visit-${id}`);
     if (visit) visit.href = url;
-    setSnippet(document.getElementById(`code-${id}`), lang, method, url);
+    setSnippet(document.getElementById(`snip-${id}`), lang, method, url);
 }
 
-/* ══════════════════════
-   EXECUTE REQUEST
-══════════════════════ */
-async function runRequest(id, method, path) {
-    const btn = document.getElementById(`btn-${id}`);
+/* ══ EXECUTE ══ */
+async function runReq(id, method, path) {
+    const btn = document.getElementById(`exec-${id}`);
     const pre = document.getElementById(`res-${id}`);
-    btn.textContent = "LOADING..."; btn.disabled = true;
-    pre.innerHTML = `<div class="loader"></div>`;
+    btn.textContent = 'Running…'; btn.disabled = true;
+    pre.innerHTML = '<div class="spin"></div>';
     try {
-        const form = document.getElementById(`form-${id}`);
-        let url  = BASE_URL + path, opts = { method };
+        const form = document.getElementById(`fm-${id}`);
+        let url = BASE + path, opts = { method };
         if (method.toUpperCase() === 'POST') { opts.body = new FormData(form); }
-        else { url = buildUrl(path, `form-${id}`); }
-        const res  = await fetch(url, opts);
-        const type = res.headers.get("content-type") || "";
-        if (type.includes("image")) {
+        else { url = buildUrl(path, `fm-${id}`); }
+        const res = await fetch(url, opts);
+        const ct  = res.headers.get('content-type') || '';
+        if (ct.includes('image')) {
             pre.innerHTML = `<img src="${URL.createObjectURL(await res.blob())}" style="max-width:100%;border-radius:8px;margin-top:6px">`;
-        } else if (type.includes("application/json")) {
+        } else if (ct.includes('application/json')) {
             pre.textContent = JSON.stringify(await res.json(), null, 2);
         } else {
             pre.textContent = await res.text();
         }
-    } catch(e) { pre.textContent = "Error: " + e.message; }
-    finally { btn.textContent = "EXECUTE"; btn.disabled = false; }
+    } catch(e) { pre.textContent = 'Error: ' + e.message; }
+    finally { btn.textContent = 'Execute'; btn.disabled = false; }
 }
 
-/* ══════════════════════
-   NFT
-══════════════════════ */
+/* ══ NFT ══ */
 async function fetchNft() {
     try {
-        const data = await (await fetch('src/nft.json')).json();
-        if (data?.title) {
-            document.getElementById('nftTitle').textContent = data.title;
-            document.getElementById('nftMsg').textContent   = data.message;
-            setTimeout(() => nftBox.classList.add('active'), 2000);
+        const d = await (await fetch('src/nft.json')).json();
+        if (d?.title) {
+            document.getElementById('nftTitle').textContent = d.title;
+            document.getElementById('nftMsg').textContent   = d.message;
+            setTimeout(() => nftBox.classList.add('on'), 2000);
         }
-    } catch(e) {}
+    } catch {}
 }
 
-/* ══════════════════════
-   LOAD SCHEMA
-══════════════════════ */
+/* ══ SCHEMA ══ */
 async function loadSchema() {
-    const container = document.getElementById('apiContainer');
-    const catRow    = document.getElementById('catRow');
-    const sbContent = document.getElementById('sidebarContent');
+    const list  = document.getElementById('apiList');
+    const fbar  = document.getElementById('filterBar');
+    const sbody = document.getElementById('sbBody');
 
     try {
         const data = await (await fetch('src/openapi.json')).json();
@@ -946,63 +1066,85 @@ async function loadSchema() {
                 const id   = idx++;
                 const tag  = info.tags?.[0] || 'General';
                 const m    = method.toUpperCase();
-                const desc = info.summary || info.description || "No description available.";
+                const desc = info.summary || info.description || 'No description.';
                 tags.add(tag);
-                apiDataStore.push({ id, path, method, info, tag });
+                store.push({ id, path, method, info, tag });
 
                 if (!sbMap[tag]) sbMap[tag] = '';
-                sbMap[tag] += `<div class="sidebar-item" data-id="${id}" data-tag="${tag}" onclick="toggleApi(${id})"><span class="si-method">${m}</span><span class="si-path" title="${path}">${path}</span></div>`;
+                sbMap[tag] += `
+                    <div class="sb-item" data-id="${id}" data-tag="${tag}" onclick="openCard(${id})">
+                        <span class="sb-method">${m}</span>
+                        <span class="sb-path" title="${path}">${path}</span>
+                    </div>`;
 
                 let fields = '';
                 info.parameters?.forEach(p => {
-                    fields += `<div class="field-group"><label>${p.name}${p.required ? ' <span style="color:var(--primary)">*</span>' : ''}</label><input type="text" name="${p.name}" placeholder="${p.description || ''}" oninput="updateSnippets(${id},'${m}','${path}')"></div>`;
+                    fields += `
+                        <div class="field-row">
+                            <label>${p.name}${p.required ? ' <span style="color:var(--a)">*</span>' : ''}</label>
+                            <input type="text" name="${p.name}" placeholder="${p.description || ''}"
+                                   oninput="updateSnippets(${id},'${m}','${path}')">
+                        </div>`;
                 });
+
                 if (info.requestBody?.content?.['multipart/form-data']?.schema?.properties) {
                     Object.entries(info.requestBody.content['multipart/form-data'].schema.properties).forEach(([name, prop]) => {
                         const isFile = prop.format === 'binary' || prop.type === 'file';
-                        fields += `<div class="field-group"><label>${name}${isFile ? ' (FILE)' : ''}</label><input type="${isFile ? 'file' : 'text'}" name="${name}" placeholder="${prop.description || ''}" ${isFile ? '' : `oninput="updateSnippets(${id},'${m}','${path}')"`}></div>`;
+                        fields += `
+                            <div class="field-row">
+                                <label>${name}${isFile ? ' <span style="opacity:.6;font-weight:400">(file)</span>' : ''}</label>
+                                <input type="${isFile ? 'file' : 'text'}" name="${name}"
+                                       placeholder="${prop.description || ''}"
+                                       ${isFile ? '' : `oninput="updateSnippets(${id},'${m}','${path}')"`}>
+                            </div>`;
                     });
                 }
 
                 html += `
-                <div class="api-card" id="card-${id}" data-tag="${tag}" style="animation-delay:${idx * .025}s">
-                    <div class="api-header" onclick="toggleApi(${id})">
-                        <span class="method-badge">${m}</span>
-                        <span class="path-text">${path}</span>
-                        <i class="material-icons-round chevron">expand_more</i>
+                <div class="api-card" id="card-${id}" data-tag="${tag}">
+                    <div class="card-head" onclick="openCard(${id})">
+                        <span class="m-badge">${m}</span>
+                        <span class="c-path">${path}</span>
+                        <span class="mi material-icons-round c-chevron">expand_more</span>
                     </div>
-                    <div class="api-desc-row"><p class="api-description">${desc}</p></div>
-                    <div class="api-details" id="details-${id}">
-                        <div class="detail-grid">
-                            <div class="form-section">
-                                <p class="form-label-top">Parameters</p>
-                                <form id="form-${id}" onsubmit="return false">
-                                    ${fields || '<p style="font-size:11px;color:var(--text-xs);margin-bottom:10px">No parameters required.</p>'}
-                                    <button class="btn-exec" id="btn-${id}" onclick="runRequest(${id},'${m}','${path}')">EXECUTE</button>
+                    <div class="card-desc-row">
+                        <p class="card-desc">${desc}</p>
+                    </div>
+                    <div class="card-body" id="cb-${id}">
+                        <div class="body-grid">
+                            <div class="pane-form">
+                                <p class="pane-title">Parameters</p>
+                                <form id="fm-${id}" onsubmit="return false">
+                                    ${fields || '<p style="font:400 11px/1.5 var(--font);color:var(--text-3);margin-bottom:10px">No parameters required.</p>'}
+                                    <button class="exec-btn" id="exec-${id}" onclick="runReq(${id},'${m}','${path}')">Execute</button>
                                 </form>
                             </div>
-                            <div class="console-section">
-                                <div class="code-window">
-                                    <div class="code-header">
-                                        <div class="code-tabs" id="tabs-${id}">
-                                            <button class="code-tab active" onclick="switchTab(${id},'curl','${m}','${path}')">CURL</button>
-                                            <button class="code-tab" onclick="switchTab(${id},'python','${m}','${path}')">PYTHON</button>
-                                            <button class="code-tab" onclick="switchTab(${id},'javascript','${m}','${path}')">JS</button>
+                            <div class="pane-console">
+                                <div class="code-block">
+                                    <div class="code-top">
+                                        <div class="c-tabs" id="tabs-${id}">
+                                            <button class="c-tab on" onclick="switchTab(${id},'curl','${m}','${path}')">curl</button>
+                                            <button class="c-tab" onclick="switchTab(${id},'python','${m}','${path}')">python</button>
+                                            <button class="c-tab" onclick="switchTab(${id},'javascript','${m}','${path}')">js</button>
                                         </div>
-                                        <div class="code-actions">
-                                            <a href="${BASE_URL}${path}" target="_blank" class="visit-pill" id="visit-${id}">RAW</a>
-                                            <button class="copy-pill" onclick="copyToClipboard('code-${id}')">COPY</button>
-                                            <button class="copy-pill" onclick="shareEndpoint(${id},'${m}','${path}')">SHARE</button>
+                                        <div class="c-acts">
+                                            <a href="${BASE}${path}" target="_blank" class="raw-link" id="visit-${id}">RAW</a>
+                                            <button class="c-pill" onclick="copyText('snip-${id}')">copy</button>
+                                            <button class="c-pill" onclick="shareEp(${id},'${m}','${path}')">share</button>
                                         </div>
                                     </div>
-                                    <div class="code-body"><pre id="code-${id}">curl -X ${m} "${BASE_URL}${path}"</pre></div>
+                                    <div class="code-body">
+                                        <pre id="snip-${id}">curl -X ${m} "${BASE}${path}"</pre>
+                                    </div>
                                 </div>
-                                <div class="code-window">
-                                    <div class="code-header">
-                                        <span style="font-size:9px;color:#fff;font-weight:800;letter-spacing:.3px">RESPONSE</span>
-                                        <button class="copy-pill" onclick="copyToClipboard('res-${id}')">COPY</button>
+                                <div class="code-block">
+                                    <div class="code-top">
+                                        <span style="font:700 9px/1 var(--mono);color:#71717A;letter-spacing:.5px">RESPONSE</span>
+                                        <button class="c-pill" onclick="copyText('res-${id}')">copy</button>
                                     </div>
-                                    <div class="code-body"><pre id="res-${id}">Run request to see output...</pre></div>
+                                    <div class="code-body green">
+                                        <pre id="res-${id}">Run a request to see output…</pre>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1011,42 +1153,47 @@ async function loadSchema() {
             });
         });
 
-        endpointsCount.textContent = idx;
+        epCnt.textContent = idx;
 
+        /* build sidebar */
         let sb = '';
-        Array.from(tags).sort().forEach(t => { sb += `<div class="sidebar-section"><span class="sidebar-tag">${t}</span>${sbMap[t]}</div>`; });
-        sbContent.innerHTML = sb;
-
         Array.from(tags).sort().forEach(t => {
-            const b = document.createElement('button');
-            b.className   = 'cat-pill';
-            b.textContent = t.toUpperCase();
-            b.onclick = (e) => {
-                document.querySelectorAll('.cat-pill').forEach(btn => btn.classList.remove('active'));
-                filterByTag(t); e.target.classList.add('active');
+            sb += `<div class="sb-group"><span class="sb-group-label">${t}</span>${sbMap[t]}</div>`;
+        });
+        sbody.innerHTML = sb;
+
+        /* build filter pills */
+        Array.from(tags).sort().forEach(t => {
+            const btn = document.createElement('button');
+            btn.className   = 'f-pill';
+            btn.textContent = t;
+            btn.onclick     = e => {
+                document.querySelectorAll('.f-pill').forEach(p => p.classList.remove('on'));
+                filterTag(t); e.target.classList.add('on');
             };
-            catRow.appendChild(b);
+            fbar.appendChild(btn);
         });
 
-        container.innerHTML = html;
+        list.innerHTML = html;
         fetchNft();
 
-    } catch(e) {
-        container.innerHTML = `<div style="text-align:center;color:var(--primary);padding:50px">LOAD FAILED: ${e.message}</div>`;
+    } catch (e) {
+        document.getElementById('apiList').innerHTML =
+            `<div style="padding:40px;text-align:center;font:400 13px/1 var(--font);color:var(--text-2)">
+                Failed to load: ${e.message}
+            </div>`;
     }
 }
 
-/* ══════════════════════
-   INIT
-══════════════════════ */
-window.onload = async () => {
+/* ══ INIT ══ */
+(async () => {
     loadSchema();
-    await detectTimezone();   // get tz first so clock is correct
-    updateClock();
-    updateWeather();
-    setInterval(updateClock, 1000);
-    setInterval(updateWeather, 600000);
-};
+    await detectTz();
+    tick();
+    loadWeather();
+    setInterval(tick, 1000);
+    setInterval(loadWeather, 600_000);
+})();
 </script>
 </body>
 </html>
