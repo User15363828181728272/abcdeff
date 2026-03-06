@@ -25,6 +25,19 @@
     { "name": "Religi" }
   ],
   "paths": {
+    "/xteai": {
+      "get": {
+        "tags": ["AI"],
+        "summary": "XTE AI",
+        "description": "AI Pintar berbasis Meta AI dengan persona Yuna. Ditenagai oleh Llama 3.3.",
+        "parameters": [
+          { "name": "q", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Pertanyaan untuk AI" }
+        ],
+        "responses": {
+          "200": { "description": "Respon dari xteai" }
+        }
+      }
+    },
     "/v1/ai/gpt-nano": {
       "get": {
         "summary": "GPT-4.1 Nano Chat",
