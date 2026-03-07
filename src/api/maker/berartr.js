@@ -1,7 +1,7 @@
 const { createCanvas } = require("@napi-rs/canvas");
 
 module.exports = function (app) {
-    app.get("/v2/maker/bratv2", async (req, res) => {
+    app.get("/v2/maker/brat", async (req, res) => {
         const { text } = req.query;
 
         if (!text) {
