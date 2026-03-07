@@ -12,13 +12,13 @@ module.exports = function (app) {
             const canvas = createCanvas(500, 500);
             const ctx = canvas.getContext("2d");
 
-            // Background
+            // 1. Background Putih
             ctx.fillStyle = "#FFFFFF";
             ctx.fillRect(0, 0, 500, 500);
 
             // Konfigurasi
-            const maxWidth = 450;
-            const maxHeight = 450;
+            const margin = 30; // Jarak dari pinggir
+            const maxWidth = 500 - (margin * 2);
             let fontSize = 120;
             let lines = [];
 
@@ -41,26 +41,25 @@ module.exports = function (app) {
                 return result;
             };
 
-            // Loop untuk mencari font size yang pas agar muat secara vertikal & horizontal
+            // Loop cari fontSize yang pas
             while (fontSize > 10) {
                 lines = wrapText(text, fontSize);
-                const lineHeight = fontSize * 1.2;
-                if (lines.length * lineHeight < maxHeight) break;
+                const lineHeight = fontSize * 1.1;
+                if (lines.length * lineHeight < (500 - margin * 2)) break;
                 fontSize -= 5;
             }
 
-            // Draw Text
+            // 2. Draw Text (Rata Kiri)
             ctx.fillStyle = "#000000";
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
+            ctx.textAlign = "left";
+            ctx.textBaseline = "top";
             
-            const lineHeight = fontSize * 1.2;
-            const totalHeight = lines.length * lineHeight;
-            let startY = 250 - (totalHeight / 2) + (lineHeight / 2);
+            const lineHeight = fontSize * 1.1;
+            let currentY = margin;
 
             lines.forEach((line) => {
-                ctx.fillText(line, 250, startY);
-                startY += lineHeight;
+                ctx.fillText(line, margin, currentY);
+                currentY += lineHeight;
             });
 
             const buffer = canvas.toBuffer("image/png");
