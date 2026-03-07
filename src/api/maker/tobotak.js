@@ -69,8 +69,8 @@ module.exports = function (app) {
         const { url } = req.query;
         
         // Prompt AI spesialis yang Abang buat tadi (Sangat Bagus!)
-        const fixedPrompt = `Anda adalah spesialis kolorimetri digital dan ahli dermatologi visual. Tugas: Analisis foto subjek dan lakukan transformasi kepada nya agar dia tidak memiliki rambut (botak), jangan mengubah foto atau tampilannya.`;
-
+        const fixedPrompt = `A realistic depiction of the person in the photo, now entirely bald. The emphasis should be on the shape of their head and the smooth texture of the scalp. Consider adding slight skin imperfections or stubble for realism. Maintain the same expression`;
+        
         if (!url) return res.status(400).json({ status: false, error: "Link gambarnya mana, Bos?" });
 
         try {
