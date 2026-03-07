@@ -650,6 +650,294 @@
         .banner-chips { width: 100%; }
         .chip { flex: 1; }
     }
+
+    /* ══════════════════════════════════════
+       MUSIC PLAYER WIDGET
+    ══════════════════════════════════════ */
+
+    /* FAB */
+    .music-fab {
+        position: fixed; bottom: 24px; right: 24px; z-index: 3000;
+        width: 50px; height: 50px; border-radius: var(--r-oo);
+        background: var(--text-1); color: #fff; border: none;
+        cursor: pointer; display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 4px 20px rgba(0,0,0,.18);
+        transition: transform .3s var(--spring), box-shadow .3s, background .2s;
+        animation: fabIn .6s var(--spring) 1s both;
+    }
+    @keyframes fabIn {
+        from { transform: scale(0) rotate(-180deg); opacity: 0; }
+        to   { transform: scale(1) rotate(0deg);    opacity: 1; }
+    }
+    .music-fab:hover  { transform: scale(1.1); box-shadow: 0 8px 32px rgba(0,0,0,.22); background: var(--a); }
+    .music-fab:active { transform: scale(.95); }
+    .music-fab .mi    { font-size: 22px; transition: transform .4s var(--spring); }
+    .music-fab.playing .mi { animation: fabBeat 1.1s ease-in-out infinite; }
+    @keyframes fabBeat {
+        0%,100% { transform: scale(1); }
+        50%      { transform: scale(1.2); }
+    }
+
+    /* Panel */
+    .music-panel {
+        position: fixed; bottom: 84px; right: 24px; z-index: 2999;
+        width: 340px; max-height: 82vh;
+        background: var(--surface); border: 1px solid var(--line);
+        border-radius: var(--r-2xl);
+        box-shadow: 0 24px 80px rgba(0,0,0,.13);
+        display: flex; flex-direction: column; overflow: hidden;
+        transform: translateY(20px) scale(.95); opacity: 0;
+        pointer-events: none;
+        transition: transform .4s var(--spring), opacity .35s var(--ease);
+        will-change: transform, opacity;
+    }
+    .music-panel.open {
+        transform: translateY(0) scale(1); opacity: 1;
+        pointer-events: all;
+    }
+
+    /* Now Playing header */
+    .mp-now {
+        padding: 18px 18px 14px;
+        background: var(--text-1);
+        position: relative; overflow: hidden; flex-shrink: 0;
+    }
+    .mp-now::before {
+        content: ''; position: absolute; inset: 0;
+        background: radial-gradient(circle at 80% 50%, rgba(255,255,255,.05) 0%, transparent 60%);
+        pointer-events: none;
+    }
+
+    /* Vinyl disc */
+    .mp-disc-wrap { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; position: relative; }
+    .mp-disc      { width: 58px; height: 58px; border-radius: 50%; flex-shrink: 0; position: relative; overflow: visible; }
+
+    .mp-disc-img {
+        width: 58px; height: 58px; border-radius: 50%;
+        object-fit: cover; display: block;
+        border: 3px solid rgba(255,255,255,.15);
+        animation: discSpin 8s linear infinite paused;
+        transition: filter .3s;
+    }
+    .mp-disc-img.spinning { animation-play-state: running; }
+    .mp-disc-img.loading  { filter: blur(2px) brightness(.55); }
+
+    @keyframes discSpin { to { transform: rotate(360deg); } }
+
+    /* Center hole */
+    .mp-disc::after {
+        content: ''; position: absolute; top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        width: 10px; height: 10px; border-radius: 50%;
+        background: var(--surface); border: 2px solid rgba(255,255,255,.28);
+        pointer-events: none; z-index: 2;
+    }
+
+    /* Spinner ring */
+    .mp-disc-spinner {
+        position: absolute; top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        width: 64px; height: 64px; border-radius: 50%;
+        border: 2.5px solid rgba(255,255,255,.12);
+        border-top-color: #fff;
+        animation: discSpin .8s linear infinite;
+        opacity: 0; pointer-events: none;
+        transition: opacity .3s; z-index: 3;
+    }
+    .mp-disc-spinner.show { opacity: 1; }
+
+    /* Track info */
+    .mp-info { flex: 1; min-width: 0; }
+
+    .mp-title {
+        font: 700 13px/1.3 var(--font); color: #fff;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        margin-bottom: 3px;
+    }
+    .mp-title.marquee {
+        animation: marquee 9s linear infinite;
+        white-space: nowrap; overflow: visible; display: inline-block;
+    }
+    @keyframes marquee {
+        0%,25%  { transform: translateX(0); }
+        75%,100%{ transform: translateX(calc(-100% + 120px)); }
+    }
+
+    .mp-artist { font: 500 11px/1 var(--font); color: rgba(255,255,255,.48); }
+
+    /* Controls row */
+    .mp-controls { display: flex; align-items: center; gap: 7px; }
+
+    .mp-btn {
+        background: rgba(255,255,255,.11); border: none; color: #fff;
+        width: 34px; height: 34px; border-radius: var(--r-oo);
+        cursor: pointer; display: flex; align-items: center; justify-content: center;
+        transition: background .2s, transform .2s var(--spring); flex-shrink: 0;
+    }
+    .mp-btn:hover  { background: rgba(255,255,255,.22); transform: scale(1.08); }
+    .mp-btn:active { transform: scale(.9); }
+    .mp-btn.main   { width: 40px; height: 40px; background: rgba(255,255,255,.18); }
+    .mp-btn.main:hover { background: rgba(255,255,255,.28); }
+    .mp-btn .mi { font-size: 18px; }
+    .mp-btn.main .mi { font-size: 20px; }
+
+    /* Progress */
+    .mp-prog-wrap {
+        flex: 1; height: 4px; background: rgba(255,255,255,.15);
+        border-radius: 2px; cursor: pointer; position: relative;
+        overflow: hidden;
+    }
+    .mp-prog-fill {
+        height: 100%; background: #fff; border-radius: 2px;
+        width: 0%; transition: width .5s linear; pointer-events: none;
+    }
+    /* shimmer on loading */
+    .mp-prog-wrap.loading::after {
+        content: ''; position: absolute; inset: 0;
+        background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.3) 50%, transparent 100%);
+        animation: progShimmer 1.4s ease-in-out infinite;
+    }
+    @keyframes progShimmer {
+        from { transform: translateX(-100%); }
+        to   { transform: translateX(100%); }
+    }
+
+    .mp-time { font: 500 10px/1 var(--mono); color: rgba(255,255,255,.44); white-space: nowrap; flex-shrink: 0; }
+
+    /* Search */
+    .mp-search-wrap {
+        padding: 12px 14px 8px; flex-shrink: 0;
+        border-bottom: 1px solid var(--line);
+    }
+    .mp-search-row { display: flex; gap: 7px; }
+
+    .mp-input {
+        flex: 1; padding: 8px 12px; border-radius: var(--r-sm);
+        border: 1px solid var(--line); background: var(--surface-2);
+        font: 400 12px/1 var(--font); color: var(--text-1);
+        transition: border-color .2s, box-shadow .2s, background .2s;
+    }
+    .mp-input:focus {
+        border-color: var(--a); background: var(--surface);
+        box-shadow: 0 0 0 3px var(--a-soft);
+        outline: none;
+    }
+    .mp-input::placeholder { color: var(--text-3); }
+
+    .mp-search-btn {
+        padding: 8px 12px; border-radius: var(--r-sm);
+        background: var(--text-1); color: #fff; border: none;
+        font: 600 12px/1 var(--font); cursor: pointer;
+        display: flex; align-items: center; gap: 5px;
+        transition: background .2s, transform .2s var(--spring);
+        white-space: nowrap; flex-shrink: 0;
+    }
+    .mp-search-btn:hover  { background: var(--a); transform: scale(1.04); }
+    .mp-search-btn:active { transform: scale(.96); }
+    .mp-search-btn .mi { font-size: 15px; }
+    .mp-search-btn.loading-btn .mi { animation: discSpin .8s linear infinite; }
+
+    /* Results */
+    .mp-results { flex: 1; overflow-y: auto; padding: 8px 10px 10px; }
+    .mp-results::-webkit-scrollbar { width: 3px; }
+    .mp-results::-webkit-scrollbar-thumb { background: var(--line); border-radius: 3px; }
+
+    /* Empty state */
+    .mp-empty {
+        display: flex; flex-direction: column; align-items: center;
+        justify-content: center; padding: 32px 16px; gap: 10px; color: var(--text-3);
+    }
+    .mp-empty .mi { font-size: 36px; color: var(--line); }
+    .mp-empty p   { font: 400 12px/1.6 var(--font); text-align: center; }
+
+    /* Track item */
+    .mp-track {
+        display: flex; align-items: center; gap: 10px;
+        padding: 9px 10px; border-radius: var(--r-md);
+        cursor: pointer;
+        transition: background .16s, transform .2s var(--spring);
+        position: relative; border: 1px solid transparent;
+    }
+    .mp-track:hover  { background: var(--surface-2); transform: translateX(3px); }
+    .mp-track.active { background: var(--a-soft); border-color: var(--line); }
+    .mp-track.active::before {
+        content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+        width: 3px; height: 60%; background: var(--a); border-radius: 0 2px 2px 0;
+    }
+
+    .mp-track-thumb {
+        width: 40px; height: 40px; border-radius: var(--r-sm);
+        object-fit: cover; flex-shrink: 0;
+        transition: transform .3s var(--spring);
+    }
+    .mp-track:hover .mp-track-thumb { transform: scale(1.06) rotate(-2deg); }
+
+    .mp-track-info { flex: 1; min-width: 0; }
+    .mp-track-title  { font: 600 12px/1.3 var(--font); color: var(--text-1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; }
+    .mp-track-artist { font: 400 11px/1 var(--font); color: var(--text-2); }
+
+    .mp-track-play {
+        width: 28px; height: 28px; border-radius: 50%;
+        background: var(--surface-2); border: 1px solid var(--line);
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0; transition: background .2s, transform .2s var(--spring), border-color .2s;
+    }
+    .mp-track:hover  .mp-track-play { background: var(--text-1); border-color: var(--text-1); }
+    .mp-track:hover  .mp-track-play .mi { color: #fff; }
+    .mp-track.active .mp-track-play { background: var(--a); border-color: var(--a); }
+    .mp-track.active .mp-track-play .mi { color: #fff; }
+    .mp-track-play .mi { font-size: 14px; color: var(--text-2); transition: color .2s; }
+
+    /* Sound wave bars (playing indicator) */
+    .mp-wave {
+        display: none; align-items: flex-end; gap: 2px; height: 16px;
+        flex-shrink: 0;
+    }
+    .mp-track.active .mp-wave { display: flex; }
+    .mp-track.active .mp-track-play { display: none; }
+    .mp-wave-bar {
+        width: 3px; background: var(--a); border-radius: 2px;
+        animation: waveBar 1s ease-in-out infinite;
+    }
+    .mp-wave-bar:nth-child(1) { height: 8px;  animation-delay: 0s; }
+    .mp-wave-bar:nth-child(2) { height: 14px; animation-delay: .15s; }
+    .mp-wave-bar:nth-child(3) { height: 10px; animation-delay: .3s; }
+    .mp-wave-bar:nth-child(4) { height: 6px;  animation-delay: .45s; }
+    @keyframes waveBar {
+        0%,100% { transform: scaleY(1); }
+        50%      { transform: scaleY(.35); }
+    }
+    /* paused = static bars */
+    .mp-track.active.paused .mp-wave-bar { animation-play-state: paused; }
+
+    /* Skeleton */
+    .mp-skel {
+        display: flex; align-items: center; gap: 10px; padding: 9px 10px;
+    }
+    .mp-skel-thumb {
+        width: 40px; height: 40px; border-radius: var(--r-sm);
+        background: var(--surface-2);
+        animation: skelPulse 1.5s ease-in-out infinite;
+    }
+    .mp-skel-lines { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+    .mp-skel-line {
+        height: 10px; border-radius: 4px; background: var(--surface-2);
+        animation: skelPulse 1.5s ease-in-out infinite;
+    }
+    .mp-skel-line:nth-child(2) { width: 58%; animation-delay: .18s; }
+    @keyframes skelPulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+    /* Mobile */
+    @media (max-width: 400px) {
+        .music-panel { width: calc(100vw - 20px); right: 10px; bottom: 76px; }
+        .music-fab   { bottom: 16px; right: 16px; width: 46px; height: 46px; }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+        .mp-disc-img, .mp-wave-bar, .mp-prog-wrap.loading::after,
+        .mp-skel-thumb, .mp-skel-line { animation: none !important; }
+    }
     </style>
 </head>
 <body>
@@ -795,6 +1083,47 @@
 <div class="toast" id="toast">
     <span class="mi material-icons-round">check_circle</span>
     <span id="toastTxt">Done!</span>
+</div>
+
+<!-- ══ MUSIC PLAYER FAB ══ -->
+<button class="music-fab" id="musicFab" aria-label="Music Player">
+    <span class="mi material-icons-round">music_note</span>
+</button>
+
+<!-- ══ MUSIC PANEL ══ -->
+<div class="music-panel" id="musicPanel">
+    <div class="mp-now">
+        <div class="mp-disc-wrap">
+            <div class="mp-disc">
+                <img class="mp-disc-img" id="mpDisc" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='58' height='58'%3E%3Ccircle cx='29' cy='29' r='29' fill='%23232326'/%3E%3C/svg%3E" alt="">
+                <div class="mp-disc-spinner" id="mpSpinner"></div>
+            </div>
+            <div class="mp-info">
+                <div class="mp-title" id="mpTitle">Nothing playing</div>
+                <div class="mp-artist" id="mpArtist">Search a song below</div>
+            </div>
+        </div>
+        <div class="mp-controls">
+            <button class="mp-btn" id="mpPrev" title="Previous"><span class="mi material-icons-round">skip_previous</span></button>
+            <button class="mp-btn main" id="mpPlay" title="Play / Pause"><span class="mi material-icons-round" id="mpPlayIcon">play_arrow</span></button>
+            <button class="mp-btn" id="mpStop" title="Stop"><span class="mi material-icons-round">stop</span></button>
+            <div class="mp-prog-wrap" id="mpProgWrap"><div class="mp-prog-fill" id="mpProgFill"></div></div>
+            <span class="mp-time" id="mpTime">0:00</span>
+            <button class="mp-btn" id="mpNext" title="Next"><span class="mi material-icons-round">skip_next</span></button>
+        </div>
+    </div>
+    <div class="mp-search-wrap">
+        <div class="mp-search-row">
+            <input class="mp-input" id="mpInput" type="text" placeholder="Search SoundCloud..." autocomplete="off">
+            <button class="mp-search-btn" id="mpSearchBtn"><span class="mi material-icons-round">search</span>Search</button>
+        </div>
+    </div>
+    <div class="mp-results" id="mpResults">
+        <div class="mp-empty">
+            <span class="mi material-icons-round">queue_music</span>
+            <p>Search for songs above<br>and start listening</p>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -1193,6 +1522,267 @@ async function loadSchema() {
     loadWeather();
     setInterval(tick, 1000);
     setInterval(loadWeather, 600_000);
+})();
+
+/* ══════════════════════════════════════════
+   MUSIC PLAYER
+══════════════════════════════════════════ */
+(function () {
+    const APIBASE = 'https://api.xte.web.id';
+
+    const fab        = document.getElementById('musicFab');
+    const panel      = document.getElementById('musicPanel');
+    const disc       = document.getElementById('mpDisc');
+    const spinner    = document.getElementById('mpSpinner');
+    const titleEl    = document.getElementById('mpTitle');
+    const artistEl   = document.getElementById('mpArtist');
+    const playBtn    = document.getElementById('mpPlay');
+    const playIcon   = document.getElementById('mpPlayIcon');
+    const stopBtn    = document.getElementById('mpStop');
+    const prevBtn    = document.getElementById('mpPrev');
+    const nextBtn    = document.getElementById('mpNext');
+    const progFill   = document.getElementById('mpProgFill');
+    const progWrap   = document.getElementById('mpProgWrap');
+    const timeEl     = document.getElementById('mpTime');
+    const mpInput    = document.getElementById('mpInput');
+    const searchBtn  = document.getElementById('mpSearchBtn');
+    const results    = document.getElementById('mpResults');
+
+    let audio       = new Audio();
+    let tracks      = [];
+    let currentIdx  = -1;
+    let panelOpen   = false;
+    let raf         = null;
+    let isPaused    = false;
+
+    audio.crossOrigin = 'anonymous';
+
+    /* ── FAB toggle ── */
+    fab.addEventListener('click', () => {
+        panelOpen = !panelOpen;
+        panel.classList.toggle('open', panelOpen);
+    });
+    document.addEventListener('click', (e) => {
+        if (panelOpen && !panel.contains(e.target) && e.target !== fab) {
+            panelOpen = false;
+            panel.classList.remove('open');
+        }
+    });
+
+    /* ── Search ── */
+    const doSearch = async () => {
+        const q = mpInput.value.trim();
+        if (!q) return;
+        showSkeletons();
+        searchBtn.classList.add('loading-btn');
+        try {
+            const res  = await fetch(`${APIBASE}/v1/search/soundcloud?q=${encodeURIComponent(q)}`);
+            const data = await res.json();
+            if (data.status && data.result?.length) {
+                tracks = data.result;
+                renderTracks();
+            } else {
+                showEmpty('No results. Try a different keyword.');
+            }
+        } catch {
+            showEmpty('Network error. Try again.');
+        } finally {
+            searchBtn.classList.remove('loading-btn');
+        }
+    };
+
+    searchBtn.addEventListener('click', doSearch);
+    mpInput.addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+
+    /* ── Render ── */
+    function renderTracks() {
+        results.innerHTML = '';
+        tracks.forEach((t, i) => {
+            const isActive = i === currentIdx;
+            const isPlay   = isActive && !isPaused;
+            const div = document.createElement('div');
+            div.className = 'mp-track' + (isActive ? ' active' : '') + (isActive && isPaused ? ' paused' : '');
+
+            div.innerHTML = `
+                <img class="mp-track-thumb" src="${t.thumbnail}" alt="" loading="lazy"
+                     onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\'%3E%3Crect width=\'40\' height=\'40\' rx=\'8\' fill=\'%23F0F0F2\'/%3E%3C/svg%3E'">
+                <div class="mp-track-info">
+                    <div class="mp-track-title">${esc(t.title)}</div>
+                    <div class="mp-track-artist">${esc(t.artist)}</div>
+                </div>
+                ${isActive
+                    ? `<div class="mp-wave">
+                           <div class="mp-wave-bar"></div>
+                           <div class="mp-wave-bar"></div>
+                           <div class="mp-wave-bar"></div>
+                           <div class="mp-wave-bar"></div>
+                       </div>`
+                    : `<div class="mp-track-play"><span class="mi material-icons-round">play_arrow</span></div>`
+                }`;
+            div.addEventListener('click', () => playTrack(i));
+            results.appendChild(div);
+        });
+    }
+
+    function showSkeletons() {
+        results.innerHTML = Array(5).fill(`
+            <div class="mp-skel">
+                <div class="mp-skel-thumb"></div>
+                <div class="mp-skel-lines">
+                    <div class="mp-skel-line"></div>
+                    <div class="mp-skel-line"></div>
+                </div>
+            </div>`).join('');
+    }
+
+    function showEmpty(msg) {
+        results.innerHTML = `<div class="mp-empty">
+            <span class="mi material-icons-round">queue_music</span>
+            <p>${msg || 'Search for songs above<br>and start listening'}</p>
+        </div>`;
+    }
+
+    function esc(s) {
+        return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    /* ── Play track ── */
+    async function playTrack(idx) {
+        if (idx < 0 || idx >= tracks.length) return;
+
+        if (idx === currentIdx && audio.src) {
+            togglePlay();
+            return;
+        }
+
+        currentIdx = idx;
+        isPaused   = false;
+        const t = tracks[idx];
+
+        /* update now-playing UI */
+        titleEl.textContent  = t.title;
+        artistEl.textContent = t.artist;
+        disc.src = t.thumbnail;
+        disc.classList.remove('spinning');
+        disc.classList.add('loading');
+        spinner.classList.add('show');
+        progWrap.classList.add('loading');
+        setIcon('hourglass_top');
+        renderTracks();
+
+        audio.pause();
+        cancelAnimationFrame(raf);
+        progFill.style.width = '0%';
+        timeEl.textContent = '0:00';
+
+        try {
+            const res  = await fetch(`${APIBASE}/download/soundcloud?url=${encodeURIComponent(t.url)}`);
+            const data = await res.json();
+            if (!data.status || !data.result?.url) throw new Error('no url');
+
+            audio = new Audio(data.result.url);
+            audio.crossOrigin = 'anonymous';
+            attachAudio();
+            audio.play();
+        } catch {
+            spinner.classList.remove('show');
+            progWrap.classList.remove('loading');
+            disc.classList.remove('loading');
+            setIcon('error_outline');
+            titleEl.textContent  = 'Failed to load';
+            artistEl.textContent = t.title;
+        }
+    }
+
+    function attachAudio() {
+        audio.addEventListener('canplay', () => {
+            spinner.classList.remove('show');
+            progWrap.classList.remove('loading');
+            disc.classList.remove('loading');
+            disc.classList.add('spinning');
+            setIcon('pause');
+            fab.classList.add('playing');
+            isPaused = false;
+            renderTracks();
+            startLoop();
+        }, { once: true });
+
+        audio.addEventListener('play', () => {
+            disc.classList.add('spinning');
+            setIcon('pause');
+            fab.classList.add('playing');
+            isPaused = false;
+            renderTracks();
+            startLoop();
+        });
+
+        audio.addEventListener('pause', () => {
+            disc.classList.remove('spinning');
+            setIcon('play_arrow');
+            fab.classList.remove('playing');
+            isPaused = true;
+            renderTracks();
+        });
+
+        audio.addEventListener('ended', () => {
+            disc.classList.remove('spinning');
+            setIcon('play_arrow');
+            fab.classList.remove('playing');
+            isPaused = true;
+            progFill.style.width = '0%';
+            timeEl.textContent = '0:00';
+            renderTracks();
+            if (currentIdx < tracks.length - 1) playTrack(currentIdx + 1);
+        });
+    }
+
+    function startLoop() {
+        cancelAnimationFrame(raf);
+        const loop = () => {
+            if (audio.duration) {
+                progFill.style.width = (audio.currentTime / audio.duration * 100) + '%';
+                timeEl.textContent   = fmt(audio.currentTime);
+            }
+            raf = requestAnimationFrame(loop);
+        };
+        raf = requestAnimationFrame(loop);
+    }
+
+    /* Seek on click */
+    progWrap.addEventListener('click', (e) => {
+        if (!audio.duration) return;
+        const r   = progWrap.getBoundingClientRect();
+        audio.currentTime = ((e.clientX - r.left) / r.width) * audio.duration;
+    });
+
+    /* Controls */
+    function togglePlay() {
+        if (!audio.src) return;
+        audio.paused ? audio.play() : audio.pause();
+    }
+    playBtn.addEventListener('click', togglePlay);
+
+    stopBtn.addEventListener('click', () => {
+        audio.pause();
+        audio.currentTime = 0;
+        disc.classList.remove('spinning');
+        fab.classList.remove('playing');
+        setIcon('play_arrow');
+        progFill.style.width = '0%';
+        timeEl.textContent = '0:00';
+        isPaused = true;
+        renderTracks();
+    });
+
+    prevBtn.addEventListener('click', () => { if (currentIdx > 0) playTrack(currentIdx - 1); });
+    nextBtn.addEventListener('click', () => { if (currentIdx < tracks.length - 1) playTrack(currentIdx + 1); });
+
+    /* Helpers */
+    function setIcon(name) { playIcon.textContent = name; }
+    function fmt(s) {
+        const m = Math.floor(s / 60), sec = Math.floor(s % 60);
+        return m + ':' + String(sec).padStart(2, '0');
+    }
 })();
 </script>
 </body>
