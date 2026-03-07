@@ -457,6 +457,19 @@
         "responses": { "200": { "description": "Image PNG" } }
       }
     },
+    "/v2/maker/cert-pro": {
+      "get": {
+        "tags": ["Maker"],
+        "summary": "Sertifikat apalah gatau",
+        "parameters": [
+          { "name": "name", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "title", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "reason", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "date", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "Sertifikat generated" } }
+      }
+    },
     "/v1/maker/tohitam": {
       "get": {
         "summary": "AI Skin Darkener",
