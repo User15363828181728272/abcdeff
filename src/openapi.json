@@ -441,6 +441,17 @@
         }
       }
     },
+    "/v2/maker/brat": {
+      "get": {
+        "tags": ["Maker"],
+        "summary": "Brat Text ( canvas bang )",
+        "description": "Generator teks dengan aesthetic ikonik Brat.",
+        "parameters": [
+          { "name": "text", "in": "query", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "Gambar style Brat" } }
+      }
+    },
     "/v1/maker/tfdana": {
       "get": {
         "summary": "DANA Transfer Receipt Generator",
