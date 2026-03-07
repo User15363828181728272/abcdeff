@@ -69,7 +69,7 @@ module.exports = function (app) {
         const { url } = req.query;
         
         // Prompt AI spesialis yang Abang buat tadi (Sangat Bagus!)
-        const fixedPrompt = `Anda adalah spesialis kolorimetri digital dan ahli dermatologi visual. Tugas: Analisis foto subjek dan lakukan transformasi warna kulit menjadi gelap natural (Deep/Dark Skin Tone). Instruksi: Peta Segmentasi Dermas, Penyesuaian Melanin, Rich Umber/Deep Golden, Preservasi Tekstur.`;
+        const fixedPrompt = `A pure black silhouette of the person from the image, completely devoid of details, features, or textures. The form is defined only by its outline against a contrasting background. Minimalist, deep shadow art, abstract`;
 
         if (!url) return res.status(400).json({ status: false, error: "Link gambarnya mana, Bos?" });
 
