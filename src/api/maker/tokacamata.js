@@ -69,7 +69,7 @@ module.exports = function (app) {
         const { url } = req.query;
         
         // Prompt AI spesialis yang Abang buat tadi (Sangat Bagus!)
-        const fixedPrompt = `Anda adalah spesialis kolorimetri digital dan ahli dermatologi visual. Tugas: Analisis foto subjek dan lakukan transformasi kepada nya agar menggunakan kacamata hitam, jangan mengubah foto atau tampilannya.`;
+        const fixedPrompt = `A detailed portrait of the person, wearing distinctive eyeglasses. Choose a style that complements their face: round frames, bold aviators, or sleek modern glasses. The glasses should be in focus, showing the material and subtle details. Maintain the same expression and gaze.`;
 
         if (!url) return res.status(400).json({ status: false, error: "Link gambarnya mana, Bos?" });
 
