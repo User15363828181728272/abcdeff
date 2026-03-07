@@ -728,20 +728,11 @@
         "responses": { "200": { "description": "File ZIP" } }
       }
     },
-    "/v2/tools/removebg": {
+ "/v2/tools/upload": {
       "post": {
         "tags": ["Tools"],
-        "summary": "AI Remove Background",
-        "description": "Hapus background gambar secara otomatis menggunakan AI.",
-        "parameters": [
-          {
-            "name": "url",
-            "in": "query",
-            "required": false,
-            "schema": { "type": "string" },
-            "description": "URL gambar yang ingin dihapus background-nya"
-          }
-        ],
+        "summary": "File Uploader (UploadF)",
+        "description": "Upload file (gambar/dokumen) ke cloud storage uploadf.com.",
         "requestBody": {
           "content": {
             "multipart/form-data": {
@@ -755,16 +746,8 @@
           }
         },
         "responses": {
-          "200": { "description": "Berhasil memproses gambar" }
+          "200": { "description": "Berhasil upload, dapat URL" }
         }
-      }
-    },
-    "/tools/ff-karakter": {
-      "get": {
-        "summary": "FF Character List Tool",
-        "description": "Menampilkan daftar lengkap karakter game Free Fire.",
-        "tags": ["Tools"],
-        "responses": { "200": { "description": "Success" } }
       }
     },
     "/v1/tools/upscale": {
